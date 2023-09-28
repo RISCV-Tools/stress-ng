@@ -1037,8 +1037,8 @@ static int stress_io_uring_child(const stress_args_t *args, void *context)
 				if ((rc != EXIT_SUCCESS) || !stress_continue(args))
 					break;
 			}
+			stress_io_uring_complete(args, &submit);
 		}
-		stress_io_uring_complete(args, &submit);
 
 		if (i++ >= 4096) {
 			i = 0;
