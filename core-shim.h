@@ -23,7 +23,9 @@
 #include <sys/uio.h>
 #endif
 
+#include <dirent.h>
 #include <sched.h>
+#include <sys/resource.h>
 
 /*
  *  BeagleBoneBlack with 4.1.15 kernel does not

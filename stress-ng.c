@@ -50,6 +50,7 @@
 
 #include <ctype.h>
 #include <sched.h>
+#include <time.h>
 #include <math.h>
 #include <float.h>
 
@@ -755,6 +756,7 @@ static void stress_usage_help(const stress_help_t help_info[])
 		}
 		if (start != ptr) {
 			const int n = (int)(ptr - start);
+
 			if (!first)
 				(void)printf("%-30s", "");
 			(void)printf("%*.*s\n", n, n, start);
@@ -1002,7 +1004,7 @@ void stress_sync_start_wait_s_pid(stress_pid_t *s_pid)
 		return;
 
 	pid = s_pid->oomable_child ? s_pid->oomable_child : s_pid->pid;
-	if ((pid <= 1))
+	if (pid <= 1)
 		return;
 
 	stress_sync_state_store(s_pid, STRESS_SYNC_START_FLAG_WAITING);
@@ -1500,7 +1502,6 @@ void stress_metrics_set_const_check(
 		return;
 
 	item = &metrics->items[idx];
-
 	item->description = const_description ?
 		description :
 		stress_shared_heap_dup_const(description);
@@ -1773,7 +1774,6 @@ static int MLOCKED_TEXT stress_run_child(
 	    (g_shared && !g_shared->caught_sigint) &&
 	    (run_duration < (double)g_opt_timeout) &&
 	    (!(g_stressor_current->bogo_ops && stats->args.ci.counter >= g_stressor_current->bogo_ops))) {
-
 		pr_warn("%s: WARNING: finished prematurely after just %s\n",
 			name, stress_duration_to_str(run_duration, true, true));
 	}
@@ -1936,7 +1936,6 @@ wait_for_stressors:
 	if (!(g_opt_flags & OPT_FLAGS_SYNC_START))
 		stress_start_timeout();
 #endif
-
 	stress_wait_stressors(s_pids_head, ticks_per_sec, stressors_list, success, resource_success, metrics_success);
 	time_finish = stress_time_now();
 
@@ -2773,7 +2772,6 @@ err_unmap_shared:
 	(void)munmap((void *)g_shared, g_shared->length);
 	stress_stressors_free();
 	exit(EXIT_FAILURE);
-
 }
 
 /*
@@ -2851,32 +2849,36 @@ static inline void stress_exclude_unsupported(bool *unsupported)
 
 	for (i = 0; i < SIZEOF_ARRAY(stressors); i++) {
 		const stress_t *stressor = &stressors[i];
-		stress_stressor_t *ss;
 
-		if (stressor->info) {
-			if (stressor->info->supported) {
-				for (ss = stressors_head; ss; ss = ss->next) {
-					if (!ss->ignore.run) {
-						const char *name = ss->stressor->name;
+		if (!stressor->info)
+			continue;
 
-						if ((ss->stressor == stressor) && ss->num_instances &&
-						    (stressor->info->supported(name) < 0)) {
-							stress_ignore_stressor(ss, STRESS_STRESSOR_UNSUPPORTED);
-							*unsupported = true;
-						}
+		if (stressor->info->supported) {
+			stress_stressor_t *ss;
+
+			for (ss = stressors_head; ss; ss = ss->next) {
+				if (!ss->ignore.run) {
+					const char *name = ss->stressor->name;
+
+					if ((ss->stressor == stressor) && ss->num_instances &&
+					    (stressor->info->supported(name) < 0)) {
+						stress_ignore_stressor(ss, STRESS_STRESSOR_UNSUPPORTED);
+						*unsupported = true;
 					}
 				}
 			}
-			if (stressor->info->stressor == stress_unimplemented) {
-				for (ss = stressors_head; ss; ss = ss->next) {
-					if (!ss->ignore.run) {
-						const char *name = ss->stressor->name;
+		}
+		if (stressor->info->stressor == stress_unimplemented) {
+			stress_stressor_t *ss;
 
-						if ((ss->stressor == stressor) && ss->num_instances) {
-							stress_exclude_unimplemented(name, stressor->info);
-							stress_ignore_stressor(ss, STRESS_STRESSOR_UNSUPPORTED);
-							*unsupported = true;
-						}
+			for (ss = stressors_head; ss; ss = ss->next) {
+				if (!ss->ignore.run) {
+					const char *name = ss->stressor->name;
+
+					if ((ss->stressor == stressor) && ss->num_instances) {
+						stress_exclude_unimplemented(name, stressor->info);
+						stress_ignore_stressor(ss, STRESS_STRESSOR_UNSUPPORTED);
+						*unsupported = true;
 					}
 				}
 			}
