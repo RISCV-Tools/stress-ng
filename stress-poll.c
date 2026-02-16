@@ -196,7 +196,7 @@ again:
 		/* Child writer */
 
 		stress_set_proc_state(args->name, STRESS_STATE_RUN);
-		stress_set_make_it_fail();
+		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 		stress_parent_died_alarm();
 		(void)stress_sched_settings_apply(true);

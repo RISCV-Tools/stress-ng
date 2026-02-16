@@ -2027,10 +2027,10 @@ char *stress_env_ld_library_path_get(void)
 }
 
 /*
- *  stress_set_make_it_fail()
+ *  stress_make_it_fail_set()
  *	enable Linux error injection failure for the process,
  */
-void stress_set_make_it_fail(void)
+void stress_make_it_fail_set(void)
 {
 #if defined(__linux__)
 	if (g_opt_flags & OPT_FLAGS_MAKE_IT_FAIL)

@@ -391,7 +391,7 @@ again:
 			static volatile uint64_t bogo_ops = 0;
 
 			stress_set_proc_state(args->name, STRESS_STATE_RUN);
-			stress_set_make_it_fail();
+			stress_make_it_fail_set();
 			(void)stress_sched_settings_apply(true);
 
 #if defined(MADV_HUGEPAGE)

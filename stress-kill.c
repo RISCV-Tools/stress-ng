@@ -49,7 +49,7 @@ static int stress_kill(stress_args_t *args)
 	if (pid == 0) {
 		stress_set_proc_state(args->name, STRESS_STATE_RUN);
 		VOID_RET(int, stress_signal_handler(args->name, SIGUSR1, stress_signal_ignore_handler, NULL));
-		stress_set_make_it_fail();
+		stress_make_it_fail_set();
 
 		while (stress_continue(args)) {
 			if (kill(ppid, 0) < 0)

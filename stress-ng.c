@@ -1934,7 +1934,7 @@ again:
 				if (g_opt_flags & OPT_FLAGS_C_STATES)
 					stress_cpuidle_read_cstates_begin(&stats->cstates);
 
-				stress_set_make_it_fail();
+				stress_make_it_fail_set();
 
 				rc = stress_run_child(checksum,
 						stats, fork_time_start,

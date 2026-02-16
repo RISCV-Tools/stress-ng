@@ -311,7 +311,7 @@ static int stress_rmap(stress_args_t *args)
 			s_pids[i].pid = getpid();
 			stress_sync_start_wait_s_pid(&s_pids[i]);
 			stress_set_proc_state(args->name, STRESS_STATE_RUN);
-			stress_set_make_it_fail();
+			stress_make_it_fail_set();
 
 			if (stress_signal_handler(args->name, SIGALRM, stress_signal_exit_handler, NULL) < 0)
 				_exit(EXIT_FAILURE);

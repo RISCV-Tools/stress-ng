@@ -84,7 +84,7 @@ again:
 		if (stress_signal_handler(args->name, SIGUSR1, stress_signal_exit_handler, NULL) < 0)
 			_exit(EXIT_FAILURE);
 
-		stress_set_make_it_fail();
+		stress_make_it_fail_set();
 
 		do {
 			unsigned int secs_sleep;

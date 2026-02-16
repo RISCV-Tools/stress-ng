@@ -606,7 +606,7 @@ again:
 			if (stress_signal_handler(args->name, SIGSEGV, stress_segv_handler, NULL) < 0)
 				_exit(EXIT_NO_RESOURCE);
 
-			stress_set_make_it_fail();
+			stress_make_it_fail_set();
 			stress_parent_died_alarm();
 			(void)stress_sched_settings_apply(true);
 			lock = stress_lock_create("dev-path");

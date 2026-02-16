@@ -221,7 +221,7 @@ static inline pid_t stress_fiemap_spawn(
 		s_pid->pid = getpid();
 
 		stress_sync_start_wait_s_pid(s_pid);
-		stress_set_make_it_fail();
+		stress_make_it_fail_set();
 
 		stress_parent_died_alarm();
 		(void)stress_sched_settings_apply(true);

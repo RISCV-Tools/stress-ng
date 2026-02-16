@@ -160,7 +160,7 @@ kill_child:
 
 			stress_set_proc_state(args->name, STRESS_STATE_RUN);
 			stress_set_oom_adjustment(args, true);
-			stress_set_make_it_fail();
+			stress_make_it_fail_set();
 			stress_process_dumpable(false);
 			(void)stress_sched_settings_apply(true);
 

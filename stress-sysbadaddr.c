@@ -2438,7 +2438,7 @@ static inline int stress_do_syscall(stress_args_t *args)
 		size_t k;
 
 		stress_set_proc_state(args->name, STRESS_STATE_RUN);
-		stress_set_make_it_fail();
+		stress_make_it_fail_set();
 
 		for (k = 0; k < SIZEOF_ARRAY(sigs); k++) {
 			if (stress_signal_handler(args->name, sigs[k], stress_signal_exit_handler, NULL) < 0)

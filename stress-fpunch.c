@@ -398,7 +398,7 @@ static int stress_fpunch(stress_args_t *args)
 			s_pids[i].pid = getpid();
 			stress_sync_start_wait_s_pid(&s_pids[i]);
 			stress_set_proc_state(args->name, STRESS_STATE_RUN);
-			stress_set_make_it_fail();
+			stress_make_it_fail_set();
 
 			VOID_RET(int, stress_signal_handler(args->name, SIGALRM, stress_signal_exit_handler, NULL));
 #if defined(HAVE_PREADV_WRITEV)

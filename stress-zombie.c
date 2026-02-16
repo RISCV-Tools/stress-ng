@@ -260,7 +260,7 @@ static void stress_zombie_free(void)
 
 static inline ALWAYS_INLINE int stress_zombie_child(stress_args_t *args)
 {
-	stress_set_make_it_fail();
+	stress_make_it_fail_set();
 	stress_set_proc_state(args->name, STRESS_STATE_ZOMBIE);
 
 	return 0;

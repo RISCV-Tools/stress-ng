@@ -70,7 +70,7 @@ again:
 	} else if (pid == 0) {
 		stress_set_proc_state(args->name, STRESS_STATE_RUN);
 		VOID_RET(int, stress_signal_handler(args->name, SIGHUP, stress_sighup_handler, NULL));
-		stress_set_make_it_fail();
+		stress_make_it_fail_set();
 
 		/* Raising SIGHUP without an handler will abort */
 		sighup_info->t_start = stress_time_now();
@@ -126,7 +126,7 @@ again:
 		int fds_rcv[2];
 
 		stress_set_proc_state(args->name, STRESS_STATE_RUN);
-		stress_set_make_it_fail();
+		stress_make_it_fail_set();
 
 		if (pipe(fds_snd) < 0)
 			_exit(0);

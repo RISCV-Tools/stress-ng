@@ -1449,7 +1449,7 @@ again:
 		return EXIT_FAILURE;
 	} else if (pid == 0) {
 		stress_set_proc_state(args->name, STRESS_STATE_RUN);
-		stress_set_make_it_fail();
+		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 
 		rc = stress_sock_client(args, mmap_buffer, mypid, sock_opts,

@@ -127,7 +127,7 @@ static int stress_make_daemon(
 		} else if (pid == 0) {
 			/* Child */
 
-			stress_set_make_it_fail();
+			stress_make_it_fail_set();
 			if (chdir("/") < 0)
 				goto err_close_fds2;
 			(void)umask(0);
@@ -197,7 +197,7 @@ again:
 		return EXIT_FAILURE;
 	} else if (pid == 0) {
 		/* Children */
-		stress_set_make_it_fail();
+		stress_make_it_fail_set();
 		(void)close(fds[0]);
 		rc = stress_make_daemon(args, fds[1], daemon_wait);
 		shim_exit_group(rc);

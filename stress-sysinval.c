@@ -2684,7 +2684,7 @@ static inline int stress_do_syscall(stress_args_t *args)
 		if (UNLIKELY(stress_signal_handler(args->name, SIGALRM, stress_syscall_itimer_handler, NULL) < 0))
 			_exit(EXIT_FAILURE);
 
-		stress_set_make_it_fail();
+		stress_make_it_fail_set();
 		stress_parent_died_alarm();
 		(void)stress_sched_settings_apply(true);
 		stress_mwc_reseed();

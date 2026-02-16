@@ -506,7 +506,7 @@ again:
 		int cpu_idx;
 
 		stress_set_proc_state(args->name, STRESS_STATE_RUN);
-		stress_set_make_it_fail();
+		stress_make_it_fail_set();
 
 #if defined(HAVE_TIMER_CLOCK_REALTIME)
 		if (timerid != (timer_t)-1) {

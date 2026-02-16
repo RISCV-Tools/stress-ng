@@ -459,7 +459,7 @@ again:
 		return EXIT_NO_RESOURCE;
 	} else if (pid == 0) {
 		stress_set_proc_state(args->name, STRESS_STATE_RUN);
-		stress_set_make_it_fail();
+		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 		(void)stress_sched_settings_apply(true);
 		rc = stress_dccp_client(args, mypid, dccp_port, dccp_domain, dccp_if);
