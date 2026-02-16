@@ -3596,7 +3596,7 @@ static int stress_vm_child(stress_args_t *args, void *ctxt)
 			syscall_start = 0.0;
 			if (UNLIKELY(!stress_continue_flag()))
 				return EXIT_SUCCESS;
-			if (UNLIKELY(((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(buf_sz)))) {
+			if (UNLIKELY(((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(buf_sz)))) {
 				buf = MAP_FAILED;
 				errno = ENOMEM;
 			} else {

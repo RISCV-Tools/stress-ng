@@ -195,7 +195,7 @@ static int stress_mmapcow_exercise(
 #endif
 
 	/* Low memory? Start again.. */
-	if (stress_low_memory(64 * page_size)) {
+	if (stress_memory_low_check(64 * page_size)) {
 		(void)munmap((void *)buf, *buf_size);
 		*buf_size = page_size;
 		return EXIT_SUCCESS;
@@ -219,7 +219,7 @@ static int stress_mmapcow_exercise(
 			rnd = stress_mwc8() & 7;
 
 			/* don't exercise child on low memory scenarios */
-			if (stress_low_memory(64 * page_size)) {
+			if (stress_memory_low_check(64 * page_size)) {
 				(void)munmap((void *)buf, *buf_size);
 				_exit(EXIT_SUCCESS);
 			}

@@ -269,10 +269,10 @@ void stress_ksm_memory_merge(const int flag)
 }
 
 /*
- *  stress_low_memory()
+ *  stress_memory_low_check()
  *	return true if running low on memory
  */
-bool stress_low_memory(const size_t requested)
+bool stress_memory_low_check(const size_t requested)
 {
 	static size_t prev_freemem = 0;
 	static size_t prev_freeswap = 0;

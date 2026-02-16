@@ -567,7 +567,7 @@ retry:
 		if (UNLIKELY(!stress_continue_flag()))
 			break;
 
-		if (UNLIKELY((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(sz)))
+		if (UNLIKELY((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(sz)))
 			goto retry;
 
 		/*

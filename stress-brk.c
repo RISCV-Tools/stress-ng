@@ -190,7 +190,7 @@ static int OPTIMIZE3 stress_brk_child(stress_args_t *args, void *context)
 		}
 
 		/* Low memory avoidance, re-start */
-		if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(page_size)) {
+		if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(page_size)) {
 			VOID_RET(int, shim_brk(start_ptr));
 			i = 0;
 		}

@@ -275,7 +275,7 @@ again:
 					pr_fail("%s: socket_pair read error detected, "
 						"failed to read expected data\n", args->name);
 				}
-				if (UNLIKELY(oom_avoid && stress_low_memory(low_mem_size)))
+				if (UNLIKELY(oom_avoid && stress_memory_low_check(low_mem_size)))
 					continue;
 				socket_pair_try_leak();
 			}
@@ -301,7 +301,7 @@ abort:
 
 				/* Low memory avoidance, re-start */
 				if (UNLIKELY(oom_avoid)) {
-					while (stress_low_memory(low_mem_size)) {
+					while (stress_memory_low_check(low_mem_size)) {
 						low_memory_count++;
 						if (UNLIKELY(!stress_continue_flag()))
 							goto tidy;

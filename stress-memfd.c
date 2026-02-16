@@ -295,7 +295,7 @@ static int stress_memfd_child(stress_args_t *args, void *context)
 
 		for (i = 0; i < memfd_fds; i++) {
 			/* Low memory avoidance, re-start */
-			if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(size))
+			if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(size))
 				break;
 
 			(void)snprintf(filename, sizeof(filename),

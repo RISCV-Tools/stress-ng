@@ -766,7 +766,7 @@ static void OPTIMIZE3 stress_mmaprandom_mmap_anon(mr_ctxt_t *ctxt, const int idx
 	for (;;) {
 		int old_flags;
 
-		if (ctxt->oom_avoid && stress_low_memory(size * 2)) {
+		if (ctxt->oom_avoid && stress_memory_low_check(size * 2)) {
 			addr = (uint8_t *)MAP_FAILED;
 			break;
 		}
@@ -889,7 +889,7 @@ static void OPTIMIZE3 stress_mmaprandom_mmap_file(mr_ctxt_t *ctxt, const int idx
 	for (;;) {
 		int old_flags;
 
-		if (ctxt->oom_avoid && stress_low_memory(size * 2)) {
+		if (ctxt->oom_avoid && stress_memory_low_check(size * 2)) {
 			addr = (uint8_t *)MAP_FAILED;
 			break;
 		}
@@ -1763,7 +1763,7 @@ static void stress_mmaprandom_clone(mr_ctxt_t *ctxt, const int idx)
 			/* Can't get memory, random guess at 128MB */
 			total = 128 * MB;
 		}
-		if (stress_low_memory(total))
+		if (stress_memory_low_check(total))
 			return;
 	}
 
@@ -1800,7 +1800,7 @@ static void stress_mmaprandom_fork(mr_ctxt_t *ctxt, const int idx)
 			/* Can't get memory, random guess at 128MB */
 			total = 128 * MB;
 		}
-		if (stress_low_memory(total))
+		if (stress_memory_low_check(total))
 			return;
 	}
 

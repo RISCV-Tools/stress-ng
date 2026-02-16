@@ -161,7 +161,7 @@ static int stress_secretmem_child(stress_args_t *args, void *context)
 			if (UNLIKELY(!stress_continue(args)))
 				break;
 
-			if (UNLIKELY((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(page_size3)))
+			if (UNLIKELY((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(page_size3)))
 				break;
 
 			if (mappings[n].addr || mappings[n].bitmap)

@@ -90,7 +90,7 @@ static bool OPTIMIZE3 stress_stack_alloc(
 	stress_stack_check_t check, *check_ptr;
 	bool check_success = true;
 
-	if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(STRESS_DATA_SIZE))
+	if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(STRESS_DATA_SIZE))
 		return true;
 
 	if (stack_fill) {

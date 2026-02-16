@@ -107,7 +107,7 @@ static int stress_oom_pipe_child(stress_args_t *args, void *ctxt)
 	for (i = 0; LIKELY(stress_continue(args) && (i < max_pipes)); i++) {
 		int *pfd = fds + (2 * i);
 
-		if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(page_size))
+		if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(page_size))
 			break;
 
 		if (pipe(pfd) < 0) {
@@ -142,7 +142,7 @@ static int stress_oom_pipe_child(stress_args_t *args, void *ctxt)
 
 			if ((fd[0] < 0) || (fd[1] < 0))
 				continue;
-			if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(max_size * 2))
+			if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(max_size * 2))
 				break;
 			if (fcntl(fd[0], F_SETPIPE_SZ, max_size) < 0)
 				max_size = page_size;

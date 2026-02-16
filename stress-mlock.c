@@ -232,7 +232,7 @@ static void stress_mlock_misc(stress_args_t *args, const size_t page_size, const
 
 #if defined(MCL_CURRENT)
 		/* Low memory avoidance, re-start */
-		if (oom_avoid && stress_low_memory(page_size * 3))
+		if (oom_avoid && stress_memory_low_check(page_size * 3))
 			return;
 		if (UNLIKELY(!stress_continue(args)))
 			return;
@@ -245,7 +245,7 @@ static void stress_mlock_misc(stress_args_t *args, const size_t page_size, const
 
 #if defined(MCL_FUTURE)
 		/* Low memory avoidance, re-start */
-		if (oom_avoid && stress_low_memory(page_size * 3))
+		if (oom_avoid && stress_memory_low_check(page_size * 3))
 			return;
 		if (UNLIKELY(!stress_continue(args)))
 			return;
@@ -255,7 +255,7 @@ static void stress_mlock_misc(stress_args_t *args, const size_t page_size, const
 #if defined(MCL_ONFAULT) &&	\
     defined(MCL_CURRENT)
 		/* Low memory avoidance, re-start */
-		if (oom_avoid && stress_low_memory(page_size * 3))
+		if (oom_avoid && stress_memory_low_check(page_size * 3))
 			return;
 		if (UNLIKELY(!stress_continue(args)))
 			return;
@@ -265,7 +265,7 @@ static void stress_mlock_misc(stress_args_t *args, const size_t page_size, const
 #if defined(MCL_ONFAULT) &&	\
     defined(MCL_FUTURE)
 		/* Low memory avoidance, re-start */
-		if (oom_avoid && stress_low_memory(page_size * 3))
+		if (oom_avoid && stress_memory_low_check(page_size * 3))
 			return;
 		if (UNLIKELY(!stress_continue(args)))
 			return;
@@ -274,7 +274,7 @@ static void stress_mlock_misc(stress_args_t *args, const size_t page_size, const
 #endif
 #if defined(MCL_ONFAULT)
 		/* Low memory avoidance, re-start */
-		if (oom_avoid && stress_low_memory(page_size * 3))
+		if (oom_avoid && stress_memory_low_check(page_size * 3))
 			return;
 		if (UNLIKELY(!stress_continue(args)))
 			return;
@@ -380,7 +380,7 @@ static int stress_mlock_child(stress_args_t *args, void *context)
 				break;
 
 			/* Low memory avoidance, re-start */
-			if (oom_avoid && stress_low_memory(page_size * 3))
+			if (oom_avoid && stress_memory_low_check(page_size * 3))
 				break;
 
 			mappings[n] = (uint8_t *)mmap(NULL, page_size * 3,
@@ -475,7 +475,7 @@ static int stress_mlock_child(stress_args_t *args, void *context)
 				break;
 
 			/* Low memory avoidance, re-start */
-			if (oom_avoid && stress_low_memory(page_size * 3))
+			if (oom_avoid && stress_memory_low_check(page_size * 3))
 				break;
 			mappings[n] = (uint8_t *)mmap(NULL, page_size,
 				PROT_READ | PROT_WRITE,

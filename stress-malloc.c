@@ -206,7 +206,7 @@ static void *stress_malloc_loop(void *ptr)
 		const unsigned int i = rnd % malloc_max;
 		const bool action = (rnd >> 12) & 1;
 		const unsigned int do_calloc = (rnd >> 14) & 0x1f;
-		const bool low_mem = ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(malloc_bytes / 2));
+		const bool low_mem = ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(malloc_bytes / 2));
 
 		shim_builtin_prefetch(&info[i]);
 

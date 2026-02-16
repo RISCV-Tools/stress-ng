@@ -135,7 +135,7 @@ static int stress_mmaphuge_child(stress_args_t *args, void *v_context)
 				flags |= (stress_mwc1() ? MAP_PRIVATE : MAP_SHARED);
 				flags |= stress_mmaphuge_settings[idx].flags;
 
-				if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(page_size))
+				if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(page_size))
 					break;
 
 				bufs[i].sz = sz;

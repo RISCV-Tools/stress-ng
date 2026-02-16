@@ -161,7 +161,7 @@ static int stress_mmapfixed_child(stress_args_t *args, void *context)
 		if (stress_mmapfixed_is_mapped((void *)addr, sz, page_size))
 			goto next;
 
-		if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(sz))
+		if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(sz))
 			goto next;
 
 		buf = (uint64_t *)mmap((void *)addr, sz, PROT_READ | PROT_WRITE, flags, -1, 0);

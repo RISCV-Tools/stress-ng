@@ -115,7 +115,7 @@ static size_t stress_mmapfiles_dir(
 				continue;
 			}
 			len = statbuf.st_size;
-			if (UNLIKELY((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(len))) {
+			if (UNLIKELY((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(len))) {
 				(void)close(fd);
 				break;
 			}

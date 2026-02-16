@@ -119,7 +119,7 @@ static int stress_pageswap_child(stress_args_t *args, void *context)
 	do {
 		page_info_t *pi;
 
-		if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_low_memory(page_size)) {
+		if ((g_opt_flags & OPT_FLAGS_OOM_AVOID) && stress_memory_low_check(page_size)) {
 			stress_pageswap_unmap(args, &head, &count, &rc);
 			max = 0;
 		}

@@ -188,7 +188,7 @@ static int stress_forkheavy_child(stress_args_t *args, void *context)
 	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
-		const bool low_mem_reap = stress_low_memory(MIN_MEM_FREE);
+		const bool low_mem_reap = stress_memory_low_check(MIN_MEM_FREE);
 
 		if (!low_mem_reap && (forkheavy_list.length < forkheavy_procs)) {
 			stress_forkheavy_t *forkheavy;

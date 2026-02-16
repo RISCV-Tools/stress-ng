@@ -57,7 +57,7 @@ static int stress_mlock_interruptible(
 		const size_t sz = (len > chunk_size) ? chunk_size : len;
 		int ret;
 
-		if (stress_low_memory(sz))
+		if (stress_memory_low_check(sz))
 			break;
 		ret = shim_mlock((void *)ptr, sz);
 		if (ret < 0)
