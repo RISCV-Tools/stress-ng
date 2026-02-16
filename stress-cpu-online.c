@@ -159,7 +159,7 @@ static int stress_cpu_online_supported(const char *name)
  */
 static int stress_cpu_online(stress_args_t *args)
 {
-	int32_t cpus = stress_get_processors_configured();
+	int32_t cpus = stress_cpus_configured_get();
 	int32_t i, cpu_online_count = 0;
 	uint32_t cpu, prev_cpu;
 	bool *cpu_online;

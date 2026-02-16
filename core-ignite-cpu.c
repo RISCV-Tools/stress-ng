@@ -162,7 +162,7 @@ void stress_ignite_cpu_start(void)
 		VOID_RET(ssize_t, write(latency_fd, &lat, sizeof(lat)));
 	}
 
-	max_cpus = stress_get_processors_configured();
+	max_cpus = stress_cpus_configured_get();
 	if (max_cpus < 1)
 		max_cpus = 1;	/* Has to have at least 1 cpu! */
 	cpu_settings = (stress_cpu_setting_t *)calloc((size_t)max_cpus, sizeof(*cpu_settings));

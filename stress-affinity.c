@@ -284,7 +284,7 @@ static int stress_affinity(stress_args_t *args)
 	info->affinity_pin = false;
 	info->affinity_rand = false;
 	info->affinity_sleep = 0;
-	info->cpus = (uint32_t)stress_get_processors_configured();
+	info->cpus = (uint32_t)stress_cpus_configured_get();
 
 	(void)stress_setting_get("affinity-delay", &info->affinity_delay);
 	(void)stress_setting_get("affinity-pin", &info->affinity_pin);

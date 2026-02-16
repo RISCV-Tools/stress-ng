@@ -1359,7 +1359,7 @@ stress_cpu_cache_cpus_t *stress_cpu_cache_details_get(void)
 	if (!stress_cpu_is_x86())
 		return NULL;
 
-	cpu_count = stress_get_processors_configured();
+	cpu_count = stress_cpus_configured_get();
 
 	eax = 0;
 	ebx = 0;

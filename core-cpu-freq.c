@@ -104,7 +104,7 @@ void stress_cpu_freq_get(
 	double *min_ghz,
 	double *max_ghz)
 {
-	const int32_t ncpus = stress_get_processors_configured();
+	const int32_t ncpus = stress_cpus_configured_get();
 	int32_t i;
 	double total_freq = 0.0;
 	int n = 0;

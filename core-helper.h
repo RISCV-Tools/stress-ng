@@ -32,7 +32,7 @@ extern const char ALIGN64 stress_ascii64[64];
 extern const char ALIGN64 stress_ascii32[32];
 
 extern WARN_UNUSED int32_t stress_cpus_online_get(void);
-extern WARN_UNUSED int32_t stress_get_processors_configured(void);
+extern WARN_UNUSED int32_t stress_cpus_configured_get(void);
 extern WARN_UNUSED int32_t stress_get_ticks_per_second(void);
 extern WARN_UNUSED int stress_get_load_avg(double *min1, double *min5, double *min15);
 extern void stress_parent_died_alarm(void);

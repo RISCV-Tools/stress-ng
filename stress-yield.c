@@ -200,7 +200,7 @@ static int stress_yield(stress_args_t *args)
 	stress_metrics_t *metrics;
 	size_t metrics_size;
 	uint64_t max_ops_per_yielder;
-	int32_t cpus = stress_get_processors_configured();
+	int32_t cpus = stress_cpus_configured_get();
 	const uint32_t instances = args->instances;
 	uint32_t yielders = 2, yield_procs = 0;
 	double count, duration, ns;

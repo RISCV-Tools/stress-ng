@@ -200,7 +200,7 @@ static void stress_flipflop_set_cpuset(cpu_set_t *set, const int num_cpus)
  */
 static int stress_flipflop(stress_args_t *args)
 {
-	const int num_cpus = stress_get_processors_configured();
+	const int num_cpus = stress_cpus_configured_get();
 	double t_begin, duration;
 	stress_flipflop_worker_t *workers;
 	uint64_t bogo_ops, *bits, *dist;

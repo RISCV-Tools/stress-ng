@@ -1038,7 +1038,7 @@ static const char PURE *stress_opt_name(const int opt_val)
 static void stress_get_processors(int32_t *count)
 {
 	if (*count == 0)
-		*count = stress_get_processors_configured();
+		*count = stress_cpus_configured_get();
 	else if (*count < 0)
 		*count = stress_cpus_online_get();
 }
@@ -1284,7 +1284,7 @@ static void stress_wait_aggressive(
 
 	for (;;) {
 		stress_stats_t *stats;
-		const int32_t cpus = stress_get_processors_configured();
+		const int32_t cpus = stress_cpus_configured_get();
 		int32_t cpu_num;
 		cpu_set_t mask;
 
@@ -2576,7 +2576,7 @@ static void stress_times_dump(
 	const double duration)
 {
 	struct tms buf;
-	double total_cpu_time = stress_get_processors_configured() * duration;
+	double total_cpu_time = stress_cpus_configured_get() * duration;
 	double u_time, s_time, t_time, u_pc, s_pc, t_pc;
 	double min1, min5, min15;
 	int rc;
@@ -3992,7 +3992,7 @@ int main(int argc, char **argv, char **envp)
 	uint32_t opt_class = 0;
 	uint32_t n_stressors, n_instances;
 	const uint32_t cpus_online = (uint32_t)stress_cpus_online_get();
-	const uint32_t cpus_configured = (uint32_t)stress_get_processors_configured();
+	const uint32_t cpus_configured = (uint32_t)stress_cpus_configured_get();
 	int ret;
 	bool unsupported = false;		/* true if stressors are unsupported */
 
@@ -4025,7 +4025,7 @@ int main(int argc, char **argv, char **envp)
 	(void)stress_get_page_size();
 	stressor_set_defaults();
 
-	if (stress_get_processors_configured() < 0) {
+	if (stress_cpus_configured_get() < 0) {
 		pr_err("sysconf failed, number of cpus configured "
 			"unknown, errno=%d: (%s)\n",
 			errno, strerror(errno));

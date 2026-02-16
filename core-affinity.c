@@ -97,7 +97,7 @@ static void stress_get_topology_set(
 	DIR *dir;
 	static const char path[] = "/sys/devices/system/cpu";
 	const struct dirent *d;
-	int max_cpus = (int)stress_get_processors_configured();
+	int max_cpus = (int)stress_cpus_configured_get();
 	cpu_set_t *sets;
 	int i, n_sets = 0, which;
 
@@ -193,7 +193,7 @@ static void stress_get_topology_set(
 int stress_affinity_parse_cpu(const char *arg, cpu_set_t *set, int *setbits)
 {
 	char *str, *ptr, *token;
-	const int32_t max_cpus = stress_get_processors_configured();
+	const int32_t max_cpus = stress_cpus_configured_get();
 	int i;
 
 	*setbits = 0;
@@ -388,7 +388,7 @@ int stress_affinity_cpu_set(const char *arg)
  */
 uint32_t stress_affinity_cpus_get(uint32_t **cpus, const bool use_affinity)
 {
-	uint32_t i, n_cpus = stress_get_processors_configured();
+	uint32_t i, n_cpus = stress_cpus_configured_get();
 
 #if defined(HAVE_SCHED_GETAFFINITY) && \
     defined(HAVE_SCHED_SETAFFINITY) && \

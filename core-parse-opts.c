@@ -589,7 +589,7 @@ int32_t stress_get_int32_instance_percent(const char *const str)
 		if (val < 0.0) {
 			return -1;
 		} else if (val > 0.0) {
-			const int32_t cpus = stress_get_processors_configured();
+			const int32_t cpus = stress_cpus_configured_get();
 
 			val = (double)cpus * val / 100.0;
 			if (val < 1.0)

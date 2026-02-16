@@ -1211,7 +1211,7 @@ static int stress_stream(stress_args_t *args)
 	/* Have to take a hunch and badly guess size */
 	if (!L3) {
 		guess = true;
-		L3 = (uint64_t)stress_get_processors_configured() * DEFAULT_STREAM_L3_SIZE;
+		L3 = (uint64_t)stress_cpus_configured_get() * DEFAULT_STREAM_L3_SIZE;
 	}
 
 	if (stress_instance_zero(args)) {

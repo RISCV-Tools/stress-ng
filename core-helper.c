@@ -112,10 +112,10 @@ int32_t stress_cpus_online_get(void)
 }
 
 /*
- *  stress_get_processors_configured()
+ *  stress_cpus_configured_get()
  *	get number of processors that are configured
  */
-int32_t stress_get_processors_configured(void)
+int32_t stress_cpus_configured_get(void)
 {
 	static int32_t processors_configured = 0;
 
@@ -865,7 +865,7 @@ void stress_yaml_runinfo(FILE *yaml)
 	}
 #endif
 	pr_yaml(yaml, "      pagesize: %zu\n", stress_get_page_size());
-	pr_yaml(yaml, "      cpus: %" PRId32 "\n", stress_get_processors_configured());
+	pr_yaml(yaml, "      cpus: %" PRId32 "\n", stress_cpus_configured_get());
 	pr_yaml(yaml, "      cpus-online: %" PRId32 "\n", stress_cpus_online_get());
 	pr_yaml(yaml, "      ticks-per-second: %" PRId32 "\n", stress_get_ticks_per_second());
 	pr_yaml(yaml, "\n");
