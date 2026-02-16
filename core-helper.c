@@ -583,13 +583,13 @@ int stress_strcmp_munged(const char *s1, const char *s2)
 }
 
 /*
- *  stress_get_uint64_zero()
+ *  stress_uint64_zero_get()
  *	return uint64 zero in way that force less smart
  *	static analysers to realise we are doing this
  *	to force a division by zero. I'd like to have
  *	a better solution than this ghastly way.
  */
-uint64_t stress_get_uint64_zero(void)
+uint64_t stress_uint64_zero_get(void)
 {
 	return g_shared->zero;
 }
