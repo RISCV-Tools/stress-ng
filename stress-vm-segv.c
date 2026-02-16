@@ -38,7 +38,7 @@ static NOINLINE void vm_unmap_child(const size_t page_size)
 
 	len = len ^ (len >> 1);
 	while (len > page_size) {
-		(void)munmap((void *)stress_get_null(), len - page_size);
+		(void)munmap((void *)stress_null_get(), len - page_size);
 		len >>= 1;
 #if !defined(__DragonFly__) &&	\
     !defined(__OpenBSD__)

@@ -595,13 +595,13 @@ uint64_t stress_uint64_zero_get(void)
 }
 
 /*
- *  stress_get_null()
+ *  stress_null_get()
  *	return null in way that force less smart
  *	static analysers to realise we are doing this
  *	to force a division by zero. I'd like to have
  *	a better solution than this ghastly way.
  */
-void *stress_get_null(void)
+void *stress_null_get(void)
 {
 	return (void *)(uintptr_t)g_shared->zero;
 }

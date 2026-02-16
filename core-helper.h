@@ -48,7 +48,7 @@ extern void stress_set_proc_state(const char *name, const int state);
 extern size_t stress_munge_underscore(char *dst, const char *src, size_t len);
 extern WARN_UNUSED int stress_strcmp_munged(const char *s1, const char *s2);
 extern WARN_UNUSED uint64_t stress_uint64_zero_get(void);
-extern WARN_UNUSED void *stress_get_null(void);
+extern WARN_UNUSED void *stress_null_get(void);
 extern WARN_UNUSED bool stress_little_endian(void);
 extern void stress_buildinfo(void);
 extern void stress_yaml_buildinfo(FILE *yaml);
