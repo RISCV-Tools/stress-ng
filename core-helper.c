@@ -1272,7 +1272,7 @@ int stress_unused_uid_get(uid_t *uid)
 	return 0;
 }
 #else
-int stress_get_unused_uid(uid_t *uid)
+int stress_unused_uid_get(uid_t *uid)
 {
 	if (uid)
 		*uid = 0;
