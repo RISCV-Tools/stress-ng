@@ -1910,7 +1910,7 @@ again:
 			if (!stress_continue_flag())
 				break;
 
-			stress_compact_memory();
+			stress_memory_compact();
 
 			fork_time_start = stress_time_now();
 			pid = fork();

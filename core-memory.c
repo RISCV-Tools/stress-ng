@@ -654,10 +654,10 @@ int stress_get_pid_memory_usage(
 }
 
 /*
- *  stress_compact_memory()
+ *  stress_memory_compact()
  *	attempt to compact kernel memory allocator
  */
-void stress_compact_memory(void)
+void stress_memory_compact(void)
 {
 	static bool compact_skip = false;
 	bool compact_memory = false;
