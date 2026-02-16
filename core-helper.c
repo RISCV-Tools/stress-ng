@@ -156,10 +156,10 @@ int32_t stress_ticks_per_second_get(void)
 }
 
 /*
- *  stress_get_load_avg()
+ *  stress_load_average_get()
  *	get load average
  */
-int stress_get_load_avg(
+int stress_load_average_get(
 	double *min1,
 	double *min5,
 	double *min15)

@@ -34,7 +34,7 @@ extern const char ALIGN64 stress_ascii32[32];
 extern WARN_UNUSED int32_t stress_cpus_online_get(void);
 extern WARN_UNUSED int32_t stress_cpus_configured_get(void);
 extern WARN_UNUSED int32_t stress_ticks_per_second_get(void);
-extern WARN_UNUSED int stress_get_load_avg(double *min1, double *min5, double *min15);
+extern WARN_UNUSED int stress_load_average_get(double *min1, double *min5, double *min15);
 extern void stress_parent_died_alarm(void);
 extern int stress_process_dumpable(const bool dumpable);
 extern int stress_set_timer_slack_ns(const char *opt);

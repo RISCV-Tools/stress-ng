@@ -853,7 +853,7 @@ again:
 			static bool get_load_avg = true;
 
 			if (get_load_avg) {
-				if (stress_get_load_avg(&min1, &min5, &min15) < 0)
+				if (stress_load_average_get(&min1, &min5, &min15) < 0)
 					get_load_avg = false;
 			}
 		}

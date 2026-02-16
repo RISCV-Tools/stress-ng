@@ -1196,7 +1196,7 @@ void stress_vmstat_start(void)
 					ptr += 7;
 				}
 #endif
-				if (stress_get_load_avg(&min1, &min5, &min15) < 0)  {
+				if (stress_load_average_get(&min1, &min5, &min15) < 0)  {
 					pr_inf("therm: %18s %5.5s %5.5s %5.5s %s\n",
 						cpuspeed, "n/a", "n/a", "n/a", therms);
 				} else {

@@ -805,7 +805,7 @@ static void MLOCKED_TEXT stress_stats_handler(int signum)
 		hdr += ret;
 		len += ret;
 	}
-	if (stress_get_load_avg(&min1, &min5, &min15) == 0) {
+	if (stress_load_average_get(&min1, &min5, &min15) == 0) {
 		ret = snprintf(hdr, sizeof(buffer) - len,
 			"Load Average: %.2f %.2f %.2f\n",
 			min1, min5, min15);
@@ -2589,7 +2589,7 @@ static void stress_times_dump(
 			errno, strerror(errno));
 		return;
 	}
-	rc = stress_get_load_avg(&min1, &min5, &min15);
+	rc = stress_load_average_get(&min1, &min5, &min15);
 
 	u_time = (double)buf.tms_cutime / (double)ticks_per_sec;
 	s_time = (double)buf.tms_cstime / (double)ticks_per_sec;

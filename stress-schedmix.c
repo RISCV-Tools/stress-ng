@@ -198,7 +198,7 @@ redo:
 		getpid();
 		break;
 	case 19:
-		VOID_RET(int, stress_get_load_avg(&min1, &min5, &min15));
+		VOID_RET(int, stress_load_average_get(&min1, &min5, &min15));
 		break;
 	case 20:
 		pid = fork();

@@ -147,7 +147,7 @@ void stress_mwc_reseed(void)
 			mwc.z ^= (uint64_t)tv.tv_sec ^ (uint64_t)tv.tv_usec;
 		mwc.z += ~(p1 - p2);
 		mwc.w += shim_rol64n((uint64_t)getpid(), 3) ^ shim_rol64n((uint64_t)getppid(), 1);
-		if (stress_get_load_avg(&m1, &m5, &m15) == 0) {
+		if (stress_load_average_get(&m1, &m5, &m15) == 0) {
 			mwc.z += (uint64_t)(128.0 * (m1 + m15));
 			mwc.w += (uint64_t)(256.0 * (m5));
 		}
