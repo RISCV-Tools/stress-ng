@@ -349,7 +349,7 @@ size_t stress_resources_allocate(
 			if (resources[i].m_mmap != MAP_FAILED) {
 				const size_t locked = STRESS_MINIMUM(mlock_size, resources[i].m_mmap_size);
 
-				stress_set_vma_anon_name(resources[i].m_mmap, resources[i].m_mmap_size, "resources-mmap");
+				stress_memory_anon_name_set(resources[i].m_mmap, resources[i].m_mmap_size, "resources-mmap");
 				(void)stress_madvise_randomize(resources[i].m_mmap, resources[i].m_mmap_size);
 				(void)stress_mincore_touch_pages_interruptible(resources[i].m_mmap, resources[i].m_mmap_size);
 				if (locked > 0) {
@@ -402,7 +402,7 @@ size_t stress_resources_allocate(
 					resources[i].fd_memfd, 0);
 				if (resources[i].ptr_memfd != MAP_FAILED) {
 					resources[i].ptr_memfd_size = page_size;
-					stress_set_vma_anon_name(resources[i].ptr_memfd, page_size, "resources-memfd");
+					stress_memory_anon_name_set(resources[i].ptr_memfd, page_size, "resources-memfd");
 					(void)stress_mincore_touch_pages_interruptible(resources[i].ptr_memfd, page_size);
 					(void)stress_madvise_mergeable(resources[i].ptr_memfd, page_size);
 				}
@@ -424,7 +424,7 @@ size_t stress_resources_allocate(
 					resources[i].fd_memfd_secret, 0);
 				if (resources[i].ptr_memfd_secret != MAP_FAILED) {
 					resources[i].ptr_memfd_secret_size = page_size;
-					stress_set_vma_anon_name(resources[i].ptr_memfd_secret, page_size, "resources-memfd-secret");
+					stress_memory_anon_name_set(resources[i].ptr_memfd_secret, page_size, "resources-memfd-secret");
 					(void)stress_mincore_touch_pages_interruptible(resources[i].ptr_memfd_secret, page_size);
 					(void)stress_madvise_mergeable(resources[i].ptr_memfd_secret, page_size);
 				}

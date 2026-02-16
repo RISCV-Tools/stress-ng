@@ -113,7 +113,7 @@ static int OPTIMIZE3 stress_fibsearch(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(data, data_size, "fibsearch-data");
+	stress_memory_anon_name_set(data, data_size, "fibsearch-data");
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);

@@ -254,7 +254,7 @@ static void *stress_far_mmap(
 	}
 
 use_page:
-	stress_set_vma_anon_name(ptr, page_size, "far-branch-returns");
+	stress_memory_anon_name_set(ptr, page_size, "far-branch-returns");
 	for (i = 0, n = 0; i < page_size; i += stress_ret_opcode.stride, n++) {
 		(void)shim_memcpy((ptr + i), stress_ret_opcode.opcodes, stress_ret_opcode.len);
 		funcs[*total_funcs + n] = (stress_ret_func_t)(void *)(ptr + i);
@@ -490,7 +490,7 @@ static int OPTIMIZE3 stress_far_branch(stress_args_t *args)
 						funcs, &total_funcs, &total_file_mapped_funcs);
 
 			if (pages[k] != MAP_FAILED) {
-				stress_set_vma_anon_name(pages[k], page_size, "functions-page");
+				stress_memory_anon_name_set(pages[k], page_size, "functions-page");
 				n_pages_mapped++;
 			} else {
 				n_pages_failed++;

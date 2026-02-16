@@ -1336,7 +1336,7 @@ static int stress_misaligned(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(buffer, buffer_size, "misaligned-data");
+	stress_memory_anon_name_set(buffer, buffer_size, "misaligned-data");
 	(void)stress_madvise_mergeable(buffer, buffer_size);
 
 #if defined(HAVE_MISALIGNED_NUMA)

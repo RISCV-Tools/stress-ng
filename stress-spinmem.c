@@ -281,7 +281,7 @@ static int stress_spinmem(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto tidy_cpus;
 	}
-	stress_set_vma_anon_name(mapping, args->page_size, "spinmem-data");
+	stress_memory_anon_name_set(mapping, args->page_size, "spinmem-data");
 
 #if defined(HAVE_SIGLONGJMP)
 	ret = sigsetjmp(jmp_env, 1);

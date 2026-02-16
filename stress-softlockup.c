@@ -271,7 +271,7 @@ static int stress_softlockup(stress_args_t *args)
 	softlockup_buffer = (uint8_t *)mmap(NULL, MB, PROT_READ | PROT_WRITE,
 					MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 	if (softlockup_buffer != MAP_FAILED)
-		stress_set_vma_anon_name(softlockup_buffer, MB, "x86-rep-stosb-data");
+		stress_memory_anon_name_set(softlockup_buffer, MB, "x86-rep-stosb-data");
 #endif
 
 	s_pids = stress_sync_s_pids_mmap((size_t)cpus_online);

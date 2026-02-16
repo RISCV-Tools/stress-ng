@@ -51,7 +51,7 @@ static int stress_pkey(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(pages, pages_size, "pkey-pages");
+	stress_memory_anon_name_set(pages, pages_size, "pkey-pages");
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);

@@ -2831,7 +2831,7 @@ static int stress_sysinval(stress_args_t *args)
 			args->name, errno, strerror(errno));
 		goto tidy;
 	}
-	stress_set_vma_anon_name(stress_syscall_exercised, stress_syscall_exercised_sz, "syscall-stats");
+	stress_memory_anon_name_set(stress_syscall_exercised, stress_syscall_exercised_sz, "syscall-stats");
 
 	hash_table = (stress_syscall_hash_table_t *)mmap(NULL,
 			sizeof(*hash_table),
@@ -2842,7 +2842,7 @@ static int stress_sysinval(stress_args_t *args)
 			args->name, errno, strerror(errno));
 		goto tidy;
 	}
-	stress_set_vma_anon_name(hash_table, sizeof(*hash_table), "syscall-hash-table");
+	stress_memory_anon_name_set(hash_table, sizeof(*hash_table), "syscall-hash-table");
 
 	current_context = (syscall_current_context_t*)
 		mmap(NULL, current_context_size, PROT_READ | PROT_WRITE,
@@ -2852,7 +2852,7 @@ static int stress_sysinval(stress_args_t *args)
 			args->name, errno, strerror(errno));
 		goto tidy;
 	}
-	stress_set_vma_anon_name(current_context, current_context_size, "syscall-context");
+	stress_memory_anon_name_set(current_context, current_context_size, "syscall-context");
 
 	if (getcwd(current_context->dirfd.cwd, sizeof(current_context->dirfd.cwd)) == NULL ) {
 		pr_fail("%s: getcwd failed, errno=%d (%s)\n",
@@ -2876,7 +2876,7 @@ static int stress_sysinval(stress_args_t *args)
 		goto tidy;
 	}
 #if defined(HAVE_MPROTECT)
-	stress_set_vma_anon_name(small_ptr, small_ptr_size, "syscall-small");
+	stress_memory_anon_name_set(small_ptr, small_ptr_size, "syscall-small");
 	(void)mprotect((void *)(small_ptr + page_size), page_size, PROT_NONE);
 #else
 	(void)munmap((void *)(small_ptr + page_size), page_size);
@@ -2890,7 +2890,7 @@ static int stress_sysinval(stress_args_t *args)
 			args->name, errno, strerror(errno));
 		goto tidy;
 	}
-	stress_set_vma_anon_name(page_ptr, page_size, "syscall-none");
+	stress_memory_anon_name_set(page_ptr, page_size, "syscall-none");
 
 	page_ptr_wr = (uint8_t *)mmap(NULL, page_ptr_wr_size, PROT_WRITE,
 		MAP_SHARED | MAP_ANONYMOUS, -1, 0);
@@ -2902,7 +2902,7 @@ static int stress_sysinval(stress_args_t *args)
 	small_ptr_wr = page_ptr_wr + page_size - 1;
 #if defined(HAVE_MPROTECT)
 	(void)mprotect((void *)(page_ptr_wr + page_size), page_size, PROT_NONE);
-	stress_set_vma_anon_name(page_ptr_wr, page_ptr_wr_size, "syscall-half-write");
+	stress_memory_anon_name_set(page_ptr_wr, page_ptr_wr_size, "syscall-half-write");
 #else
 	(void)munmap((void *)(page_ptr_wr + page_size), page_size);
 	page_ptr_wr_size -= page_size;

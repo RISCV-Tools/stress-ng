@@ -298,7 +298,7 @@ static int stress_flushcache_child(stress_args_t *args, void *ctxt)
 			args->name, context->d_bytes, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(context->d_addr, context->d_bytes, "d-cache");
+	stress_memory_anon_name_set(context->d_addr, context->d_bytes, "d-cache");
 
 	if (context->i_addr)
 		(void)stress_flushcache_nohugepage(context->i_addr, context->i_bytes);
@@ -368,7 +368,7 @@ static int stress_flushcache(stress_args_t *args)
 			args->name, context.i_bytes, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(context.i_addr, context.i_bytes, "i-cache");
+	stress_memory_anon_name_set(context.i_addr, context.i_bytes, "i-cache");
 	context.icache_func = (stress_ret_func_t)context.i_addr;
 
 	(void)shim_memcpy(context.i_addr, &stress_ret_opcode.opcodes, stress_ret_opcode.len);

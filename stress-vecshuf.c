@@ -376,7 +376,7 @@ static int stress_vecshuf(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(data, sizeof(*data), "vecshuf-data");
+	stress_memory_anon_name_set(data, sizeof(*data), "vecshuf-data");
 
 	for (i = 1; i < SIZEOF_ARRAY(stress_vecshuf_data); i++) {
 		stress_vecshuf_data[i].metrics.duration = 0.0;

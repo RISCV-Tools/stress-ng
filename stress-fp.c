@@ -677,7 +677,7 @@ static int stress_fp(stress_args_t *args)
 			args->name, FP_ELEMENTS, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(fp_data, mmap_size, "fp-data");
+	stress_memory_anon_name_set(fp_data, mmap_size, "fp-data");
 	(void)stress_madvise_mergeable(fp_data, mmap_size);
 
 	(void)stress_setting_get("fp-method", &fp_method);

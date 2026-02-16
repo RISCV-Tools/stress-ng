@@ -142,7 +142,7 @@ static void stress_cyclic_init(const uint32_t instances)
 	if (stress_cyclic_state == MAP_FAILED)
 		return;
 
-	stress_set_vma_anon_name(stress_cyclic_state, sizeof(*stress_cyclic_state), "cyclic-state");
+	stress_memory_anon_name_set(stress_cyclic_state, sizeof(*stress_cyclic_state), "cyclic-state");
 	stress_cyclic_state->lock = stress_lock_create("cyclic-state");
 }
 
@@ -713,7 +713,7 @@ static int stress_cyclic(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(rt_stats, size, "rt-statistics");
+	stress_memory_anon_name_set(rt_stats, size, "rt-statistics");
 	rt_stats->cyclic_samples = cyclic_samples;
 	rt_stats->latencies_size = cyclic_samples * sizeof(*rt_stats->latencies);
 	rt_stats->latencies = (int64_t *)stress_mmap_populate(NULL,
@@ -727,7 +727,7 @@ static int stress_cyclic(stress_args_t *args)
 		(void)munmap((void *)rt_stats, size);
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(rt_stats->latencies, rt_stats->latencies_size, "latencies");
+	stress_memory_anon_name_set(rt_stats->latencies, rt_stats->latencies_size, "latencies");
 	rt_stats->min_ns = INT64_MAX;
 	rt_stats->max_ns = INT64_MIN;
 	rt_stats->ns = 0.0;

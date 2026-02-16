@@ -850,7 +850,7 @@ static inline int stress_matrix_3d_exercise(
 		goto tidy_ret;
 	}
 	(void)stress_madvise_collapse(a, matrix_3d_mmap_size);
-	stress_set_vma_anon_name(a, matrix_3d_mmap_size, "matrix-a");
+	stress_memory_anon_name_set(a, matrix_3d_mmap_size, "matrix-a");
 
 	b = (matrix_3d_ptr_t)stress_mmap_populate(NULL, matrix_3d_mmap_size,
 		PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
@@ -861,7 +861,7 @@ static inline int stress_matrix_3d_exercise(
 		goto tidy_a;
 	}
 	(void)stress_madvise_collapse(b, matrix_3d_mmap_size);
-	stress_set_vma_anon_name(b, matrix_3d_mmap_size, "matrix-b");
+	stress_memory_anon_name_set(b, matrix_3d_mmap_size, "matrix-b");
 
 	r = (matrix_3d_ptr_t)stress_mmap_populate(NULL, matrix_3d_mmap_size,
 		PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
@@ -872,7 +872,7 @@ static inline int stress_matrix_3d_exercise(
 		goto tidy_b;
 	}
 	(void)stress_madvise_collapse(r, matrix_3d_mmap_size);
-	stress_set_vma_anon_name(r, matrix_3d_mmap_size, "matrix-r");
+	stress_memory_anon_name_set(r, matrix_3d_mmap_size, "matrix-r");
 
 	if (verify) {
 		s = (matrix_3d_ptr_t)stress_mmap_populate(NULL, matrix_3d_mmap_size,
@@ -884,7 +884,7 @@ static inline int stress_matrix_3d_exercise(
 			goto tidy_r;
 		}
 		(void)stress_madvise_collapse(s, matrix_3d_mmap_size);
-		stress_set_vma_anon_name(s, matrix_3d_mmap_size, "matrix-s");
+		stress_memory_anon_name_set(s, matrix_3d_mmap_size, "matrix-s");
 	}
 
 	/*

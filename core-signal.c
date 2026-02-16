@@ -380,7 +380,7 @@ int stress_signal_handler(
 					errno, strerror(errno));
 				return -1;
 			}
-			stress_set_vma_anon_name(stack, STRESS_SIGSTKSZ, "sigstack");
+			stress_memory_anon_name_set(stack, STRESS_SIGSTKSZ, "sigstack");
 			if (stress_stack_sigalt(stack, STRESS_SIGSTKSZ) < 0)
 				return -1;
 		}

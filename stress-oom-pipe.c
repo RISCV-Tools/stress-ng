@@ -203,7 +203,7 @@ static int stress_oom_pipe(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(buffer, buffer_size, "rw-pipe-buffer");
+	stress_memory_anon_name_set(buffer, buffer_size, "rw-pipe-buffer");
 	context.wr_buffer = (uint32_t *)buffer;
 	context.rd_buffer = (uint32_t *)((uintptr_t)buffer + page_size);
 

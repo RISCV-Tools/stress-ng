@@ -235,7 +235,7 @@ static int stress_sighup(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name((void *)sighup_info, sizeof(*sighup_info), "state");
+	stress_memory_anon_name_set((void *)sighup_info, sizeof(*sighup_info), "state");
 	sighup_info->count = 0.0;
 	sighup_info->t_start = 0.0;
 	sighup_info->latency = 0.0;

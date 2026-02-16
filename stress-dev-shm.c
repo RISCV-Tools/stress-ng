@@ -103,7 +103,7 @@ static inline int stress_dev_shm_child(
 				if (stress_mmap_stats(addr, (size_t)sz, &stats) == 0)
 					stress_mmap_stats_sum(&context->stats, &stats);
 
-				stress_set_vma_anon_name(addr, (size_t)sz, "mmapped-dev-shm");
+				stress_memory_anon_name_set(addr, (size_t)sz, "mmapped-dev-shm");
 				(void)stress_madvise_randomize(addr, (size_t)sz);
 				(void)stress_madvise_mergeable(addr, (size_t)sz);
 

@@ -134,9 +134,9 @@ static void stress_vma_page_name(const void *addr, size_t page_size)
 			name[i] = charset[idx];
 		}
 		name[i] = '\0';
-		stress_set_vma_anon_name(addr, page_size, name);
+		stress_memory_anon_name_set(addr, page_size, name);
 	} else {
-		stress_set_vma_anon_name(addr, page_size, NULL);
+		stress_memory_anon_name_set(addr, page_size, NULL);
 	}
 }
 #endif
@@ -841,7 +841,7 @@ static int stress_vma(stress_args_t *args)
 		(void)munmap(stress_vma_page, args->page_size);
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(stress_vma_metrics, sizeof(*stress_vma_metrics), "vma-metrics");
+	stress_memory_anon_name_set(stress_vma_metrics, sizeof(*stress_vma_metrics), "vma-metrics");
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);

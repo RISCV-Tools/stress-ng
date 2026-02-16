@@ -215,7 +215,7 @@ static int stress_dekker(stress_args_t *args)
 		return EXIT_NO_RESOURCE;
 	}
 
-	stress_set_vma_anon_name(dekker, sz, "dekker-mutex");
+	stress_memory_anon_name_set(dekker, sz, "dekker-mutex");
 	stress_zero_metrics(&dekker->p0, 1);
 	stress_zero_metrics(&dekker->p1, 1);
 

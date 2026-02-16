@@ -408,10 +408,10 @@ void CONST *stress_memory_address_align(const void *addr, const size_t alignment
 }
 
 /*
- *  stress_set_vma_anon_name()
+ *  stress_memory_anon_name_set()
  *	set a name to an anonymously mapped vma
  */
-void stress_set_vma_anon_name(const void *addr, const size_t size, const char *name)
+void stress_memory_anon_name_set(const void *addr, const size_t size, const char *name)
 {
 #if defined(HAVE_SYS_PRCTL_H) &&	\
     defined(HAVE_PRCTL) &&		\

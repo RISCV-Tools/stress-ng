@@ -3870,7 +3870,7 @@ static int stress_vm(stress_args_t *args)
 		(void)stress_munmap_anon_shared(context, sizeof(*context));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(context->bit_error_count, page_size, "bit-error-count");
+	stress_memory_anon_name_set(context->bit_error_count, page_size, "bit-error-count");
 
 	*context->bit_error_count = 0ULL;
 

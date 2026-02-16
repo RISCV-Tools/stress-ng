@@ -1427,7 +1427,7 @@ static int stress_sock(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(mmap_buffer, MMAP_BUF_SIZE, "io-buffer");
+	stress_memory_anon_name_set(mmap_buffer, MMAP_BUF_SIZE, "io-buffer");
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);

@@ -151,7 +151,7 @@ static int stress_context_init(
 			errno, strerror(errno));
 		return -1;
 	}
-	stress_set_vma_anon_name(context_data->stack, STACK_ALLOC, "context-stack");
+	stress_memory_anon_name_set(context_data->stack, STACK_ALLOC, "context-stack");
 
 	context_data->canary.check0 = stress_mwc32();
 	context_data->canary.check1 = stress_mwc32();
@@ -187,7 +187,7 @@ static int stress_context(stress_args_t *args)
 			stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(context, context_size, "context-data");
+	stress_memory_anon_name_set(context, context_size, "context-data");
 	if (stress_instance_zero(args)) {
 		pr_dbg("%s: context mapped at %p..%p\n", args->name,
 			(void *)context,

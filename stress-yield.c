@@ -280,7 +280,7 @@ static int stress_yield(stress_args_t *args)
 		free(pids);
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(metrics, metrics_size, "metrics");
+	stress_memory_anon_name_set(metrics, metrics_size, "metrics");
 	stress_zero_metrics(metrics, yielders);
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);

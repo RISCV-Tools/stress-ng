@@ -380,7 +380,7 @@ static void stress_mmaptorture_vm_name(
 		vma_name[0] = hex[(j >> 4) & 0xf];
 		vma_name[1] = hex[j & 0xf];
 
-		stress_set_vma_anon_name(ptr + i, page_size, vma_name);
+		stress_memory_anon_name_set(ptr + i, page_size, vma_name);
 	}
 }
 

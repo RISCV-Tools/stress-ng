@@ -530,7 +530,7 @@ static int stress_mmap_child(stress_args_t *args, void *ctxt)
 		(void)munmap((void *)mapped, pages * sizeof(*mapped));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(mappings, pages * sizeof(*mappings), "page-pointers");
+	stress_memory_anon_name_set(mappings, pages * sizeof(*mappings), "page-pointers");
 
 	if (context->mmap_mlock)
 		(void)shim_mlock(mappings, pages * sizeof(*mappings));
@@ -545,7 +545,7 @@ static int stress_mmap_child(stress_args_t *args, void *ctxt)
 		(void)munmap((void *)mapped, pages * sizeof(*mapped));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(idx, pages * sizeof(*idx), "page-index");
+	stress_memory_anon_name_set(idx, pages * sizeof(*idx), "page-index");
 
 	if (context->mmap_mlock)
 		(void)shim_mlock(idx, pages * sizeof(*idx));
@@ -867,7 +867,7 @@ cleanup:
 			if (buf != MAP_FAILED) {
 				if (context->mmap_mlock)
 					(void)shim_mlock(buf, page_size);
-				stress_set_vma_anon_name((void *)buf, page_size, mmap_name);
+				stress_memory_anon_name_set((void *)buf, page_size, mmap_name);
 				(void)stress_munmap_force((void *)buf, page_size);
 			}
 			if (tmpfd >= 0)
@@ -888,7 +888,7 @@ cleanup:
 
 			if (context->mmap_mlock)
 				(void)shim_mlock(buf64, page_size);
-			stress_set_vma_anon_name((void *)buf64, page_size, mmap_name);
+			stress_memory_anon_name_set((void *)buf64, page_size, mmap_name);
 
 			*buf64 = val;
 			ret = mprotect((void *)buf64, page_size, PROT_READ);
@@ -920,7 +920,7 @@ cleanup:
 		if (buf64 != MAP_FAILED) {
 			if (context->mmap_mlock)
 				(void)shim_mlock(buf64, page_size);
-			stress_set_vma_anon_name((void *)buf64, page_size, mmap_name);
+			stress_memory_anon_name_set((void *)buf64, page_size, mmap_name);
 
 			ret = mprotect((void *)buf64, page_size, PROT_WRITE);
 			if (ret < 0) {

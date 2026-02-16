@@ -392,7 +392,7 @@ static int stress_tlb_shootdown(stress_args_t *args)
 #if defined(MADV_NOHUGEPAGE)
 	(void)shim_madvise(mem, mmap_size, MADV_NOHUGEPAGE);
 #endif
-	stress_set_vma_anon_name(mem, mmap_size, "tlb-shootdown-buffer");
+	stress_memory_anon_name_set(mem, mmap_size, "tlb-shootdown-buffer");
 	(void)shim_memset(mem, 0xff, mmap_size);
 
 	tlb_procs = n_cpus;

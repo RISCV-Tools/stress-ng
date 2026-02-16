@@ -522,7 +522,7 @@ redo:
 		goto exit_free_pids;
 	}
 	(void)stress_madvise_nohugepage(buffer, buffer_len);
-	stress_set_vma_anon_name(buffer, buffer_len, "varyload-buffer");
+	stress_memory_anon_name_set(buffer, buffer_len, "varyload-buffer");
 
 	(void)stress_varyload_set_sched(args, varyload_sched);
 

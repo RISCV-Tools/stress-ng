@@ -249,7 +249,7 @@ static int stress_munmap(stress_args_t *args)
 			args->name, errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(ctxt, sizeof(*ctxt), "context");
+	stress_memory_anon_name_set(ctxt, sizeof(*ctxt), "context");
 	ctxt->duration = 0.0;
 	ctxt->count = 0.0;
 	ctxt->args = args;

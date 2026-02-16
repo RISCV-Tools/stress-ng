@@ -213,7 +213,7 @@ static int stress_unlink(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(metrics, metrics_sz, "metrics");
+	stress_memory_anon_name_set(metrics, metrics_sz, "metrics");
 	stress_zero_metrics(metrics, UNLINK_PROCS);
 
 	stress_fs_temp_dir_args(args, pathname, sizeof(pathname));

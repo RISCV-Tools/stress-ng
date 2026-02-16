@@ -229,7 +229,7 @@ static int stress_stack_child(stress_args_t *args, void *context)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(altstack, STRESS_SIGSTKSZ, "altstack");
+	stress_memory_anon_name_set(altstack, STRESS_SIGSTKSZ, "altstack");
 	(void)stress_mincore_touch_pages(altstack, STRESS_SIGSTKSZ);
 
 	/*

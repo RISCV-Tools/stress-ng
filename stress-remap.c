@@ -180,7 +180,7 @@ static int stress_remap(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(data, data_size, "remap-pages");
+	stress_memory_anon_name_set(data, data_size, "remap-pages");
 	if (remap_mlock)
 		(void)shim_mlock(data, data_size);
 
@@ -195,7 +195,7 @@ static int stress_remap(stress_args_t *args)
 		(void)munmap((void *)data, data_size);
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(order, order_size, "remap-ordering");
+	stress_memory_anon_name_set(order, order_size, "remap-ordering");
 	if (remap_mlock)
 		(void)shim_mlock(order, order_size);
 
@@ -208,7 +208,7 @@ static int stress_remap(stress_args_t *args)
 			PROT_READ | PROT_WRITE,
 			MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 	if (mapped != MAP_FAILED) {
-		stress_set_vma_anon_name(mapped, mapped_size, "mapped-data");
+		stress_memory_anon_name_set(mapped, mapped_size, "mapped-data");
 		if (remap_mlock)
 			(void)shim_mlock(mapped, mapped_size);
 		/*

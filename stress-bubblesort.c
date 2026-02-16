@@ -194,7 +194,7 @@ static int stress_bubblesort(stress_args_t *args)
 		return EXIT_NO_RESOURCE;
 	}
 	(void)stress_madvise_collapse(data, data_size);
-	stress_set_vma_anon_name(data, data_size, "bubblesort-data");
+	stress_memory_anon_name_set(data, data_size, "bubblesort-data");
 
 #if defined(HAVE_SIGLONGJMP)
 	ret = sigsetjmp(jmp_env, 1);

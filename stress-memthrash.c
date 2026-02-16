@@ -935,7 +935,7 @@ mmap_retry:
 			goto reap_mem;
 		goto mmap_retry;
 	}
-	stress_set_vma_anon_name(mem, MEM_SIZE, "memthrash-data");
+	stress_memory_anon_name_set(mem, MEM_SIZE, "memthrash-data");
 	(void)stress_madvise_mergeable(mem, MEM_SIZE);
 	(void)stress_madvise_nohugepage(mem, MEM_SIZE);
 

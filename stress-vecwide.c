@@ -184,7 +184,7 @@ static int stress_vecwide(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(vec_args, vec_args_size, "vec-args");
+	stress_memory_anon_name_set(vec_args, vec_args_size, "vec-args");
 
 	for (i = 0; i < SIZEOF_ARRAY(stress_vecwide_funcs); i++) {
 		stress_vecwide_metrics[i].duration = 0.0;

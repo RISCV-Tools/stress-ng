@@ -353,7 +353,7 @@ static int stress_fractal(stress_args_t *args)
 			args->name, data_sz, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(info.data, data_sz, "fractal-data");
+	stress_memory_anon_name_set(info.data, data_sz, "fractal-data");
 	if (stress_instance_zero(args)) {
 		pr_inf("%s: %s, %" PRId32 " x %" PRId32 ", %" PRId32 " iterations, "
 			"(%.2f, %.2fi) .. (%.2f, %.2fi)\n",

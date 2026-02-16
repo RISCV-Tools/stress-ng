@@ -274,7 +274,7 @@ static int stress_forkheavy(stress_args_t *args)
 		free(forkheavy_args.resources);
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(metrics, sizeof(*metrics), "metrics");
+	stress_memory_anon_name_set(metrics, sizeof(*metrics), "metrics");
 	stress_zero_metrics(metrics, 1);
 	metrics->lock = stress_lock_create("metrics");
 

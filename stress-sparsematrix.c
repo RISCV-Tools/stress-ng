@@ -1221,7 +1221,7 @@ static void *mmap_create(const uint64_t n, const uint32_t x, const uint32_t y)
 		MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (UNLIKELY(m.mmap == MAP_FAILED))
 		return NULL;
-	stress_set_vma_anon_name(m.mmap, m.mmap_size, "sparse-data");
+	stress_memory_anon_name_set(m.mmap, m.mmap_size, "sparse-data");
 	return (void *)&m;
 }
 

@@ -792,7 +792,7 @@ static void OPTIMIZE3 stress_mmaprandom_mmap_anon(mr_ctxt_t *ctxt, const int idx
 		return;
 
 	(void)snprintf(name, sizeof(name), "mmaprandom-anon-%p", addr);
-	stress_set_vma_anon_name(addr, size, name);
+	stress_memory_anon_name_set(addr, size, name);
 
 	RB_REMOVE(sm_free_node_tree, &sm_free_node_tree_root, mr_node);
 	sm_free_nodes--;
@@ -1073,7 +1073,7 @@ static void OPTIMIZE3 stress_mmaprandom_shm_sysv(mr_ctxt_t *ctxt, const int idx)
 		return;
 
 	(void)snprintf(name, sizeof(name), "mmaprandom-anon-%p", addr);
-	stress_set_vma_anon_name(addr, size, name);
+	stress_memory_anon_name_set(addr, size, name);
 
 	RB_REMOVE(sm_free_node_tree, &sm_free_node_tree_root, mr_node);
 	sm_free_nodes--;
@@ -1143,7 +1143,7 @@ static void OPTIMIZE3 stress_mmaprandom_shm_posix(mr_ctxt_t *ctxt, const int idx
 	ctxt->count[idx] += 1.0;
 
 	(void)snprintf(name, sizeof(name), "mmaprandom-anon-%p", addr);
-	stress_set_vma_anon_name(addr, size, name);
+	stress_memory_anon_name_set(addr, size, name);
 
 	RB_REMOVE(sm_free_node_tree, &sm_free_node_tree_root, mr_node);
 	sm_free_nodes--;
@@ -2120,7 +2120,7 @@ static int stress_mmaprandom(stress_args_t *args)
 			args->name, errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(ctxt, sizeof(*ctxt), "context");
+	stress_memory_anon_name_set(ctxt, sizeof(*ctxt), "context");
 
 	ctxt->oom_avoid = !!(g_opt_flags & OPT_FLAGS_OOM_AVOID);
 	ctxt->n_mr_nodes = MMAP_RANDOM_DEFAULT_MMAPPINGS;
@@ -2159,7 +2159,7 @@ static int stress_mmaprandom(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto unmap_ctxt;
 	}
-	stress_set_vma_anon_name(ctxt->page, args->page_size, "io-page");
+	stress_memory_anon_name_set(ctxt->page, args->page_size, "io-page");
 
 	ctxt->count = (double *)stress_mmap_anon_shared(count_size, PROT_READ | PROT_WRITE);
 	if (ctxt->count == MAP_FAILED) {
@@ -2168,7 +2168,7 @@ static int stress_mmaprandom(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto unmap_ctxt_page;
 	}
-	stress_set_vma_anon_name(ctxt->count, count_size, "counters");
+	stress_memory_anon_name_set(ctxt->count, count_size, "counters");
 
 	ret = stress_fs_temp_dir_make_args(args);
 	if (ret < 0) {
@@ -2209,7 +2209,7 @@ static int stress_mmaprandom(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto tidy_fds;
 	}
-	stress_set_vma_anon_name(ctxt->mr_nodes, mr_nodes_size, "page-structs");
+	stress_memory_anon_name_set(ctxt->mr_nodes, mr_nodes_size, "page-structs");
 
 	for (i = 0; i < ctxt->n_mr_nodes; i++) {
 		ctxt->mr_nodes[i].flags = 0;

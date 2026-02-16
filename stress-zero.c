@@ -91,7 +91,7 @@ static int stress_zero(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(rd_buffer, page_size, "read-buffer");
+	stress_memory_anon_name_set(rd_buffer, page_size, "read-buffer");
 	(void)stress_madvise_mergeable(rd_buffer, page_size);
 
 	wr_buffer = stress_mmap_populate(NULL, page_size,
@@ -105,7 +105,7 @@ static int stress_zero(stress_args_t *args)
 		(void)munmap(rd_buffer, page_size);
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(wr_buffer, page_size, "write-buffer");
+	stress_memory_anon_name_set(wr_buffer, page_size, "write-buffer");
 	(void)stress_madvise_mergeable(wr_buffer, page_size);
 
 	if ((fd = open("/dev/zero", flags)) < 0) {

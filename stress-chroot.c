@@ -423,7 +423,7 @@ static int stress_chroot(stress_args_t *args)
 			args->name, stress_memory_free_get());
 		return EXIT_FAILURE;
 	}
-	stress_set_vma_anon_name(data, sizeof(*data), "metrics");
+	stress_memory_anon_name_set(data, sizeof(*data), "metrics");
 	stress_zero_metrics(&data->metrics, 1);
 	data->args = args;
 	data->rootpath_inode = chroot_inode("/");

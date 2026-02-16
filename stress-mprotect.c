@@ -219,7 +219,7 @@ static int stress_mprotect(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto tidy_prot_flags;
 	}
-	stress_set_vma_anon_name(mem, mem_size, "mprotect-data");
+	stress_memory_anon_name_set(mem, mem_size, "mprotect-data");
 	(void)stress_madvise_mergeable(mem, mem_size);
 
 	/* Make sure this is killable by OOM killer */

@@ -461,7 +461,7 @@ static int stress_llc_affinity(stress_args_t *args)
 		stress_affinity_cpus_free(&cpus);
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(buf, mmap_sz, "llc-buffer");
+	stress_memory_anon_name_set(buf, mmap_sz, "llc-buffer");
 
 	if (llc_affinity_numa) {
 #if defined(HAVE_LINUX_MEMPOLICY_H)

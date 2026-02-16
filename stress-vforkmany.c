@@ -107,7 +107,7 @@ static int stress_vforkmany(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(stack_sig, STRESS_SIGSTKSZ, "altstack");
+	stress_memory_anon_name_set(stack_sig, STRESS_SIGSTKSZ, "altstack");
 	if (stress_stack_sigalt(stack_sig, STRESS_SIGSTKSZ) < 0)
 		return EXIT_FAILURE;
 
@@ -123,7 +123,7 @@ static int stress_vforkmany(stress_args_t *args)
 		(void)munmap((void *)stack_sig, STRESS_SIGSTKSZ);
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(vforkmany_shared, sizeof(*vforkmany_shared), "state");
+	stress_memory_anon_name_set(vforkmany_shared, sizeof(*vforkmany_shared), "state");
 	vforkmany_shared->terminate = false;
 	vforkmany_shared->invoked = 0;
 	vforkmany_shared->waited = 0;

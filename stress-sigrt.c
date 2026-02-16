@@ -58,7 +58,7 @@ static int stress_sigrt(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(stress_sigrt_metrics, stress_sigrt_metrics_size, "metrics");
+	stress_memory_anon_name_set(stress_sigrt_metrics, stress_sigrt_metrics_size, "metrics");
 	pids = (pid_t *)calloc((size_t)MAX_RTSIGS, sizeof(*pids));
 	if (!pids) {
 		pr_inf_skip("%s: failed to allocate array of %zu pids%s, skipping stressor\n",

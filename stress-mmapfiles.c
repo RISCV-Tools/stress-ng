@@ -247,7 +247,7 @@ static int stress_mmapfiles(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(mmapfile_info, sizeof(*mmapfile_info), "mmapfile-info");
+	stress_memory_anon_name_set(mmapfile_info, sizeof(*mmapfile_info), "mmapfile-info");
 	mmapfile_info->mmap_page_count = 0.0;
 	mmapfile_info->mmap_count = 0.0;
 	mmapfile_info->mmap_duration = 0.0;

@@ -283,7 +283,7 @@ static int stress_rmap(stress_args_t *args)
 			(uintptr_t *)mmap(NULL, page_size, PROT_READ | PROT_WRITE,
 				MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 		if (paddings[i] != MAP_FAILED)
-			stress_set_vma_anon_name(paddings[i], page_size, "mmap-padding");
+			stress_memory_anon_name_set(paddings[i], page_size, "mmap-padding");
 	}
 
 	if (stress_instance_zero(args)) {

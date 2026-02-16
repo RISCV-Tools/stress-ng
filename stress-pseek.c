@@ -390,7 +390,7 @@ static int stress_pseek(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(procs, procs_size, "process-state");
+	stress_memory_anon_name_set(procs, procs_size, "process-state");
 
 	info.fd = -1;
 	info.pseek_rand = false;
@@ -452,7 +452,7 @@ static int stress_pseek(stress_args_t *args)
 			rc = EXIT_NO_RESOURCE;
 			goto tidy_munmap_procs;
 		}
-		stress_set_vma_anon_name(procs[i].buf, (size_t)info.pseek_io_size, "pseek-buffer");
+		stress_memory_anon_name_set(procs[i].buf, (size_t)info.pseek_io_size, "pseek-buffer");
 		(void)shim_memset(procs[i].buf, stress_mwc8(), (size_t)info.pseek_io_size);
 	}
 

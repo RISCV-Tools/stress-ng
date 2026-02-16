@@ -210,7 +210,7 @@ static int stress_numacopy(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto metrics_free;
 	}
-	stress_set_vma_anon_name(numa_pages, numa_pages_size, "pages");
+	stress_memory_anon_name_set(numa_pages, numa_pages_size, "pages");
 
 	local_page = (uint8_t *)stress_mmap_populate(NULL, page_size,
 					PROT_READ | PROT_WRITE,
@@ -223,7 +223,7 @@ static int stress_numacopy(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto numa_pages_free;
 	}
-	stress_set_vma_anon_name(numa_pages, numa_pages_size, "pages");
+	stress_memory_anon_name_set(numa_pages, numa_pages_size, "pages");
 
 	for (node = 0; node < num_numa_nodes; node++) {
 		long lret;

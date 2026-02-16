@@ -312,7 +312,7 @@ static int stress_memcpy(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(buf, 3 * MEMCPY_MEMSIZE, "memcpy-buffer");
+	stress_memory_anon_name_set(buf, 3 * MEMCPY_MEMSIZE, "memcpy-buffer");
 
 	str1 = buf;
 	str2 = str1 + MEMCPY_MEMSIZE;

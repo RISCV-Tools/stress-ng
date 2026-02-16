@@ -757,7 +757,7 @@ int stress_lock_mem_map(void)
 		return -1;
 
 	(void)snprintf(name, sizeof(name), "lock-%s", stress_lock_funcs.type);
-	stress_set_vma_anon_name(stress_locks, mmap_size, name);
+	stress_memory_anon_name_set(stress_locks, mmap_size, name);
 
 	stress_lock_big_lock = &stress_locks[0];
 	stress_lock_funcs.init(stress_lock_big_lock);

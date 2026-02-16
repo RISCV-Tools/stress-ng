@@ -165,7 +165,7 @@ static int stress_stackmmap(stress_args_t *args)
 		(void)close(fd);
 		goto tidy_dir;
 	}
-	stress_set_vma_anon_name(stack_sig, STRESS_SIGSTKSZ, "altstack-anon");
+	stress_memory_anon_name_set(stack_sig, STRESS_SIGSTKSZ, "altstack-anon");
 
 	stack_mmap = (uint8_t *)mmap(NULL, MMAPSTACK_SIZE,
 		PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
@@ -186,7 +186,7 @@ static int stress_stackmmap(stress_args_t *args)
 		goto tidy_stack_sig;
 	}
 	(void)close(fd);
-	stress_set_vma_anon_name(stack_mmap, MMAPSTACK_SIZE, "altstack-file");
+	stress_memory_anon_name_set(stack_mmap, MMAPSTACK_SIZE, "altstack-file");
 
 	if (shim_madvise((void *)stack_mmap, MMAPSTACK_SIZE, MADV_RANDOM) < 0) {
 		pr_dbg("%s: madvise failed, errno=%d (%s)\n",

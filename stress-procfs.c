@@ -190,7 +190,7 @@ static void stress_proc_self_mem(stress_args_t *args, const int fd)
 		free(buf);
 		return;
 	}
-	stress_set_vma_anon_name(page, page_size, "proc-self-mem");
+	stress_memory_anon_name_set(page, page_size, "proc-self-mem");
 	offset = (off_t)(uintptr_t)page;
 
 	(void)shim_memset(page, rnd, page_size);

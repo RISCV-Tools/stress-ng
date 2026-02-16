@@ -2758,7 +2758,7 @@ static inline void stress_shared_map(const int32_t num_procs)
 		stress_stressors_free();
 		exit(EXIT_FAILURE);
 	}
-	stress_set_vma_anon_name(g_shared, sz, "g_shared");
+	stress_memory_anon_name_set(g_shared, sz, "g_shared");
 
 	/* Paranoid */
 	(void)shim_memset(g_shared, 0, sz);
@@ -2791,7 +2791,7 @@ STRESS_PRAGMA_POP
 #if defined(HAVE_MPROTECT)
 	/* Make last page trigger a segfault if it is accessed */
 	(void)mprotect(last_page, page_size, PROT_NONE);
-	stress_set_vma_anon_name(last_page, page_size,  "g_shared_guard");
+	stress_memory_anon_name_set(last_page, page_size,  "g_shared_guard");
 #elif defined(HAVE_MREMAP) &&	\
       defined(MAP_FIXED)
 	{
@@ -2810,7 +2810,7 @@ STRESS_PRAGMA_POP
 		if (new_last_page == MAP_FAILED)
 			g_shared->length -= page_size;
 		if (new_last_page != MAP_FAILED)
-			stress_set_vma_anon_name(last_page, page_size,  "g_shared_guard");
+			stress_memory_anon_name_set(last_page, page_size,  "g_shared_guard");
 	}
 #endif
 
@@ -2828,7 +2828,7 @@ STRESS_PRAGMA_POP
 			errno, strerror(errno));
 		goto err_unmap_shared;
 	}
-	stress_set_vma_anon_name(g_shared->checksum.checksums, len, "checksum");
+	stress_memory_anon_name_set(g_shared->checksum.checksums, len, "checksum");
 	(void)shim_memset(g_shared->checksum.checksums, 0, sz);
 	g_shared->checksum.length = sz;
 
@@ -2841,17 +2841,17 @@ STRESS_PRAGMA_POP
 	g_shared->mapped.page_none = stress_map_page(PROT_NONE, "PROT_NONE", page_size);
 	if (g_shared->mapped.page_none == MAP_FAILED)
 		goto err_unmap_checksums;
-	stress_set_vma_anon_name(g_shared->mapped.page_none, page_size, "mapped-none");
+	stress_memory_anon_name_set(g_shared->mapped.page_none, page_size, "mapped-none");
 
 	g_shared->mapped.page_ro = stress_map_page(PROT_READ, "PROT_READ", page_size);
 	if (g_shared->mapped.page_ro == MAP_FAILED)
 		goto err_unmap_page_none;
-	stress_set_vma_anon_name(g_shared->mapped.page_ro, page_size, "mapped-ro");
+	stress_memory_anon_name_set(g_shared->mapped.page_ro, page_size, "mapped-ro");
 
 	g_shared->mapped.page_wo = stress_map_page(PROT_WRITE, "PROT_WRITE", page_size);
 	if (g_shared->mapped.page_wo == MAP_FAILED)
 		goto err_unmap_page_ro;
-	stress_set_vma_anon_name(g_shared->mapped.page_wo, page_size, "mapped-wo");
+	stress_memory_anon_name_set(g_shared->mapped.page_wo, page_size, "mapped-wo");
 
 	return;
 

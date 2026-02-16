@@ -173,7 +173,7 @@ static int stress_unshare(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(unshare_info, unshare_info_size, "unshare-metrics");
+	stress_memory_anon_name_set(unshare_info, unshare_info_size, "unshare-metrics");
 
 	for (i = 0; i < MAX_PIDS; i++) {
 		unshare_info[i].duration = 0.0;

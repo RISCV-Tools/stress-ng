@@ -114,7 +114,7 @@ static int stress_sigio(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(buffers, 2 * BUFFER_SIZE, "io-buffers");
+	stress_memory_anon_name_set(buffers, 2 * BUFFER_SIZE, "io-buffers");
 	rd_buffer = &buffers[BUFFER_SIZE * 0];
 	wr_buffer = &buffers[BUFFER_SIZE * 1];
 

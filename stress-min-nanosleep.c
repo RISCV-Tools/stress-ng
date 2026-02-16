@@ -271,7 +271,7 @@ static void stress_min_nanosleep_init(const uint32_t instances)
 	delays = (nanosleep_delays_t *)stress_mmap_populate(NULL, delays_size, PROT_READ | PROT_WRITE,
 					MAP_ANONYMOUS | MAP_SHARED, -1, 0);
 	if (delays != MAP_FAILED)
-		stress_set_vma_anon_name(delays, delays_size, "nanosleep-timings");
+		stress_memory_anon_name_set(delays, delays_size, "nanosleep-timings");
 }
 
 static void stress_min_nanosleep_deinit(void)

@@ -431,7 +431,7 @@ static int stress_prefetch(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(l3_data, l3_data_mmap_size, "l3data");
+	stress_memory_anon_name_set(l3_data, l3_data_mmap_size, "l3data");
 
 	l3_data_end = STRESS_PTRU64_ADD(l3_data, l3_data_size);
 	checksum_sane = stress_prefetch_data_set(l3_data, l3_data_end);

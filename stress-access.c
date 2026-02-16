@@ -327,7 +327,7 @@ static int stress_access(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto tidy;
 	}
-	stress_set_vma_anon_name(metrics, metrics_size, "metrics");
+	stress_memory_anon_name_set(metrics, metrics_size, "metrics");
 	stress_zero_metrics(metrics, 2);
 
 	stress_sync_start_init(&s_pids[0]);

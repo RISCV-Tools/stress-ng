@@ -286,7 +286,7 @@ static int stress_userfaultfd_child(stress_args_t *args, void *context)
 			errno, strerror(errno));
 		goto free_zeropage;
 	}
-	stress_set_vma_anon_name(data, sz, "userfaultfd-data");
+	stress_memory_anon_name_set(data, sz, "userfaultfd-data");
 
 	/* Exercise invalid flags */
 	fd = shim_userfaultfd(~0);

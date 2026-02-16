@@ -4809,7 +4809,7 @@ static int stress_dev(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto deinit;
 	}
-	stress_set_vma_anon_name(mmap_dev_states, mmap_dev_states_size, "dev-states");
+	stress_memory_anon_name_set(mmap_dev_states, mmap_dev_states_size, "dev-states");
 	
 	stress_dev_info_list_state_init(dev_info_list, mmap_dev_states);
 

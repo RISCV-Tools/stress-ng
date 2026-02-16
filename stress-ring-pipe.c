@@ -143,7 +143,7 @@ static int stress_ring_pipe(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		goto err_ret;
 	}
-	stress_set_vma_anon_name(buf, STRESS_RING_PIPE_SIZE_MAX, "ring-pipe-buffer");
+	stress_memory_anon_name_set(buf, STRESS_RING_PIPE_SIZE_MAX, "ring-pipe-buffer");
 
 	pipe_fds = (pipe_fds_t *)calloc(ring_pipe_num, sizeof(*pipe_fds));
 	if (!pipe_fds) {

@@ -204,7 +204,7 @@ static int stress_mmapcow_exercise(
 	if ((*flags & MMAPCOW_NUMA) && numa_mask && numa_nodes)
 		stress_numa_randomize_pages(args, numa_nodes, numa_mask, buf, *buf_size, page_size);
 #endif
-	stress_set_vma_anon_name(buf, *buf_size, "mmapcow-pages");
+	stress_memory_anon_name_set(buf, *buf_size, "mmapcow-pages");
 	buf_end = buf + *buf_size;
 	rnd = stress_mwc8() & 7;
 

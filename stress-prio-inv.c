@@ -360,7 +360,7 @@ static int stress_prio_inv(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(prio_inv_info, sizeof(*prio_inv_info), "state");
+	stress_memory_anon_name_set(prio_inv_info, sizeof(*prio_inv_info), "state");
 	child_info = prio_inv_info->child_info;
 	prio_inv_info->args = args;
 

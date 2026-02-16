@@ -625,7 +625,7 @@ static int stress_pipe(stress_args_t *args)
 		(void)close(pipefds[1]);
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(buf_rd, buf_rd_size, "read-buffer");
+	stress_memory_anon_name_set(buf_rd, buf_rd_size, "read-buffer");
 
 	/* round to nearest whole page */
 	buf_wr_size = ((pipe_wr_size + page_size - 1) & ~(page_size - 1)) * 2;
@@ -642,7 +642,7 @@ static int stress_pipe(stress_args_t *args)
 		(void)close(pipefds[1]);
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(buf_wr, buf_wr_size, "write-buffer");
+	stress_memory_anon_name_set(buf_wr, buf_wr_size, "write-buffer");
 	stress_rndbuf(buf_wr, buf_wr_size);
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);

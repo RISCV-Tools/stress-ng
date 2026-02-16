@@ -106,7 +106,7 @@ static int stress_lsm(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(buf, buf_size, "lsm-data");
+	stress_memory_anon_name_set(buf, buf_size, "lsm-data");
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);

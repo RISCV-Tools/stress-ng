@@ -1775,7 +1775,7 @@ static int stress_zlib(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_FAILURE;
 	}
-	stress_set_vma_anon_name(shared_checksums, sizeof(*shared_checksums), "zlib-checksums");
+	stress_memory_anon_name_set(shared_checksums, sizeof(*shared_checksums), "zlib-checksums");
 	if (pipe(fds) < 0) {
 		pr_err("%s: pipe failed, errno=%d (%s)\n",
 			args->name, errno, strerror(errno));

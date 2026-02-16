@@ -340,7 +340,7 @@ static int stress_easy_opcode(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(state, sizeof(*state), "state");
+	stress_memory_anon_name_set(state, sizeof(*state), "state");
 
 	state->bogo_ops = 0;
 	state->ops = 0;
@@ -356,7 +356,7 @@ static int stress_easy_opcode(stress_args_t *args)
 		(void)munmap((void *)state, sizeof(*state));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(opcodes, page_size * PAGES, "opcodes");
+	stress_memory_anon_name_set(opcodes, page_size * PAGES, "opcodes");
 	/* Force pages resident */
 	(void)shim_memset(opcodes, 0x00, page_size * PAGES);
 

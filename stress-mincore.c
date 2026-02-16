@@ -114,7 +114,7 @@ static int stress_mincore(stress_args_t *args)
 	mapped = (uint8_t *)mmap(NULL, page_size, PROT_READ | PROT_WRITE,
 			MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (mapped != MAP_FAILED)
-		stress_set_vma_anon_name(mapped, page_size, "rw-page");
+		stress_memory_anon_name_set(mapped, page_size, "rw-page");
 
 	/* Map a file backed page, silently ignore failure */
 	fd = stress_mincore_file(args);
@@ -125,7 +125,7 @@ static int stress_mincore(stress_args_t *args)
 		fdmapped = (uint8_t *)MAP_FAILED;
 	}
 	if (fdmapped != MAP_FAILED)
-		stress_set_vma_anon_name(fdmapped, page_size, "fd-page");
+		stress_memory_anon_name_set(fdmapped, page_size, "fd-page");
 
 	/* Map then unmap a page to get an unmapped page address */
 	unmapped = (uint8_t *)mmap(NULL, page_size, PROT_READ | PROT_WRITE,

@@ -533,7 +533,7 @@ static int stress_fma(stress_args_t *args)
 			args->name, sizeof(*pfma), stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(pfma, sizeof(*pfma), "fma-data");
+	stress_memory_anon_name_set(pfma, sizeof(*pfma), "fma-data");
 	stress_madvise_mergeable(pfma, sizeof(*pfma));
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);

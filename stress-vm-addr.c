@@ -576,7 +576,7 @@ static int stress_vm_addr(stress_args_t *args)
 		}
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(context.bit_error_count, page_size, "bit-error-count");
+	stress_memory_anon_name_set(context.bit_error_count, page_size, "bit-error-count");
 
 	if (context.vm_addr_numa) {
 #if defined(HAVE_LINUX_MEMPOLICY_H)

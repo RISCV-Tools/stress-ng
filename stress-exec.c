@@ -240,7 +240,7 @@ static stress_pid_hash_t *stress_exec_alloc_pid(const bool alloc_stack)
 			stress_exec_free_list_add(sph);
 			return NULL;
 		}
-		stress_set_vma_anon_name(sph->stack, CLONE_STACK_SIZE, "clone-stack");
+		stress_memory_anon_name_set(sph->stack, CLONE_STACK_SIZE, "clone-stack");
 	}
 #else
 	(void)alloc_stack;
@@ -784,7 +784,7 @@ static int stress_exec(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto err_free_ld_library_path;
 	}
-	stress_set_vma_anon_name(stress_pid_hash_table, stress_pid_hash_table_size, "pid-hash");
+	stress_memory_anon_name_set(stress_pid_hash_table, stress_pid_hash_table_size, "pid-hash");
 
 	cache_max = sizeof(*stress_pid_cache) * exec_max;
 	stress_pid_cache = (stress_pid_hash_t*)
@@ -796,7 +796,7 @@ static int stress_exec(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto err_unmap_pid_hash_table;
 	}
-	stress_set_vma_anon_name(stress_pid_cache, cache_max, "pid-cache");
+	stress_memory_anon_name_set(stress_pid_cache, cache_max, "pid-cache");
 	stress_pid_cache_index = 0;
 	stress_pid_cache_items = (size_t)exec_max;
 
@@ -806,7 +806,7 @@ static int stress_exec(stress_args_t *args)
 	if (str == MAP_FAILED)
 		str = NULL;
 	else {
-		stress_set_vma_anon_name(str, arg_max, "exec-args");
+		stress_memory_anon_name_set(str, arg_max, "exec-args");
 		(void)shim_memset(str, 'X', arg_max - 1);
 	}
 

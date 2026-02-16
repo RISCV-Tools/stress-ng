@@ -505,7 +505,7 @@ static int stress_efivar(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(efi_ignore, sz, "efi-ignore-state");
+	stress_memory_anon_name_set(efi_ignore, sz, "efi-ignore-state");
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);

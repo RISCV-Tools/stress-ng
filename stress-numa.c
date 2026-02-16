@@ -262,7 +262,7 @@ static int stress_numa(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto old_numa_mask_free;
 	}
-	stress_set_vma_anon_name(status, status_size, "status");
+	stress_memory_anon_name_set(status, status_size, "status");
 
 	dest_nodes_size = num_pages * sizeof(*dest_nodes);
 	dest_nodes = (int *)stress_mmap_populate(NULL, dest_nodes_size,
@@ -276,7 +276,7 @@ static int stress_numa(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto status_free;
 	}
-	stress_set_vma_anon_name(dest_nodes, dest_nodes_size, "dest-nodes");
+	stress_memory_anon_name_set(dest_nodes, dest_nodes_size, "dest-nodes");
 
 	pages_size = num_pages * sizeof(*pages);
 	pages = (void **)stress_mmap_populate(NULL, pages_size,
@@ -290,7 +290,7 @@ static int stress_numa(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto dest_nodes_free;
 	}
-	stress_set_vma_anon_name(pages, pages_size, "pages");
+	stress_memory_anon_name_set(pages, pages_size, "pages");
 
 	/*
 	 *  We need a buffer to migrate around NUMA nodes
@@ -306,7 +306,7 @@ static int stress_numa(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto pages_free;
 	}
-	stress_set_vma_anon_name(buf, numa_bytes, "numa-shared-data");
+	stress_memory_anon_name_set(buf, numa_bytes, "numa-shared-data");
 	(void)stress_madvise_mergeable(buf, numa_bytes);
 	(void)stress_madvise_nohugepage(buf, numa_bytes);
 

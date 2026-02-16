@@ -80,7 +80,7 @@ static int stress_full(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(buffer, buffer_size, "io-buffer");
+	stress_memory_anon_name_set(buffer, buffer_size, "io-buffer");
 	(void)stress_madvise_mergeable(buffer, buffer_size);
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);

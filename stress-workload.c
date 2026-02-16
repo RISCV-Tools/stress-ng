@@ -577,7 +577,7 @@ static int stress_workload(stress_args_t *args)
 		return EXIT_NO_RESOURCE;
 	}
 	(void)stress_madvise_nohugepage(buffer, buffer_len);
-	stress_set_vma_anon_name(buffer, buffer_len, "workload-buffer");
+	stress_memory_anon_name_set(buffer, buffer_len, "workload-buffer");
 
 	if (workload_threads > 0) {
 #if defined(WORKLOAD_THREADED)

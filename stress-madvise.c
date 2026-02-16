@@ -417,7 +417,7 @@ static int stress_madvise(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(page, page_size, "data-page");
+	stress_memory_anon_name_set(page, page_size, "data-page");
 
 	/* Don't use /proc/self/, use more direct /proc/$PID/ */
 	(void)snprintf(ctxt.smaps, sizeof(ctxt.smaps), "/proc/%" PRIdMAX "/smaps", (intmax_t)pid);

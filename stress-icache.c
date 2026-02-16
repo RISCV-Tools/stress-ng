@@ -196,7 +196,7 @@ static int stress_icache(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name((void *)pages, pages_size, "opcodes");
+	stress_memory_anon_name_set((void *)pages, pages_size, "opcodes");
 	for (i = 0; i < pages_size; i += 64) {
 		(void)shim_memcpy((void *)(pages + i), &stress_ret_opcode.opcodes, stress_ret_opcode.len);
 	}

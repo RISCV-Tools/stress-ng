@@ -229,7 +229,7 @@ static int stress_rseq(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(rseq_info, sizeof(*rseq_info), "state");
+	stress_memory_anon_name_set(rseq_info, sizeof(*rseq_info), "state");
 
 	rseq_area = stress_rseq_get_area();
 	if (stress_instance_zero(args))

@@ -298,7 +298,7 @@ static int stress_sigsegv(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(ro_ptr, args->page_size, "ro-page");
+	stress_memory_anon_name_set(ro_ptr, args->page_size, "ro-page");
 
 	/* Allocate PROT_NONE page */
 	none_ptr = (uint8_t *)mmap(NULL, args->page_size, PROT_NONE,
@@ -311,7 +311,7 @@ static int stress_sigsegv(stress_args_t *args)
 		(void)munmap((void *)ro_ptr, args->page_size);
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(none_ptr, args->page_size, "no-page");
+	stress_memory_anon_name_set(none_ptr, args->page_size, "no-page");
 
 #if defined(HAVE_MADVISE) &&	\
     defined(MADV_GUARD_INSTALL)
@@ -327,7 +327,7 @@ static int stress_sigsegv(stress_args_t *args)
 		(void)munmap((void *)ro_ptr, args->page_size);
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(guard_ptr, args->page_size, "guard-page");
+	stress_memory_anon_name_set(guard_ptr, args->page_size, "guard-page");
 	if (madvise(guard_ptr, args->page_size, MADV_GUARD_INSTALL) < 0) {
 		/*
 		 * older kernels may not have MADV_GUARD_INSTALL, so

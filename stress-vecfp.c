@@ -423,7 +423,7 @@ static int stress_vecfp(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(vecfp_init, sizeof(*vecfp_init), "vecfp-init-data");
+	stress_memory_anon_name_set(vecfp_init, sizeof(*vecfp_init), "vecfp-init-data");
 
 	(void)stress_setting_get("vecfp-method", &vecfp_method);
 

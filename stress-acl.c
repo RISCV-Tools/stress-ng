@@ -429,7 +429,7 @@ static int stress_acl(stress_args_t *args)
 			args->name, acls_size, stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(acls, acls_size, "acls");
+	stress_memory_anon_name_set(acls, acls_size, "acls");
 
 	acls_tested = (bool *)stress_mmap_populate(NULL, acls_tested_size,
 					PROT_READ | PROT_WRITE,
@@ -441,7 +441,7 @@ static int stress_acl(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto tidy_unmap_acls;
 	}
-	stress_set_vma_anon_name(acls, acls_size, "acls-tested");
+	stress_memory_anon_name_set(acls, acls_size, "acls-tested");
 
 	rc = stress_acl_setup(args, acl_rand, uid, gid, max_acls, acls, &acl_count, acls_tested);
 	if (rc != EXIT_SUCCESS)

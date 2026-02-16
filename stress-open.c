@@ -1128,7 +1128,7 @@ static int stress_open(stress_args_t *args)
 	}
 	if (!args->instance)
 		pr_inf("%s: using a maximum of %zu file descriptors\n", args->name, open_max);
-	stress_set_vma_anon_name(fds, sz, "fds");
+	stress_memory_anon_name_set(fds, sz, "fds");
 
 	if (open_fd) {
 		(void)snprintf(path, sizeof(path), "/proc/%" PRIdMAX "/fd", (intmax_t)mypid);

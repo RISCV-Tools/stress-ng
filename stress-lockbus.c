@@ -172,7 +172,7 @@ static void stress_lockbus_init(const uint32_t instances)
 	shared_buffer = (uint32_t *)stress_mmap_populate(NULL, lockbus_buffer_size,
 		PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_SHARED, -1, 0);
 	if (shared_buffer != MAP_FAILED)
-		stress_set_vma_anon_name(shared_buffer, lockbus_buffer_size, "lockbus-shared-data");
+		stress_memory_anon_name_set(shared_buffer, lockbus_buffer_size, "lockbus-shared-data");
 }
 
 static void stress_lockbus_deinit(void)
@@ -255,7 +255,7 @@ static int stress_lockbus(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(local_buffer, lockbus_buffer_size, "lockbus-data");
+	stress_memory_anon_name_set(local_buffer, lockbus_buffer_size, "lockbus-data");
 
 #if defined(STRESS_ARCH_M68K)
 	do_misaligned = false;

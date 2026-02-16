@@ -682,7 +682,7 @@ static int stress_apparmor(stress_args_t *args)
 			args->name, stress_memory_free_get());
 		goto err_free_s_pids;
 	}
-	stress_set_vma_anon_name(stress_apparmor_shared_info, sizeof(*stress_apparmor_shared_info), "lock-counter");
+	stress_memory_anon_name_set(stress_apparmor_shared_info, sizeof(*stress_apparmor_shared_info), "lock-counter");
 	data_copy = (char *)malloc(g_apparmor_data_len);
 	if (!data_copy) {
 		pr_inf_skip("%s: failed to allocate apparmor data copy buffer%s, skipping stressor\n",

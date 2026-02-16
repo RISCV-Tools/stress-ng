@@ -305,7 +305,7 @@ static stress_clone_t *stress_clone_new(void)
 			MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 		if (new_clone == MAP_FAILED)
 			return NULL;
-		stress_set_vma_anon_name(new_clone, sizeof(*new_clone), "clone-descriptor");
+		stress_memory_anon_name_set(new_clone, sizeof(*new_clone), "clone-descriptor");
 	}
 
 	if (clones.head)
@@ -485,7 +485,7 @@ static int stress_clone_child(stress_args_t *args, void *context)
 	ptr = stress_mmap_populate(NULL, mmap_size, PROT_READ | PROT_WRITE,
 			MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (ptr != MAP_FAILED) {
-		stress_set_vma_anon_name(ptr, mmap_size, "oom-allocation");
+		stress_memory_anon_name_set(ptr, mmap_size, "oom-allocation");
 		(void)stress_mincore_touch_pages(ptr, mmap_size);
 	}
 
@@ -600,7 +600,7 @@ static int stress_clone(stress_args_t *args)
 			args->name, sizeof(*shared), stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(shared, sizeof(*shared), "clone-state");
+	stress_memory_anon_name_set(shared, sizeof(*shared), "clone-state");
 	stress_zero_metrics(&shared->metrics, 1);
 	shared->metrics.lock = stress_lock_create("metrics");
 

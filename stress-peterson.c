@@ -226,7 +226,7 @@ static int stress_peterson(stress_args_t *args)
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name(peterson, sz, "peterson-lock");
+	stress_memory_anon_name_set(peterson, sz, "peterson-lock");
 
 	stress_zero_metrics(&peterson->p0, 1);
 	stress_zero_metrics(&peterson->p1, 1);

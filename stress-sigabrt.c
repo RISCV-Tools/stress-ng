@@ -75,7 +75,7 @@ static int stress_sigabrt(stress_args_t *args)
 			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
-	stress_set_vma_anon_name((void *)sigabrt_info, sizeof(*sigabrt_info), "state");
+	stress_memory_anon_name_set((void *)sigabrt_info, sizeof(*sigabrt_info), "state");
 
 	sigabrt_info->count = 0.0;
 	sigabrt_info->t_start = 0.0;
