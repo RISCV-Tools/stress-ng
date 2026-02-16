@@ -370,7 +370,7 @@ static int stress_mmaphuge(stress_args_t *args)
 				max = stress_mmaphuge_settings[i].sz;
 		}
 
-		stress_usage_bytes(args, max, max * args->instances);
+		stress_memory_usage_get(args, max, max * args->instances);
 	}
 
 

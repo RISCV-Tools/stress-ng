@@ -3840,7 +3840,7 @@ static int stress_vm(stress_args_t *args)
 
 	if (stress_instance_zero(args)) {
 		pr_dbg("%s: using method '%s'\n", args->name, context->vm_method->name);
-		stress_usage_bytes(args, context->vm_bytes, vm_total);
+		stress_memory_usage_get(args, context->vm_bytes, vm_total);
 	}
 
 	for (retries = 0; LIKELY((retries < 100) && stress_continue_flag()); retries++) {

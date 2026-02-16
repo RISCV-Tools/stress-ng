@@ -182,7 +182,7 @@ static int stress_pageswap(stress_args_t *args)
 	}
 
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, args->page_size * pageswap_pages, args->page_size * pageswap_pages * args->instances);
+		stress_memory_usage_get(args, args->page_size * pageswap_pages, args->page_size * pageswap_pages * args->instances);
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);

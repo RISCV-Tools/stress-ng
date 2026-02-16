@@ -91,7 +91,7 @@ static int stress_vforkmany(stress_args_t *args)
 	if (stress_setting_get("vforkmany-vm-bytes", &vforkmany_vm_bytes)) {
 		vforkmany_vm = true;
 		if (stress_instance_zero(args))
-			stress_usage_bytes(args, vforkmany_vm_bytes, vforkmany_vm_bytes * args->instances);
+			stress_memory_usage_get(args, vforkmany_vm_bytes, vforkmany_vm_bytes * args->instances);
 	}
 
 	stress_memory_ksm_merge(1);

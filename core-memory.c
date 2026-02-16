@@ -376,11 +376,11 @@ uint64_t stress_memory_phys_size_get(void)
 }
 
 /*
- *  stress_usage_bytes()
+ *  stress_memory_usage_get()
  *	report how much memory is used per instance
  *	and in total compared to physical memory available
  */
-void stress_usage_bytes(
+void stress_memory_usage_get(
 	stress_args_t *args,
 	const size_t vm_per_instance,
 	const size_t vm_total)

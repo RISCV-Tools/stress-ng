@@ -267,7 +267,7 @@ static int stress_userfaultfd_child(stress_args_t *args, void *context)
 	if (userfaultfd_bytes < args->page_size)
 		userfaultfd_bytes = args->page_size;
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, userfaultfd_bytes, userfaultfd_bytes * args->instances);
+		stress_memory_usage_get(args, userfaultfd_bytes, userfaultfd_bytes * args->instances);
 
 	sz = userfaultfd_bytes & ~(page_size - 1);
 

@@ -1136,7 +1136,7 @@ static int stress_memrate(stress_args_t *args)
 
 	context->memrate_bytes = (context->memrate_bytes + 1023) & ~(1023ULL);
 	if (stress_instance_zero(args)) {
-		stress_usage_bytes(args, context->memrate_bytes, context->memrate_bytes);
+		stress_memory_usage_get(args, context->memrate_bytes, context->memrate_bytes);
 		pr_inf("%s: cache flushing %s\n", args->name,
 			context->memrate_flush ? "enabled" :
 			"disabled, cache flushing can be enabled with --memrate-flush option");

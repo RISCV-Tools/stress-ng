@@ -289,7 +289,7 @@ static int stress_rmap(stress_args_t *args)
 	if (stress_instance_zero(args)) {
 		const size_t map_sz = MAPPINGS_MAX * MAPPING_PAGES * page_size;
 
-		stress_usage_bytes(args, map_sz, map_sz * args->instances);
+		stress_memory_usage_get(args, map_sz, map_sz * args->instances);
 	}
 
 	/*

@@ -210,7 +210,7 @@ static int stress_mmapfork(stress_args_t *args)
 				if (len < args->page_size)
 					len = args->page_size;
 				if ((i == 0) && report_size) {
-					stress_usage_bytes(args, len, len_total);
+					stress_memory_usage_get(args, len, len_total);
 				}
 
 				segv_ret = MMAPFORK_SEGV_MMAP;

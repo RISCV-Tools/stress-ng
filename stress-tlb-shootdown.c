@@ -402,7 +402,7 @@ static int stress_tlb_shootdown(stress_args_t *args)
 		tlb_procs = MIN_TLB_PROCS;
 
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, mmap_size, mmap_size * args->instances);
+		stress_memory_usage_get(args, mmap_size, mmap_size * args->instances);
 
 	t_begin = stress_time_now();
 	tlb_begin = stress_tlb_interrupts();

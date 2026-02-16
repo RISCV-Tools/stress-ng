@@ -69,7 +69,7 @@ static int stress_vm_splice(stress_args_t *args)
 	if (vm_splice_bytes < page_size)
 		vm_splice_bytes = page_size;
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, vm_splice_bytes, vm_splice_bytes * args->instances);
+		stress_memory_usage_get(args, vm_splice_bytes, vm_splice_bytes * args->instances);
 	sz = vm_splice_bytes & ~(page_size - 1);
 
 	buf = (uint64_t *)stress_mmap_populate(NULL, sz, PROT_READ | PROT_WRITE,

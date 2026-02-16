@@ -1023,7 +1023,7 @@ static int stress_matrix(stress_args_t *args)
 
 	/* report size used by the 3 matrices a, b and r */
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, 3 * matrix_mmap_size, 3 * matrix_mmap_size * args->instances);
+		stress_memory_usage_get(args, 3 * matrix_mmap_size, 3 * matrix_mmap_size * args->instances);
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);

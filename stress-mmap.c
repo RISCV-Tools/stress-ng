@@ -1041,7 +1041,7 @@ static int stress_mmap(stress_args_t *args)
 	}
 	context.sz = context.mmap_bytes & ~(page_size - 1);
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, context.mmap_bytes, mmap_total);
+		stress_memory_usage_get(args, context.mmap_bytes, mmap_total);
 
 	if (context.mmap_file) {
 		int file_flags = O_CREAT | O_RDWR;

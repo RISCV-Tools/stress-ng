@@ -375,7 +375,7 @@ misaligned_done:
 		const size_t total_bytes = lockbus_buffer_size + (lockbus_buffer_size * args->instances);
 		const size_t stressor_bytes = ((total_bytes / args->instances) + page_size - 1) & ~(page_size - 1);
 
-		stress_usage_bytes(args, stressor_bytes, total_bytes);
+		stress_memory_usage_get(args, stressor_bytes, total_bytes);
 	}
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);

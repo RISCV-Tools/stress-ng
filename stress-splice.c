@@ -176,7 +176,7 @@ static int stress_splice(stress_args_t *args)
 	if (splice_bytes < MIN_SPLICE_BYTES)
 		splice_bytes = MIN_SPLICE_BYTES;
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, splice_bytes, splice_bytes * args->instances);
+		stress_memory_usage_get(args, splice_bytes, splice_bytes * args->instances);
 
 	buffer_len = (ssize_t)(splice_bytes > SPLICE_BUFFER_LEN ?
 				SPLICE_BUFFER_LEN : splice_bytes);

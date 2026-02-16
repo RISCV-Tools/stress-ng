@@ -202,7 +202,7 @@ static int stress_icache(stress_args_t *args)
 	}
 
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, pages_size, pages_size * args->instances);
+		stress_memory_usage_get(args, pages_size, pages_size * args->instances);
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);

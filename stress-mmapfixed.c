@@ -291,7 +291,7 @@ static int stress_mmapfixed(stress_args_t *args)
 	}
 
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, args->page_size * 8, args->page_size * 8 * args->instances);
+		stress_memory_usage_get(args, args->page_size * 8, args->page_size * 8 * args->instances);
 
 	ret = stress_oomable_child(args, &info, stress_mmapfixed_child, STRESS_OOMABLE_QUIET);
 

@@ -227,7 +227,7 @@ static int stress_mremap_child(stress_args_t *args, void *context)
 		mremap_bytes = page_size;
 	mremap_bytes_total = args->instances * mremap_bytes;
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, mremap_bytes, mremap_bytes_total);
+		stress_memory_usage_get(args, mremap_bytes, mremap_bytes_total);
 
 	new_sz = sz = mremap_bytes & ~(page_size - 1);
 

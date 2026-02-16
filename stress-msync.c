@@ -139,7 +139,7 @@ static int stress_msync(stress_args_t *args)
 	if (msync_bytes < page_size)
 		msync_bytes = page_size;
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, msync_bytes, msync_bytes_total);
+		stress_memory_usage_get(args, msync_bytes, msync_bytes_total);
 	sz = msync_bytes & ~(page_size - 1);
 	if (sz < (uint64_t)min_size)
 		sz = (uint64_t)min_size;

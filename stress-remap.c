@@ -232,7 +232,7 @@ static int stress_remap(stress_args_t *args)
 	if (stress_instance_zero(args)) {
 		const size_t sz = data_size + order_size + mapped_size;
 
-		stress_usage_bytes(args, sz, sz * args->instances);
+		stress_memory_usage_get(args, sz, sz * args->instances);
 	}
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);

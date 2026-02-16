@@ -380,7 +380,7 @@ static int stress_pagemove(stress_args_t *args)
 				buf,
 				info.pages, page_size >> 10);
 		}
-		stress_usage_bytes(args, pagemove_bytes, pagemove_bytes_total);
+		stress_memory_usage_get(args, pagemove_bytes, pagemove_bytes_total);
 	}
 
 	return stress_oomable_child(args, &info, stress_pagemove_child, STRESS_OOMABLE_NORMAL);

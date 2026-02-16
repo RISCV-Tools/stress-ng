@@ -197,7 +197,7 @@ static int stress_numacopy(stress_args_t *args)
 	numa_bytes = (args->page_size * (size_t)(num_numa_nodes + 1)) +
 		((numa_pages_size + page_size - 1) & ~(page_size - 1));
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, numa_bytes, numa_bytes * args->instances);
+		stress_memory_usage_get(args, numa_bytes, numa_bytes * args->instances);
 
 	numa_pages = (uint8_t **)stress_mmap_populate(NULL, numa_pages_size,
 					PROT_READ | PROT_WRITE,

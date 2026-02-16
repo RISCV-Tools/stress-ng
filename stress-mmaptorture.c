@@ -872,7 +872,7 @@ static int stress_mmaptorture(stress_args_t *args)
 	}
 
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, mmap_bytes, mmap_bytes * args->instances);
+		stress_memory_usage_get(args, mmap_bytes, mmap_bytes * args->instances);
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);

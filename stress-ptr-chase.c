@@ -133,7 +133,7 @@ static int stress_ptr_chase(stress_args_t *args)
 	if (stress_instance_zero(args)) {
 		const size_t sz = alloc_size + ptrs_size;
 
-		stress_usage_bytes(args, sz, sz * args->instances);
+		stress_memory_usage_get(args, sz, sz * args->instances);
 	}
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);

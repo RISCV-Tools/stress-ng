@@ -365,7 +365,7 @@ static int stress_mlock_child(stress_args_t *args, void *context)
 		max = mappings_max;
 
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, mappings_len, mappings_len * args->instances);
+		stress_memory_usage_get(args, mappings_len, mappings_len * args->instances);
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);

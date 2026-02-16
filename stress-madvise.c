@@ -468,7 +468,7 @@ static int stress_madvise(stress_args_t *args)
 	}
 
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, ctxt.madvise_bytes, ctxt.madvise_bytes * args->instances);
+		stress_memory_usage_get(args, ctxt.madvise_bytes, ctxt.madvise_bytes * args->instances);
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);

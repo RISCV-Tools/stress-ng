@@ -388,7 +388,7 @@ static int stress_vm_rw(stress_args_t *args)
 	if (vm_rw_bytes < args->page_size)
 		vm_rw_bytes = args->page_size;
 	if (stress_instance_zero(args))
-		stress_usage_bytes(args, vm_rw_bytes, vm_rw_bytes * args->instances);
+		stress_memory_usage_get(args, vm_rw_bytes, vm_rw_bytes * args->instances);
 	ctxt.args = args;
 	ctxt.sz = vm_rw_bytes & ~(args->page_size - 1);
 	ctxt.iov_count = (ctxt.sz + CHUNK_SIZE - 1) / CHUNK_SIZE;

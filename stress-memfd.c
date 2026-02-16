@@ -275,7 +275,7 @@ static int stress_memfd_child(stress_args_t *args, void *context)
 	if (stress_instance_zero(args)) {
 		const size_t mapped_size = memfd_fds * ((size + page_size - 1) & ~(page_size  - 1));
 
-		stress_usage_bytes(args, mapped_size, mapped_size * args->instances);
+		stress_memory_usage_get(args, mapped_size, mapped_size * args->instances);
 	}
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
