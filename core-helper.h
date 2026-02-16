@@ -37,8 +37,10 @@ extern WARN_UNUSED int32_t stress_ticks_per_second_get(void);
 extern WARN_UNUSED int stress_load_average_get(double *min1, double *min5, double *min15);
 extern void stress_parent_died_alarm(void);
 extern int stress_process_dumpable(const bool dumpable);
-extern int stress_set_timer_slack_ns(const char *opt);
+
+extern int stress_timer_slack_ns_set(const char *opt);
 extern void stress_set_timer_slack(void);
+
 extern void stress_set_proc_name_init(int argc, char *argv[], char *envp[]);
 extern void stress_set_proc_name_raw(const char *name);
 extern void stress_set_proc_name(const char *name);

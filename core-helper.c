@@ -297,10 +297,10 @@ int stress_process_dumpable(const bool dumpable)
 }
 
 /*
- *  stress_set_timer_slack_ns()
+ *  stress_timer_slack_ns_set()
  *	set timer slack in nanoseconds
  */
-int stress_set_timer_slack_ns(const char *opt)
+int stress_timer_slack_ns_set(const char *opt)
 {
 #if defined(HAVE_PRCTL_TIMER_SLACK)
 	uint32_t timer_slack;

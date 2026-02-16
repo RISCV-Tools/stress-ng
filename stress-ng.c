@@ -3573,7 +3573,7 @@ next_opt:
 			g_opt_timeout = stress_get_uint64_time(optarg);
 			break;
 		case OPT_timer_slack:
-			(void)stress_set_timer_slack_ns(optarg);
+			(void)stress_timer_slack_ns_set(optarg);
 			break;
 		case OPT_version:
 			stress_version();
