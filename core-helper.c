@@ -134,10 +134,10 @@ int32_t stress_cpus_configured_get(void)
 }
 
 /*
- *  stress_get_ticks_per_second()
+ *  stress_ticks_per_second_get()
  *	get number of ticks perf second
  */
-int32_t stress_get_ticks_per_second(void)
+int32_t stress_ticks_per_second_get(void)
 {
 #if defined(__fiwix)
 	return 100;	/* Workaround */
@@ -867,7 +867,7 @@ void stress_yaml_runinfo(FILE *yaml)
 	pr_yaml(yaml, "      pagesize: %zu\n", stress_get_page_size());
 	pr_yaml(yaml, "      cpus: %" PRId32 "\n", stress_cpus_configured_get());
 	pr_yaml(yaml, "      cpus-online: %" PRId32 "\n", stress_cpus_online_get());
-	pr_yaml(yaml, "      ticks-per-second: %" PRId32 "\n", stress_get_ticks_per_second());
+	pr_yaml(yaml, "      ticks-per-second: %" PRId32 "\n", stress_ticks_per_second_get());
 	pr_yaml(yaml, "\n");
 }
 

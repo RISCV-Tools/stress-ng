@@ -4032,7 +4032,7 @@ int main(int argc, char **argv, char **envp)
 		ret = EXIT_FAILURE;
 		goto exit_settings_free;
 	}
-	ticks_per_sec = stress_get_ticks_per_second();
+	ticks_per_sec = stress_ticks_per_second_get();
 	if (ticks_per_sec < 0) {
 		pr_err("sysconf failed, clock ticks per second "
 			"unknown, errno=%d (%s)\n",
