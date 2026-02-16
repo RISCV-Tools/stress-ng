@@ -1291,11 +1291,11 @@ int CONST stress_kernel_release(const int major, const int minor, const int patc
 }
 
 /*
- *  stress_get_kernel_release()
+ *  stress_kernel_release_get()
  *	return kernel release number in base 100, e.g.
  *	 4.15.2 -> 401502, return -1 if failed.
  */
-int stress_get_kernel_release(void)
+int stress_kernel_release_get(void)
 {
 #if defined(HAVE_UNAME) &&	\
     defined(HAVE_SYS_UTSNAME_H)

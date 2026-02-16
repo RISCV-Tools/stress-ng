@@ -227,7 +227,7 @@ static int stress_tee(stress_args_t *args)
 	int fd, pipe_in[2], pipe_out[2];
 	pid_t pids[2];
 	int ret = EXIT_FAILURE;
-	const int release = stress_get_kernel_release();
+	const int release = stress_kernel_release_get();
 	int metrics_count = 0;
 	double duration = 0.0, bytes = 0.0, rate;
 
