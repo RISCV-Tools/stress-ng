@@ -429,10 +429,10 @@ void stress_set_vma_anon_name(const void *addr, const size_t size, const char *n
 }
 
 /*
- *  stress_swapoff()
+ *  stress_memory_swap_off()
  *	swapoff and retry if EINTR occurs
  */
-int stress_swapoff(const char *path)
+int stress_memory_swap_off(const char *path)
 {
 #if defined(HAVE_SYS_SWAP_H) && \
     defined(HAVE_SWAP)

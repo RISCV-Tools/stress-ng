@@ -35,7 +35,7 @@ extern void stress_memory_usage_get(stress_args_t *args,
 extern WARN_UNUSED void *stress_memory_address_align(const void *addr, const size_t alignment);
 extern void stress_set_vma_anon_name(const void *addr, const size_t size,
 	const char *name);
-extern int stress_swapoff(const char *path);
+extern int stress_memory_swap_off(const char *path);
 extern bool stress_memory_readable(const void *addr, const size_t len);
 extern WARN_UNUSED int stress_get_pid_memory_usage(const pid_t pid,
 	size_t *total, size_t *resident, size_t *shared);

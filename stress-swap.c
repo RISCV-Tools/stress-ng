@@ -314,7 +314,7 @@ static void stress_swap_clean_dir(stress_args_t *args)
 		stress_fs_make_filename(filename, sizeof(filename), path, d->d_name);
 		if (shim_stat(filename, &stat_buf) == 0) {
 			if (S_ISREG(stat_buf.st_mode)) {
-				(void)stress_swapoff(filename);
+				(void)stress_memory_swap_off(filename);
 				(void)unlink(filename);
 			}
 		}
@@ -511,7 +511,7 @@ static int stress_swap_child(stress_args_t *args, void *context)
 			(void)stress_munmap_force(ptr, mmap_size);
 		}
 
-		ret = stress_swapoff(filename);
+		ret = stress_memory_swap_off(filename);
 		if ((bad_flags == SWAP_HDR_SANE) && (ret < 0)) {
 			pr_fail("%s: swapoff failed%s, errno=%d (%s)\n",
 				args->name, stress_fs_type_get(filename),
@@ -523,17 +523,17 @@ static int stress_swap_child(stress_args_t *args, void *context)
 		/* Exercise illegal swapon filename */
 		ret = swapon("", swapflags);
 		if (ret == 0)
-			VOID_RET(int, stress_swapoff(""));	/* Should never happen */
+			VOID_RET(int, stress_memory_swap_off(""));	/* Should never happen */
 
 		/* Exercise illegal swapoff filename */
-		ret = stress_swapoff("");
+		ret = stress_memory_swap_off("");
 		if (ret == 0)
 			VOID_RET(int, swapon("", swapflags));	/* Should never happen */
 
 		/* Exercise illegal swapon flags */
 		ret = swapon(filename, ~0);
 		if (ret == 0)
-			VOID_RET(int, stress_swapoff(filename));/* Should never happen */
+			VOID_RET(int, stress_memory_swap_off(filename));/* Should never happen */
 
 		stress_bogo_inc(args);
 	} while (stress_continue(args));

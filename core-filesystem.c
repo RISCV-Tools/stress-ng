@@ -1580,7 +1580,7 @@ static void stress_fs_clean_dir_files(
 			static_fs_inode_flags_unset(temp_path, 0);
 			stress_fs_chattr_flags_unset(path);
 			if (strstr(path, "swap"))
-				(void)stress_swapoff(path);
+				(void)stress_memory_swap_off(path);
 			(void)shim_unlink(path);
 			break;
 		default:
