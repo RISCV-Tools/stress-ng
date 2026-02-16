@@ -465,12 +465,12 @@ int stress_swapoff(const char *path)
 }
 
 /*
- *  stress_addr_readable()
+ *  stress_memory_readable()
  *	portable way to check if memory addr[0]..addr[len - 1] is readable,
  *	create pipe, see if write of the memory range works, failure (with
  *	EFAULT) will be used to indicate address range is not readable.
  */
-bool stress_addr_readable(const void *addr, const size_t len)
+bool stress_memory_readable(const void *addr, const size_t len)
 {
 	int fds[2];
 	bool ret = false;

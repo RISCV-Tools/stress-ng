@@ -168,7 +168,7 @@ static int stress_rseq_supported(const char *name)
 		pr_inf_skip("%s stressor will be skipped, libc rseq area is NULL\n", name);
 		return -1;
 	}
-	if (!stress_addr_readable(rseq, sizeof(*rseq))) {
+	if (!stress_memory_readable(rseq, sizeof(*rseq))) {
 		pr_inf_skip("%s stressor will be skipped, libc rseq area is unreadable\n", name);
 		return -1;
 	}

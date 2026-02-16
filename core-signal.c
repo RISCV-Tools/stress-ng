@@ -190,7 +190,7 @@ static void stress_dump_data(
 	const uint8_t *fault_addr,
 	const size_t len)
 {
-	if (stress_addr_readable(addr, len)) {
+	if (stress_memory_readable(addr, len)) {
 		size_t i;
 		bool show_opcode = false;
 		int n, sz = 0;
