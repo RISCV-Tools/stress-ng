@@ -150,7 +150,7 @@ static int stress_sigio(stress_args_t *args)
 
 	async_sigs = 0;
 again:
-	parent_cpu = stress_get_cpu();
+	parent_cpu = stress_cpu_get();
 	pid = fork();
 	if (pid < 0) {
 		if (stress_redo_fork(args, errno))

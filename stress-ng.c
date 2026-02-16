@@ -1658,7 +1658,7 @@ static int MLOCKED_TEXT stress_run_child(
 	(void)umask(0077);
 
 	pr_dbg("%s: [%" PRIdMAX "] started (instance %" PRId32 " on CPU %u)\n",
-		name, (intmax_t)child_pid, instance, stress_get_cpu());
+		name, (intmax_t)child_pid, instance, stress_cpu_get());
 
 	if (g_opt_flags & OPT_FLAGS_INTERRUPTS)
 		stress_interrupts_start(stats->interrupts);
@@ -1790,7 +1790,7 @@ static int MLOCKED_TEXT stress_run_child(
 
 	stress_get_usage_stats(ticks_per_sec, stats);
 	pr_dbg("%s: [%" PRIdMAX "] exited (instance %" PRId32 " on CPU %u)\n",
-		name, (intmax_t)child_pid, instance, stress_get_cpu());
+		name, (intmax_t)child_pid, instance, stress_cpu_get());
 
 	/* Allow for some slops of ~0.5 secs */
 	run_duration = (finish - fork_time_start) + 0.5;

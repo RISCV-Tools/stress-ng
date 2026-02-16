@@ -326,7 +326,7 @@ static int stress_softlockup(stress_args_t *args)
 
 	for (i = 0; i < cpus_online; i++) {
 again:
-		parent_cpu = stress_get_cpu();
+		parent_cpu = stress_cpu_get();
 		s_pids[i].pid = fork();
 		if (s_pids[i].pid < 0) {
 			if (stress_redo_fork(args, errno))

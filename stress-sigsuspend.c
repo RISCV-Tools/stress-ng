@@ -63,7 +63,7 @@ static int stress_sigsuspend(stress_args_t *args)
 
 	for (n = 0; n < MAX_SIGSUSPEND_PIDS; n++) {
 again:
-		parent_cpu = stress_get_cpu();
+		parent_cpu = stress_cpu_get();
 		pid[n] = fork();
 		if (pid[n] < 0) {
 			if (stress_redo_fork(args, errno))

@@ -286,7 +286,7 @@ redo:
 	stress_sync_start_wait(args);
 	stress_set_proc_state(args->name, STRESS_STATE_RUN);
 again:
-	parent_cpu = stress_get_cpu();
+	parent_cpu = stress_cpu_get();
 	cpid = fork();
 	if (cpid < 0) {
 		if (stress_redo_fork(args, errno))

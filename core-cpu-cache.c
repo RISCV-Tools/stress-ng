@@ -47,7 +47,7 @@ static const char stress_cpu_cache_dir[] = "cache";
  */
 static inline unsigned int stress_cpu_cache_get_cpu(const stress_cpu_cache_cpus_t *cpus)
 {
-	const unsigned int cpu = stress_get_cpu();
+	const unsigned int cpu = stress_cpu_get();
 
 	return (cpu >= cpus->count) ? 0 : cpu;
 }

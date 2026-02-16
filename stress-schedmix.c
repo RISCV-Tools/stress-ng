@@ -503,7 +503,7 @@ static int stress_schedmix(stress_args_t *args)
 	size_t i;
 	size_t schedmix_procs = DEFAULT_SCHEDMIX_PROCS;
 	int rc;
-	const int parent_cpu = stress_get_cpu();
+	const int parent_cpu = stress_cpu_get();
 
 	if (stress_sched_types_length == (0)) {
 		if (stress_instance_zero(args)) {

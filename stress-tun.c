@@ -193,7 +193,7 @@ static int stress_tun(stress_args_t *args)
 		if (UNLIKELY(ret < 0))
 			goto clean_up;
 
-		parent_cpu = stress_get_cpu();
+		parent_cpu = stress_cpu_get();
 		pid = fork();
 		if (pid < 0) {
 			goto clean_up;

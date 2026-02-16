@@ -404,7 +404,7 @@ void stress_set_proc_name_scramble(void)
 	/* generate scrambled bit patterns via hashing */
 	a = stress_hash_murmur3_32((uint8_t *)&now, sizeof(now), (uint32_t)rnd2);
 	b = stress_hash_mulxror64((char *)&rnd1, sizeof(rnd1)) ^ ~(uint32_t)rnd1;
-	c = stress_hash_coffin32_be((char *)&now, sizeof(now)) ^ stress_get_cpu();
+	c = stress_hash_coffin32_be((char *)&now, sizeof(now)) ^ stress_cpu_get();
 	d = stress_hash_coffin32_le((char *)&rnd1, sizeof(rnd1));
 
 	rnd1 = ((uint64_t)a << 32) | (uint64_t)b;
@@ -872,10 +872,10 @@ void stress_yaml_runinfo(FILE *yaml)
 }
 
 /*
- *  stress_get_cpu()
+ *  stress_cpu_get()
  *	get cpu number that process is currently on
  */
-unsigned int stress_get_cpu(void)
+unsigned int stress_cpu_get(void)
 {
 #if defined(HAVE_SCHED_GETCPU)
 #if defined(__PPC64__) || defined(__ppc64__) ||	\

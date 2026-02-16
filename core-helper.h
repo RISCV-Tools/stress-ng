@@ -54,7 +54,7 @@ extern void stress_buildinfo(void);
 extern void stress_yaml_buildinfo(FILE *yaml);
 extern void stress_runinfo(void);
 extern void stress_yaml_runinfo(FILE *yaml);
-extern WARN_UNUSED unsigned int stress_get_cpu(void);
+extern WARN_UNUSED unsigned int stress_cpu_get(void);
 extern WARN_UNUSED const char *stress_compiler_get(void) RETURNS_NONNULL;
 extern WARN_UNUSED const char *stress_uname_info_get(void) RETURNS_NONNULL;
 extern WARN_UNUSED int stress_unimplemented(stress_args_t *args);

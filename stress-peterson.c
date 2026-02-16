@@ -238,7 +238,7 @@ static int stress_peterson(stress_args_t *args)
 	peterson->m.flag[0] = false;
 	peterson->m.flag[1] = false;
 
-	parent_cpu = stress_get_cpu();
+	parent_cpu = stress_cpu_get();
 	pid = fork();
 	if (pid < 0) {
 		pr_inf_skip("%s: cannot create child process, skipping stressor\n", args->name);

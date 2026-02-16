@@ -280,7 +280,7 @@ static int stress_rawsock_child(stress_args_t *args, void *context)
 	if (stress_signal_sigchld_handler(args) < 0)
 		return EXIT_NO_RESOURCE;
 again:
-	parent_cpu = stress_get_cpu();
+	parent_cpu = stress_cpu_get();
 	pid = fork();
 	if (pid < 0) {
 		if (stress_redo_fork(args, errno)) {

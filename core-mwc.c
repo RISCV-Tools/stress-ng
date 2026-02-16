@@ -159,7 +159,7 @@ void stress_mwc_reseed(void)
 		/*
 		 *  Mix in some initial system values
 		 */
-		mwc.z ^= shim_rol32n(mwc.z, stress_get_cpu() & 0x1f);
+		mwc.z ^= shim_rol32n(mwc.z, stress_cpu_get() & 0x1f);
 		mwc.w ^= shim_rol32n(mwc.w, (uint32_t)(stress_get_phys_mem_size() >> 22));
 		mwc.z ^= stress_fs_size_get();
 		mwc.z ^= stress_get_kernel_release();

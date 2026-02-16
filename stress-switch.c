@@ -193,7 +193,7 @@ static int stress_switch_pipe(
 	stress_sync_start_wait(args);
 	stress_set_proc_state(args->name, STRESS_STATE_RUN);
 again:
-	parent_cpu = stress_get_cpu();
+	parent_cpu = stress_cpu_get();
 	pid = fork();
 	if (pid < 0) {
 		if (stress_redo_fork(args, errno))
@@ -314,7 +314,7 @@ static int stress_switch_sem_sysv(
 	stress_sync_start_wait(args);
 	stress_set_proc_state(args->name, STRESS_STATE_RUN);
 again:
-	parent_cpu = stress_get_cpu();
+	parent_cpu = stress_cpu_get();
 	pid = fork();
 	if (pid < 0) {
 		if (stress_redo_fork(args, errno))
@@ -434,7 +434,7 @@ static int stress_switch_mq(
 	stress_sync_start_wait(args);
 	stress_set_proc_state(args->name, STRESS_STATE_RUN);
 again:
-	parent_cpu = stress_get_cpu();
+	parent_cpu = stress_cpu_get();
 	pid = fork();
 	if (pid < 0) {
 		if (stress_redo_fork(args, errno))

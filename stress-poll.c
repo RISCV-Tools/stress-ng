@@ -181,7 +181,7 @@ static int OPTIMIZE3 stress_poll(stress_args_t *args)
 	stress_sync_start_wait(args);
 	stress_set_proc_state(args->name, STRESS_STATE_RUN);
 again:
-	parent_cpu = stress_get_cpu();
+	parent_cpu = stress_cpu_get();
 	pid = fork();
 	if (pid < 0) {
 		if (stress_redo_fork(args, errno))
