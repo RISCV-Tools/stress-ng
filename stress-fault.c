@@ -18,6 +18,7 @@
  *
  */
 #include "stress-ng.h"
+#include "core-mmap.h"
 #include "core-put.h"
 #include "core-signal.h"
 

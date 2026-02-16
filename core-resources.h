@@ -22,6 +22,7 @@
 
 #include <sys/socket.h>
 #include "core-killpid.h"
+#include "core-mmap.h"
 #include "core-pthread.h"
 
 #if defined(__NR_userfaultfd)
