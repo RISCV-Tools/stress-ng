@@ -94,7 +94,7 @@ static int stress_vforkmany(stress_args_t *args)
 			stress_usage_bytes(args, vforkmany_vm_bytes, vforkmany_vm_bytes * args->instances);
 	}
 
-	stress_ksm_memory_merge(1);
+	stress_memory_ksm_merge(1);
 
 	/* We should use an alternative signal stack */
 	stack_sig = (uint8_t *)stress_mmap_populate(NULL, STRESS_SIGSTKSZ,

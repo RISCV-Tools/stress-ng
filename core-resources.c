@@ -177,7 +177,7 @@ size_t stress_resources_allocate(
 	static const int types[] = { SOCK_STREAM, SOCK_DGRAM };
 
 	stress_resources_init(resources, num_resources);
-	stress_ksm_memory_merge(1);
+	stress_memory_ksm_merge(1);
 
 	(void)pid;
 	(void)page_size;

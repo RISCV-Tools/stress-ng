@@ -394,7 +394,7 @@ static int stress_fork_fn(
 						break;
 
 					case 6:
-						stress_ksm_memory_merge(1);
+						stress_memory_ksm_merge(1);
 						break;
 					/* cases 7 */
 					default:

@@ -1649,7 +1649,7 @@ static int MLOCKED_TEXT stress_run_child(
 	stress_timer_slack_set();
 
 	if (g_opt_flags & OPT_FLAGS_KSM)
-		stress_ksm_memory_merge(1);
+		stress_memory_ksm_merge(1);
 
 	stress_proc_state_set(name, STRESS_STATE_INIT);
 	stress_mwc_reseed();
@@ -4059,7 +4059,7 @@ int main(int argc, char **argv, char **envp)
 	}
 
 	if (g_opt_flags & OPT_FLAGS_KSM)
-		stress_ksm_memory_merge(1);
+		stress_memory_ksm_merge(1);
 
 	/*
 	 *  Load in job file options

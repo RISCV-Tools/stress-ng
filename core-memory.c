@@ -246,10 +246,10 @@ char *stress_get_memfree_str(void)
 #endif
 
 /*
- *  stress_ksm_memory_merge()
+ *  stress_memory_ksm_merge()
  *	set kernel samepage merging flag (linux only)
  */
-void stress_ksm_memory_merge(const int flag)
+void stress_memory_ksm_merge(const int flag)
 {
 #if defined(__linux__) &&		\
     defined(PR_SET_MEMORY_MERGE) &&	\
@@ -336,7 +336,7 @@ update:
 
 		/* low memory? automatically enable ksm memory merging */
 		if (low_memory)
-			stress_ksm_memory_merge(1);
+			stress_memory_ksm_merge(1);
 	}
 	return low_memory;
 }

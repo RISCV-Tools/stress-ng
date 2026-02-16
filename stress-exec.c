@@ -748,7 +748,7 @@ static int stress_exec(stress_args_t *args)
 	if (stress_setting_get("exec-fork-method", &exec_fork_method_idx))
 		exec_fork_method = stress_exec_fork_methods[exec_fork_method_idx].method;
 
-	stress_ksm_memory_merge(1);
+	stress_memory_ksm_merge(1);
 
 	ld_library_path = stress_env_ld_library_path_get();
 
