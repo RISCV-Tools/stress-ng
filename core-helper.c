@@ -90,10 +90,10 @@ const char ALIGN64 stress_ascii32[32] = {
 };
 
 /*
- *  stress_get_processors_online()
+ *  stress_cpus_online_get()
  *	get number of processors that are online
  */
-int32_t stress_get_processors_online(void)
+int32_t stress_cpus_online_get(void)
 {
 	static int32_t processors_online = 0;
 
@@ -125,7 +125,7 @@ int32_t stress_get_processors_configured(void)
 #if defined(_SC_NPROCESSORS_CONF)
 	processors_configured = (int32_t)sysconf(_SC_NPROCESSORS_CONF);
 	if (UNLIKELY(processors_configured < 0))
-		processors_configured = stress_get_processors_online();
+		processors_configured = stress_cpus_online_get();
 #else
 	processors_configured = 1;
 	UNEXPECTED
@@ -866,7 +866,7 @@ void stress_yaml_runinfo(FILE *yaml)
 #endif
 	pr_yaml(yaml, "      pagesize: %zu\n", stress_get_page_size());
 	pr_yaml(yaml, "      cpus: %" PRId32 "\n", stress_get_processors_configured());
-	pr_yaml(yaml, "      cpus-online: %" PRId32 "\n", stress_get_processors_online());
+	pr_yaml(yaml, "      cpus-online: %" PRId32 "\n", stress_cpus_online_get());
 	pr_yaml(yaml, "      ticks-per-second: %" PRId32 "\n", stress_get_ticks_per_second());
 	pr_yaml(yaml, "\n");
 }

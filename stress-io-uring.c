@@ -972,7 +972,7 @@ static int stress_io_uring_child(stress_args_t *args, void *context)
 	const pid_t self = getpid();
 	uint32_t io_uring_entries;
 	stress_io_uring_user_data_t user_data[SIZEOF_ARRAY(stress_io_uring_setups)];
-	const int32_t cpus = stress_get_processors_online();
+	const int32_t cpus = stress_cpus_online_get();
 	int flags;
 
 	(void)context;

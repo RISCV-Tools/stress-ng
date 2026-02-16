@@ -253,7 +253,7 @@ static int stress_softlockup(stress_args_t *args)
 	int max_prio = 0, parent_cpu;
 	bool good_policy = false;
 	const bool first_instance = (stress_instance_zero(args));
-	const uint32_t cpus_online = (uint32_t)stress_get_processors_online();
+	const uint32_t cpus_online = (uint32_t)stress_cpus_online_get();
 	uint32_t i;
 	struct sched_param param;
 	NOCLOBBER uint64_t timeout;

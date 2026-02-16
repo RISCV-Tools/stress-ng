@@ -165,7 +165,7 @@ static int stress_smi(stress_args_t *args)
 	bool load_module = false;
 	uint64_t s1 = 0, val;
 	double d1 = 0.0;
-	const int cpus = stress_get_processors_online();
+	const int cpus = stress_cpus_online_get();
 #if defined(STRESS_ARCH_X86_64)
 	static smi_regs_t r1, r2;
 #endif

@@ -995,7 +995,7 @@ static int stress_memthrash(stress_args_t *args)
 	stress_memthrash_find_primes();
 
 	context.args = args;
-	context.total_cpus = (uint32_t)stress_get_processors_online();
+	context.total_cpus = (uint32_t)stress_cpus_online_get();
 	context.max_threads = stress_memthrash_max(args->instances, context.total_cpus);
 #if defined(HAVE_MEMTHRASH_NUMA)
 	{

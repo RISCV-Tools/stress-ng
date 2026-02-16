@@ -1040,7 +1040,7 @@ static void stress_get_processors(int32_t *count)
 	if (*count == 0)
 		*count = stress_get_processors_configured();
 	else if (*count < 0)
-		*count = stress_get_processors_online();
+		*count = stress_cpus_online_get();
 }
 
 /*
@@ -3991,7 +3991,7 @@ int main(int argc, char **argv, char **envp)
 	size_t i;
 	uint32_t opt_class = 0;
 	uint32_t n_stressors, n_instances;
-	const uint32_t cpus_online = (uint32_t)stress_get_processors_online();
+	const uint32_t cpus_online = (uint32_t)stress_cpus_online_get();
 	const uint32_t cpus_configured = (uint32_t)stress_get_processors_configured();
 	int ret;
 	bool unsupported = false;		/* true if stressors are unsupported */

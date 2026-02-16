@@ -140,7 +140,7 @@ static bool stress_is_affinity_set(void)
 #if defined(HAVE_SCHED_GETAFFINITY)
 	cpu_set_t mask;
 	int i;
-	const int cpus_online = (int)stress_get_processors_online();
+	const int cpus_online = (int)stress_cpus_online_get();
 
 	CPU_ZERO(&mask);
 	if (sched_getaffinity(0, sizeof(mask), &mask) < 0)
