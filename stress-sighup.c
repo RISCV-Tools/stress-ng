@@ -68,7 +68,7 @@ again:
 			args->name, errno, strerror(errno));
 		return -1;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		VOID_RET(int, stress_signal_handler(args->name, SIGHUP, stress_sighup_handler, NULL));
 		stress_make_it_fail_set();
 
@@ -125,7 +125,7 @@ again:
 		int fds_snd[2];
 		int fds_rcv[2];
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 
 		if (pipe(fds_snd) < 0)
@@ -240,9 +240,9 @@ static int stress_sighup(stress_args_t *args)
 	sighup_info->t_start = 0.0;
 	sighup_info->latency = 0.0;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		const bool rnd = stress_mwc1();
@@ -257,7 +257,7 @@ static int stress_sighup(stress_args_t *args)
 		}
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (sighup_info->count > 0.0) ? sighup_info->latency / sighup_info->count : 0.0;
 	stress_metrics_set(args, 0, "nanosec SIGHUP latency",

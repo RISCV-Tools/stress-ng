@@ -3874,9 +3874,9 @@ static int stress_vm(stress_args_t *args)
 
 	*context->bit_error_count = 0ULL;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	ret = stress_oomable_child(args, context, stress_vm_child, STRESS_OOMABLE_NORMAL);
 
@@ -3890,7 +3890,7 @@ static int stress_vm(stress_args_t *args)
 		ret = EXIT_FAILURE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)munmap((void *)context->bit_error_count, page_size);
 
 #if defined(HAVE_LINUX_MEMPOLICY_H)

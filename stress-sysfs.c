@@ -767,9 +767,9 @@ static int stress_sysfs(stress_args_t *args)
 
 	(void)shim_memset(pthreads_ret, 0, sizeof(pthreads_ret));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	/*
 	 *  Main stressing loop: the pthread stressors are
@@ -826,7 +826,7 @@ again:
 		} else {
 			/* Child, spawn threads for sysfs stressing */
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			stress_parent_died_alarm();
 
@@ -890,7 +890,7 @@ again:
 		rate, STRESS_METRIC_HARMONIC_MEAN);
 
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)shim_pthread_spin_destroy(&hash_lock);
 exit_destroy_open_lock:

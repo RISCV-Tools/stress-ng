@@ -446,9 +446,9 @@ static int stress_chroot(stress_args_t *args)
 	(void)close(fd);
 	data->cwd_fd = open(".", O_DIRECTORY | O_RDONLY);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		pid_t pid;
@@ -458,7 +458,7 @@ again:
 			if (stress_redo_fork(args, errno))
 				goto again;
 		} else if (pid == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_set_oom_adjustment(args, true);
 			(void)stress_sched_settings_apply(true);
 			stress_make_it_fail_set();
@@ -501,11 +501,11 @@ again:
 	if (data->cwd_fd != -1)
 		(void)close(data->cwd_fd);
 tidy_all:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)shim_unlink(filename);
 tidy_dir:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)shim_rmdir(temppath);
 tidy_ret:

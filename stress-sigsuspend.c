@@ -57,9 +57,9 @@ static int stress_sigsuspend(stress_args_t *args)
 	(void)sigemptyset(&mask);
 	(void)sigprocmask(SIG_BLOCK, &mask, &oldmask);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (n = 0; n < MAX_SIGSUSPEND_PIDS; n++) {
 again:
@@ -74,7 +74,7 @@ again:
 				args->name, errno, strerror(errno));
 			goto reap;
 		} else if (pid[n] == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			(void)stress_affinity_change_cpu(args, parent_cpu);
 			stress_parent_died_alarm();
@@ -99,7 +99,7 @@ again:
 	} while (stress_continue(args));
 
 reap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	for (i = 0; i < n; i++) {
 		int status;
 

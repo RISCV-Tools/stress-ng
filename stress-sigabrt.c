@@ -81,9 +81,9 @@ static int stress_sigabrt(stress_args_t *args)
 	sigabrt_info->t_start = 0.0;
 	sigabrt_info->latency = 0.0;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		pid_t pid;
@@ -105,7 +105,7 @@ again:
 			rc = EXIT_FAILURE;
 			goto sigabrt_info_munmap;
 		} else if (pid == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 
 			/* Randomly select death by abort or SIGABRT */
@@ -168,7 +168,7 @@ rewait:
 		}
 	} while ((rc == EXIT_SUCCESS) && stress_continue(args));
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (sigabrt_info->count > 0.0) ? sigabrt_info->latency / sigabrt_info->count : 0.0;
 	stress_metrics_set(args, 0, "nanosec SIGABRT latency",

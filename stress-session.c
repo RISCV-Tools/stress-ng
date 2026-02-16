@@ -136,7 +136,7 @@ static int stress_session_child(stress_args_t *args, const int fd)
 			args->name, errno, strerror(errno));
 		return STRESS_SESSION_FORK_FAILED;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		stress_session_set_and_get(args, fd);
 		(void)shim_vhangup();
@@ -187,9 +187,9 @@ static int stress_session(stress_args_t *args)
 		return EXIT_NO_RESOURCE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	while (stress_continue(args)) {
 		pid_t pid;
@@ -207,7 +207,7 @@ static int stress_session(stress_args_t *args)
 			/* Child */
 			int ret;
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			(void)close(fds[0]);
 			ret = stress_session_child(args, fds[1]);
 			(void)close(fds[1]);
@@ -239,7 +239,7 @@ static int stress_session(stress_args_t *args)
 		}
 		stress_bogo_inc(args);
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fds[0]);
 	(void)close(fds[1]);
 

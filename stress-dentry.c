@@ -340,9 +340,9 @@ static int stress_dentry(stress_args_t *args)
 	(void)stress_fs_temp_dir(dir_path, sizeof(dir_path), args->name,
 		args->pid, args->instance);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	stress_dentry_state(&nr_dentry1);
 	do {
@@ -457,7 +457,7 @@ abort:
 		pr_inf("%s: %" PRId64 " dentries allocated\n",
 			args->name, nr_dentries);
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (creat_count > 0.0) ? (double)creat_duration / creat_count : 0.0;
 	stress_metrics_set(args, 0, "nanosecs per file creation",

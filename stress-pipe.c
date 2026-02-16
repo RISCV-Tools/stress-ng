@@ -645,9 +645,9 @@ static int stress_pipe(stress_args_t *args)
 	stress_set_vma_anon_name(buf_wr, buf_wr_size, "write-buffer");
 	stress_rndbuf(buf_wr, buf_wr_size);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	parent_cpu = stress_cpu_get();
 	pid = fork();
@@ -666,7 +666,7 @@ again:
 	} else if (pid == 0) {
 		int ret;
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		stress_parent_died_alarm();
 		(void)stress_sched_settings_apply(true);
@@ -730,7 +730,7 @@ again:
 			rc = EXIT_FAILURE;
 	}
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

@@ -601,9 +601,9 @@ static int stress_gpu_child(stress_args_t *args, void *context)
 	pret = pthread_create(&pthread, NULL, stress_gpu_pthread, (void *)args);
 #endif
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		stress_gpu_run(texsize, uploads);
@@ -630,7 +630,7 @@ deinit:
 	if (teximage)
 		free(teximage);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (fd >= 0) {
 		/* and re-connect stderr */

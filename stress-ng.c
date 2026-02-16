@@ -1630,7 +1630,7 @@ static int MLOCKED_TEXT stress_run_child(
 
 	sigalarmed = &stats->sigalarmed;
 
-	stress_set_proc_state(name, STRESS_STATE_START);
+	stress_proc_state_set(name, STRESS_STATE_START);
 	g_shared->instance_count.started++;
 
 	if (stress_sched_settings_apply(true) < 0) {
@@ -1651,7 +1651,7 @@ static int MLOCKED_TEXT stress_run_child(
 	if (g_opt_flags & OPT_FLAGS_KSM)
 		stress_ksm_memory_merge(1);
 
-	stress_set_proc_state(name, STRESS_STATE_INIT);
+	stress_proc_state_set(name, STRESS_STATE_INIT);
 	stress_mwc_reseed();
 	stress_limit_max_set();
 	stress_io_priority_set(ionice_class, ionice_level);
@@ -1754,7 +1754,7 @@ static int MLOCKED_TEXT stress_run_child(
 		/* Ensure reserved padding is zero to not confuse checksum */
 		(void)shim_memset((*checksum)->data.pad, 0, sizeof((*checksum)->data.pad));
 
-		stress_set_proc_state(name, STRESS_STATE_STOP);
+		stress_proc_state_set(name, STRESS_STATE_STOP);
 		/*
 		 *  Bogo ops counter should be OK for reading,
 		 *  if not then flag up that the counter may
@@ -1816,7 +1816,7 @@ child_exit:
 		stress_continue_set_flag(false);
 		(void)shim_kill(getppid(), SIGALRM);
 	}
-	stress_set_proc_state(name, STRESS_STATE_EXIT);
+	stress_proc_state_set(name, STRESS_STATE_EXIT);
 	g_shared->instance_count.exited++;
 	g_shared->instance_count.started--;
 	if (rc == EXIT_FAILURE)
@@ -1927,7 +1927,7 @@ again:
 				goto wait_for_stressors;
 			case 0:
 				/* Child */
-				stress_set_proc_state(g_stressor_current->stressor->name, STRESS_STATE_INIT);
+				stress_proc_state_set(g_stressor_current->stressor->name, STRESS_STATE_INIT);
 				child_pid = getpid();
 				stats->s_pid.reaped = false;
 				stats->s_pid.pid = child_pid;
@@ -4003,7 +4003,7 @@ int main(int argc, char **argv, char **envp)
 
 	stress_fixup_stressor_names();
 
-	stress_set_proc_name_init(argc, argv, envp);
+	stress_proc_name_init(argc, argv, envp);
 
 	if (setjmp(g_error_env) == 1) {
 		ret = EXIT_FAILURE;

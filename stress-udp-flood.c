@@ -115,9 +115,9 @@ static int OPTIMIZE3 stress_udp_flood(stress_args_t *args)
 		return EXIT_FAILURE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	seq_port = -1024;
 	rand_port = -1024;
@@ -209,7 +209,7 @@ static int OPTIMIZE3 stress_udp_flood(stress_args_t *args)
 		rc = EXIT_FAILURE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)close(fd);
 

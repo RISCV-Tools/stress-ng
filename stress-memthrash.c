@@ -1029,13 +1029,13 @@ static int stress_memthrash(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_usage_bytes(args, MEM_SIZE, MEM_SIZE * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = stress_oomable_child(args, &context, stress_memthrash_child, STRESS_OOMABLE_NORMAL);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 #if defined(HAVE_MEMTHRASH_NUMA)
 	if (context.numa_mask)
 		stress_numa_mask_free(context.numa_mask);

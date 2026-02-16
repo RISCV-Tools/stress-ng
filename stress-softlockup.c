@@ -337,10 +337,10 @@ again:
 				args->name, errno, strerror(errno));
 			goto finish;
 		} else if (s_pids[i].pid == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+			stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 			s_pids[i].pid = getpid();
 			stress_sync_start_wait_s_pid(&s_pids[i]);
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 
 			(void)stress_affinity_change_cpu(args, parent_cpu);
@@ -350,10 +350,10 @@ again:
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	param.sched_priority = policies[0].max_prio;
 	(void)sched_setscheduler(args->pid, policies[0].policy, &param);
@@ -361,7 +361,7 @@ again:
 	(void)shim_pause();
 	rc = stress_kill_and_wait_many(args, s_pids, (size_t)cpus_online, SIGALRM, false);
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(HAVE_X86_REP_STOSB)
 	if (softlockup_buffer != MAP_FAILED)

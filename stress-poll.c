@@ -177,9 +177,9 @@ static int OPTIMIZE3 stress_poll(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	parent_cpu = stress_cpu_get();
 	pid = fork();
@@ -195,7 +195,7 @@ again:
 	} else if (pid == 0) {
 		/* Child writer */
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 		stress_parent_died_alarm();
@@ -426,7 +426,7 @@ abort:
 	}
 
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 0; i < max_fds; i++) {
 		(void)close(pipe_fds[i].fd[0]);

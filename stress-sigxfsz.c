@@ -82,9 +82,9 @@ static int stress_sigxfsz(stress_args_t *args)
 	}
 	(void)unlink(filename);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t_start = stress_time_now();
 	do {
@@ -124,7 +124,7 @@ static int stress_sigxfsz(stress_args_t *args)
 	/*  And ignore IO signals from now on */
 	VOID_RET(int, stress_signal_handler(args->name, SIGXFSZ, SIG_IGN, NULL));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)close(fd);
 tidy_dir:

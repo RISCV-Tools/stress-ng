@@ -642,9 +642,9 @@ static int stress_tsc(stress_args_t *args)
 	int ret = EXIT_SUCCESS;
 	int (*tsc_func)(stress_args_t *args, const bool verify, double *duration) = stress_tsc_generic;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	(void)stress_setting_get("tsc-lfence", &tsc_lfence);
 	(void)stress_setting_get("tsc-rdtscp", &tsc_rdtscp);
@@ -695,7 +695,7 @@ static int stress_tsc(stress_args_t *args)
 		stress_metrics_set(args, 0, "nanosecs per time counter read",
 			duration * STRESS_DBL_NANOSECOND, STRESS_METRIC_HARMONIC_MEAN);
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return ret;
 }

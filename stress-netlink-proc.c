@@ -167,13 +167,13 @@ static void spawn_several(const char *name, const int n, const int max)
 		char newname[128];
 
 		(void)snprintf(newname, sizeof(newname), "%d", n);
-		stress_set_proc_name(newname);
+		stress_proc_name_set(newname);
 
 		if (n >= max) {
-			stress_set_proc_name("dead");
+			stress_proc_name_set("dead");
 			_exit(0);
 		} else {
-			stress_set_proc_name("spawn");
+			stress_proc_name_set("spawn");
 			spawn_several(name, n + 1, max);
 		}
 	} else if (pid < 0) {
@@ -182,7 +182,7 @@ static void spawn_several(const char *name, const int n, const int max)
 		int status;
 
 		if (n != 0)
-			stress_set_proc_name("wait");
+			stress_proc_name_set("wait");
 		(void)shim_waitpid(pid, &status, 0);
 		if (n != 0)
 			_exit(0);
@@ -262,9 +262,9 @@ static int stress_netlink_proc(stress_args_t *args)
 		return EXIT_FAILURE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		spawn_several(args->name, 0, 5);
@@ -272,7 +272,7 @@ static int stress_netlink_proc(stress_args_t *args)
 			break;
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)close(sock);
 

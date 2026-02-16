@@ -355,9 +355,9 @@ static int stress_userfaultfd_child(stress_args_t *args, void *context)
 	c.page_size = page_size;
 	c.parent = self;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	/*
 	 *  We need to clone and share the same VM address space
@@ -463,11 +463,11 @@ do_read:
 		VOID_RET(int, ioctl(fd, UFFDIO_WAKE, &wake));
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	stress_kill_and_wait(args, pid, SIGALRM, false);
 unreg:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	if (ioctl(fd, UFFDIO_UNREGISTER, &reg) < 0) {
 		pr_fail("%s: ioctl UFFDIO_UNREGISTER failed, errno=%d (%s)\n",
 			args->name, errno, strerror(errno));
@@ -475,10 +475,10 @@ unreg:
 		goto unmap_data;
 	}
 unmap_data:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)munmap((void *)data, sz);
 free_zeropage:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	free(zero_page);
 	if (fd > -1)
 		(void)close(fd);

@@ -213,9 +213,9 @@ static int stress_fsize(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_fs_usage_bytes(args, max, max * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t = stress_time_now();
 	do {
@@ -323,7 +323,7 @@ err:
 	stress_metrics_set(args, 0, "SIGXFSZ signals per sec",
 		rate, STRESS_METRIC_HARMONIC_MEAN);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	if (fd != -1)
 		(void)close(fd);
 	(void)stress_fs_temp_dir_rm_args(args);

@@ -357,9 +357,9 @@ static int stress_revio(stress_args_t *args)
 	(void)stress_fs_temp_filename_args(args,
 		filename, sizeof(filename), stress_mwc32());
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		int fd;
@@ -471,7 +471,7 @@ PRAGMA_UNROLL_N(4)
 
 	rc = EXIT_SUCCESS;
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	free(alloc_buf);
 	(void)stress_fs_temp_dir_rm_args(args);

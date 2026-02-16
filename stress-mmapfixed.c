@@ -127,9 +127,9 @@ static int stress_mmapfixed_child(stress_args_t *args, void *context)
 
 	VOID_RET(int, stress_signal_handler(args->name, SIGSEGV, stress_signal_exit_handler, NULL));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		uint64_t *buf;
@@ -252,7 +252,7 @@ next:
 			addr = MMAP_TOP;
 	} while ((rc == EXIT_SUCCESS) && stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

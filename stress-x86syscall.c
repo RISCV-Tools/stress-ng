@@ -389,9 +389,9 @@ static int stress_x86syscall(stress_args_t *args)
 			x86syscall_funcs[n++] = x86syscalls[i].func;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t1 = stress_time_now();
 	do {
@@ -523,7 +523,7 @@ static int stress_x86syscall(stress_args_t *args)
 		}
 	}
 #endif
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

@@ -239,9 +239,9 @@ static int stress_cpu_online(stress_args_t *args)
 			args->name, cpu_online_count + 1);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	/* Use a pipe to send offlined CPU number to child */
 	if (pipe(fds) < 0) {
@@ -264,7 +264,7 @@ static int stress_cpu_online(stress_args_t *args)
 		} else if (pid == 0) {
 			cpu = 0;
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 
 			/*
@@ -388,7 +388,7 @@ static int stress_cpu_online(stress_args_t *args)
 		}
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	/*
 	 *  Child running? close pipe and kill it

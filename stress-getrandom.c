@@ -114,9 +114,9 @@ static int stress_getrandom(stress_args_t *args)
 {
 	double duration = 0.0, bytes = 0.0, rate;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		char buffer[RANDOM_BUFFER_SIZE];
@@ -164,7 +164,7 @@ static int stress_getrandom(stress_args_t *args)
 		duration += stress_time_now() - t;
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (duration > 0.0) ? (8.0 * bytes) / duration : 0.0;
 	stress_metrics_set(args, 0, "getrandom bits per sec",

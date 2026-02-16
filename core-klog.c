@@ -147,7 +147,7 @@ void stress_klog_start(void)
 		double last_logged = stress_time_now();
 
 		stress_parent_died_alarm();
-		stress_set_proc_state_str("klog","monitoring");
+		stress_proc_name_state_str_set("klog","monitoring");
 
 		VOID_RET(int, stress_sched_set(getpid(), SCHED_RR, UNDEFINED, true));
 		(void)fseek(klog_fp, 0, SEEK_END);

@@ -281,9 +281,9 @@ redo:
 	if (stress_instance_zero(args))
 		stress_fs_usage_bytes(args, LOCK_FILE_SIZE, LOCK_FILE_SIZE * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	parent_cpu = stress_cpu_get();
 	cpid = fork();
@@ -297,7 +297,7 @@ again:
 		goto tidy;
 	}
 	if (cpid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 		stress_parent_died_alarm();
@@ -312,7 +312,7 @@ again:
 	if (stress_lockofd_contention(args, fd) == 0)
 		ret = EXIT_SUCCESS;
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (cpid > 1)
 		stress_kill_and_wait(args, cpid, SIGALRM, true);

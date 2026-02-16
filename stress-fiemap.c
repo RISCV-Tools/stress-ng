@@ -217,7 +217,7 @@ static inline pid_t stress_fiemap_spawn(
 	if (s_pid->pid < 0) {
 		return -1;
 	} else if (s_pid->pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		s_pid->pid = getpid();
 
 		stress_sync_start_wait_s_pid(s_pid);
@@ -334,25 +334,25 @@ static int stress_fiemap(stress_args_t *args)
 			goto reap;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
         stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = stress_fiemap_writer(args, fd, fiemap_bytes);
 reap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	/* And reap stressors */
 	stress_kill_and_wait_many(args, s_pids, n, SIGALRM, true);
 close_clean:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd);
 dir_clean:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)stress_fs_temp_dir_rm_args(args);
 clean:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)stress_sync_s_pids_munmap(s_pids, MAX_FIEMAP_PROCS);
 	stress_lock_destroy(counter_lock);

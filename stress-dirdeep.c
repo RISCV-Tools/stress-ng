@@ -463,9 +463,9 @@ static int stress_dirdeep(stress_args_t *args)
 	inodes_estimate = 1;		/* created one for root */
 	inodes_min = inodes_start;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	stress_dirdeep_make(args, linkpath, path, path_len, sizeof(path),
 		dirdeep_dirs, dirdeep_inodes, dirdeep_files, dirdeep_bytes,
@@ -477,7 +477,7 @@ static int stress_dirdeep(stress_args_t *args)
 			break;
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)shim_strscpy(path, rootpath, sizeof(path));
 	stress_dir_tidy(args, path, path_len, sizeof(path), stress_time_now());

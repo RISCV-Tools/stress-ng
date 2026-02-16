@@ -734,7 +734,7 @@ static void stress_vma_loop(
 			int pthreads_ret[n];
 			size_t j;
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			stress_parent_died_alarm();
 			(void)stress_sched_settings_apply(true);
@@ -843,14 +843,14 @@ static int stress_vma(stress_args_t *args)
 	}
 	stress_set_vma_anon_name(stress_vma_metrics, sizeof(*stress_vma_metrics), "vma-metrics");
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t1 = stress_time_now();
 	ret = stress_oomable_child(args, &ctxt, stress_vma_child, STRESS_OOMABLE_NORMAL);
 	duration = stress_time_now() - t1;
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 0; i < SIZEOF_ARRAY(stress_vma_metrics->s.metrics); i++) {
 		char msg[64];

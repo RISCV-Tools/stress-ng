@@ -1257,9 +1257,9 @@ static int stress_af_alg(stress_args_t *args)
 		(void)shim_usleep(200000);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (sigsetjmp(jmp_env, 1) != 0)
 		goto deinit;
@@ -1334,7 +1334,7 @@ static int stress_af_alg(stress_args_t *args)
 	rc = EXIT_SUCCESS;
 deinit:
 	do_jmp = false;
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (idx = 0, info = crypto_info_list; info; info = info->next) {
 		if (info->metrics.duration > 0.0) {

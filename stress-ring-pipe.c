@@ -201,9 +201,9 @@ static int stress_ring_pipe(stress_args_t *args)
 			ring_pipe_splice ? "using splice" : "using read+write");
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	(void)shim_memset(buf, 0xa5, STRESS_RING_PIPE_SIZE_MAX);
 
@@ -270,7 +270,7 @@ finish:
 		rate / (double)MB, STRESS_METRIC_HARMONIC_MEAN);
 
 err_deinit:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 err_close_pipes:
 	for (i = 0; i < n_pipes; i++) {
 		(void)close(pipe_fds[i].fds[0]);

@@ -2437,7 +2437,7 @@ static inline int stress_do_syscall(stress_args_t *args)
 #endif
 		size_t k;
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 
 		for (k = 0; k < SIZEOF_ARRAY(sigs); k++) {
@@ -2653,14 +2653,14 @@ static int stress_sysbadaddr(stress_args_t *args)
 		bad_addrs[i].addr = bad_addrs[i].func(args);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	ret = stress_oomable_child(args, NULL, stress_sysbadaddr_child, STRESS_OOMABLE_DROP_CAP);
 
 cleanup:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_munmap(wo_page, page_size);
 	stress_munmap(no_page, page_size);
 	stress_munmap(rx_page, page_size);

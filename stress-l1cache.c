@@ -560,9 +560,9 @@ static int stress_l1cache(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_usage_bytes(args, l1cache_size << 2, (l1cache_size << 2) * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		if (UNLIKELY(stress_l1cache_func(args, cache_aligned, l1cache_size, l1cache_sets, l1cache_set_size) == EXIT_FAILURE)) {
@@ -573,7 +573,7 @@ static int stress_l1cache(stress_args_t *args)
 		stress_bogo_add(args, l1cache_sets);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)cache, l1cache_size << 2);
 

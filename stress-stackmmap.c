@@ -214,9 +214,9 @@ static int stress_stackmmap(stress_args_t *args)
 	c_test.uc_stack.ss_size = MMAPSTACK_SIZE - (page_size * 2);
 	c_test.uc_link = &c_main;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	/*
 	 *  set jmp handler to jmp back into the loop on a full
@@ -260,7 +260,7 @@ again:
 		} else {
 			/* Child */
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			stress_parent_died_alarm();
 			(void)stress_sched_settings_apply(true);
@@ -301,12 +301,12 @@ finish:
 	rc = EXIT_SUCCESS;
 
 tidy_mmap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)munmap((void *)stack_mmap, MMAPSTACK_SIZE);
 tidy_stack_sig:
 	(void)munmap((void *)stack_sig, STRESS_SIGSTKSZ);
 tidy_dir:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)stress_fs_temp_dir_rm_args(args);
 	return rc;
 }

@@ -304,9 +304,9 @@ static int stress_flushcache_child(stress_args_t *args, void *ctxt)
 		(void)stress_flushcache_nohugepage(context->i_addr, context->i_bytes);
 	(void)stress_flushcache_nohugepage(context->d_addr, context->d_bytes);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		if (context->i_addr)
@@ -320,7 +320,7 @@ static int stress_flushcache_child(stress_args_t *args, void *ctxt)
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap(context->d_addr, context->d_bytes);
 

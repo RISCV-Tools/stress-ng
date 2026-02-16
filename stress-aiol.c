@@ -522,9 +522,9 @@ retry_open:
 	}
 	(void)shim_unlink(filename);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t = stress_time_now();
 	do {
@@ -828,19 +828,19 @@ retry_open:
 	duration = stress_time_now() - t;
 	rc = EXIT_SUCCESS;
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(info.fds[0]);
 	for (i = 1; i < aiol_requests; i++) {
 		if (info.fds[i] != info.fds[0])
 			(void)close(info.fds[i]);
 	}
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)shim_io_destroy(info.ctx_id);
 	(void)stress_fs_temp_dir_rm_args(args);
 
 free_memory:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	stress_metrics_set(args, 0, "async I/O events completed",
 		(double)info.aiol_completions, STRESS_METRIC_TOTAL);

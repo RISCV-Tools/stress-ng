@@ -605,9 +605,9 @@ static int stress_monte_carlo(stress_args_t *args)
 			monte_carlo_samples = MIN_MONTE_CARLO_SAMPLES;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		stress_monte_carlo_by_method(args, monte_carlo_samples,
@@ -615,7 +615,7 @@ static int stress_monte_carlo(stress_args_t *args)
 			metrics, results, rands_supported);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (idx = 0, i = 1; i < METHODS_MAX; i++) {
 		for (j = 1; j < RANDS_MAX; j++) {

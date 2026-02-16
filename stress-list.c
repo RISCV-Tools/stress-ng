@@ -575,9 +575,9 @@ static int stress_list(stress_args_t *args)
 		v = shim_ror64(v);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		uint64_t rnd;
@@ -614,7 +614,7 @@ tidy:
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	free(entries);
 
 	return rc;

@@ -276,9 +276,9 @@ static int stress_flipflop(stress_args_t *args)
 		goto free_bits;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (stress_flipflop_create_workers(max_ops, workers,
 			bits, flipflop_bits, false, &cpus_a, &worker_hold,
@@ -353,7 +353,7 @@ static int stress_flipflop(stress_args_t *args)
 			(double)dist[2 * flipflop_bits - 1] / duration);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 free_workers:
 	for (i = 0; i < 2 * flipflop_bits; i++) {

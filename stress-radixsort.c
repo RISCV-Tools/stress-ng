@@ -262,9 +262,9 @@ static int stress_radixsort(stress_args_t *args)
 		stress_rndstr((char *)ptr, STR_SIZE);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		/* Sort "random" data */
@@ -311,7 +311,7 @@ static int stress_radixsort(stress_args_t *args)
 	(void)stress_signal_restore(args->name, SIGALRM, &old_action);
 tidy:
 #endif
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	free(data);
 	free(text);

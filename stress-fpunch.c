@@ -394,10 +394,10 @@ static int stress_fpunch(stress_args_t *args)
 			int tmp_fd;
 #endif
 
-			stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+			stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 			s_pids[i].pid = getpid();
 			stress_sync_start_wait_s_pid(&s_pids[i]);
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 
 			VOID_RET(int, stress_signal_handler(args->name, SIGALRM, stress_signal_exit_handler, NULL));
@@ -426,10 +426,10 @@ static int stress_fpunch(stress_args_t *args)
 			stress_sync_start_s_pid_list_add(&s_pids_head, &s_pids[i]);
 		}
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	/* Wait for test run duration to complete */
 	(void)sleep((unsigned int)g_opt_timeout);
@@ -437,7 +437,7 @@ static int stress_fpunch(stress_args_t *args)
 	if (stress_kill_and_wait_many(args, s_pids, STRESS_PUNCH_PIDS, SIGALRM, true) != EXIT_SUCCESS)
 		rc = EXIT_FAILURE;
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	extents = stress_fs_extents_get(fd);
 	stress_metrics_set(args, 0, "extents per file",
@@ -445,7 +445,7 @@ static int stress_fpunch(stress_args_t *args)
 
 tidy:
 	(void)shim_unlink(filename);
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	if (fd != -1)
 		(void)close(fd);
 tidy_temp:

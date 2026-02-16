@@ -163,7 +163,7 @@ again:
 	} else if (pid == 0) {
 		/* Child */
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 		stress_parent_died_alarm();
@@ -175,7 +175,7 @@ again:
 		(void)close(fds[0]);
 		(void)shim_memset(wr_buffer, 0, BUFFER_SIZE);
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 		while (stress_continue(args)) {
 			ssize_t n;
@@ -191,9 +191,9 @@ again:
 	(void)close(fds[1]);
 	fds[1] = -1;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (stress_signal_handler(args->name, SIGIO, stress_sigio_handler, NULL) < 0)
 		goto reap;
@@ -241,7 +241,7 @@ err:
 		VOID_RET(int, fcntl(fds[0], F_SETFL, flags & ~(O_ASYNC | O_NONBLOCK)));
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (fds[0] != -1)
 		(void)close(fds[0]);

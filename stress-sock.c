@@ -1429,9 +1429,9 @@ static int stress_sock(stress_args_t *args)
 	}
 	stress_set_vma_anon_name(mmap_buffer, MMAP_BUF_SIZE, "io-buffer");
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	parent_cpu = stress_cpu_get();
 	pid = fork();
@@ -1448,7 +1448,7 @@ again:
 		(void)munmap((void *)mmap_buffer, MMAP_BUF_SIZE);
 		return EXIT_FAILURE;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 
@@ -1465,7 +1465,7 @@ again:
 
 	}
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_net_release_ports(sock_port, sock_port);
 
 	return rc;

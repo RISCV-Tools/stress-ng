@@ -2219,9 +2219,9 @@ static int stress_regs(stress_args_t *args)
 	stress_regs_func = regs_bitflip ? stress_regs_exercise_bitflip :
 					  stress_regs_exercise;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 #if defined(STRESS_ARCH_X86) &&	\
     defined(HAVE_INT128_T)
@@ -2240,7 +2240,7 @@ static int stress_regs(stress_args_t *args)
 		stress_bogo_inc(args);
 	} while (stress_regs_success && stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return stress_regs_success ? EXIT_SUCCESS : EXIT_FAILURE;
 }

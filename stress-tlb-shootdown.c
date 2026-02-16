@@ -417,7 +417,7 @@ static int stress_tlb_shootdown(stress_args_t *args)
 		if (s_pids[i].pid < 0) {
 			continue;
 		} else if (s_pids[i].pid == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 
 			stress_tlb_shootdown_child(args, n_cpus, i, stride,
@@ -436,10 +436,10 @@ static int stress_tlb_shootdown(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 #if defined(HAVE_MADVISE) &&	\
@@ -487,7 +487,7 @@ static int stress_tlb_shootdown(stress_args_t *args)
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	tlb_end = stress_tlb_interrupts();
 	duration = stress_time_now() - t_begin;
 

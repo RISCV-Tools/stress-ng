@@ -313,9 +313,9 @@ static int stress_syncload(stress_args_t *args)
 	for (i = 0; i < SIZEOF_ARRAY(fma_a); i++)
 		fma_a[i] = 0.0;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		double now;
@@ -339,7 +339,7 @@ static int stress_syncload(stress_args_t *args)
 
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return EXIT_SUCCESS;
 }

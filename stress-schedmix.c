@@ -559,10 +559,10 @@ static int stress_schedmix(stress_args_t *args)
 		if (s_pids[i].pid < 0) {
 			continue;
 		} else if (s_pids[i].pid == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+			stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 			s_pids[i].pid = getpid();
 			stress_sync_start_wait_s_pid(&s_pids[i]);
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 
 			VOID_RET(int, shim_nice(stress_mwc8modn(7)));
@@ -574,16 +574,16 @@ static int stress_schedmix(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		(void)shim_pause();
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(HAVE_SCHEDMIX_SEM)
 	if (schedmix_sem) {

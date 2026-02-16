@@ -919,9 +919,9 @@ static int stress_procfs(stress_args_t *args)
 				stress_proc_rw_thread, &ctxt);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		size_t j = stress_mwc32() % n;
@@ -968,7 +968,7 @@ static int stress_procfs(stress_args_t *args)
 		VOID_RET(int, shim_pthread_spin_unlock(&lock));
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 0; i < MAX_PROCFS_THREADS; i++) {
 		if (ret[i] == 0) {

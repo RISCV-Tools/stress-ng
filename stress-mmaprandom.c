@@ -1809,7 +1809,7 @@ static void stress_mmaprandom_fork(mr_ctxt_t *ctxt, const int idx)
 	if (pid < 0) {
 		return;
 	} else if (pid == 0) {
-		stress_set_proc_state(ctxt->args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(ctxt->args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 
 		/* Either unmap mappings in child or let _exit(2) do it */
@@ -2222,9 +2222,9 @@ static int stress_mmaprandom(stress_args_t *args)
 
 	ctxt->args = args;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t = stress_time_now();
 	while (stress_continue(args)) {
@@ -2237,7 +2237,7 @@ static int stress_mmaprandom(stress_args_t *args)
 		stress_mwc_set_seed(++w, --z);
 	}
 	duration = stress_time_now() - t;
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 0; i < SIZEOF_ARRAY(mr_funcs); i++) {
 		char buf[64];

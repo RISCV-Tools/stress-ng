@@ -47,7 +47,7 @@ static int stress_kill(stress_args_t *args)
 	 */
 	pid = fork();
 	if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		VOID_RET(int, stress_signal_handler(args->name, SIGUSR1, stress_signal_ignore_handler, NULL));
 		stress_make_it_fail_set();
 
@@ -56,13 +56,13 @@ static int stress_kill(stress_args_t *args)
 				break;
 			(void)shim_pause();
 		}
-		stress_set_proc_state(args->name, STRESS_STATE_WAIT);
+		stress_proc_state_set(args->name, STRESS_STATE_WAIT);
 		_exit(0);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		pid_t bad_pid;
@@ -156,7 +156,7 @@ static int stress_kill(stress_args_t *args)
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (pid != -1) {
 		int status;

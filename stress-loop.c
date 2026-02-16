@@ -148,9 +148,9 @@ static int stress_loop(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_usage_bytes(args, loop_bytes, loop_bytes * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		int ctrl_dev, loop_dev;
@@ -446,10 +446,10 @@ next:
 
 	rc = EXIT_SUCCESS;
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(backing_fd);
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)stress_fs_temp_dir_rm_args(args);
 
 	return rc;

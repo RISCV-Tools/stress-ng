@@ -320,7 +320,7 @@ static int stress_fork_fn(
 			}
 
 			if (pid == 0) {
-				stress_set_proc_state(args->name, STRESS_STATE_RUN);
+				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 				/*
 				 *  50% of forks are very short lived exiting processes
@@ -512,9 +512,9 @@ static int stress_fork(stress_args_t *args)
 	}
 
 	stress_force_bind();
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (fork_unmap) {
 		pid_t pid;
@@ -538,7 +538,7 @@ static int stress_fork(stress_args_t *args)
 	} else {
 		rc = stress_fork_fn(args, STRESS_FORK, fork_max, mode);
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }
@@ -563,9 +563,9 @@ static int stress_vfork(stress_args_t *args)
 	}
 
 	stress_force_bind();
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 	rc = stress_fork_fn(args, STRESS_VFORK, vfork_max, 0);
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

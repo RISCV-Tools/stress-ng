@@ -333,7 +333,7 @@ static int stress_pseek_spawn(stress_args_t *args, stress_peekio_proc_t *proc)
 		return -1;
 	} else if (pid == 0) {
 		/* Child */
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		stress_peekio_exercise(proc);
 		_exit(0);
@@ -485,9 +485,9 @@ static int stress_pseek(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_fs_usage_bytes(args, file_size, file_size * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (i = 1; i < pseek_procs; i++) {
 		if (stress_pseek_spawn(args, &procs[i]) < 0) {
@@ -503,7 +503,7 @@ static int stress_pseek(stress_args_t *args)
 
 	stress_peekio_exercise(&procs[0]);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 1; i < pseek_procs; i++) {
 		stress_pseek_kill(args, &procs[i]);

@@ -128,9 +128,9 @@ static int stress_key(stress_args_t *args)
 	}
 	stress_rndstr(huge_description, key_huge_desc_size);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t_start = stress_time_now();
 	do {
@@ -405,7 +405,7 @@ tidy:
 	stress_metrics_set(args, 0, "keys added/modified/searched/removed per sec",
 		rate, STRESS_METRIC_HARMONIC_MEAN);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	free(huge_description);
 

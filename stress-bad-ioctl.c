@@ -560,9 +560,9 @@ static int stress_bad_ioctl(stress_args_t *args)
 	stress_bad_ioctl_dev_dir(args, "/dev", 0);
 	dev_ioctl_node = dev_ioctl_info_head;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		pid_t pid;
@@ -596,7 +596,7 @@ again:
 			int r, ssjret;
 			uint32_t offset;
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			ssjret = sigsetjmp(jmp_env, 1);
 			if (ssjret != 0) {
 				pr_fail("%s: caught an unexpected segmentation fault\n", args->name);
@@ -651,7 +651,7 @@ again:
 		}
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	stress_bad_ioctl_dev_free(dev_ioctl_info_head);
 

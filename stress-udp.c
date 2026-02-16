@@ -389,10 +389,10 @@ static int OPTIMIZE3 stress_udp_server(
 
 	rc = EXIT_SUCCESS;
 die_close:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd);
 die:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 #if defined(AF_UNIX) &&		\
     defined(HAVE_SYS_UN_H) &&	\
     defined(HAVE_SOCKADDR_UN)
@@ -477,9 +477,9 @@ static int stress_udp(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	parent_cpu = stress_cpu_get();
 	pid = fork();
@@ -490,7 +490,7 @@ again:
 			args->name, errno, strerror(errno));
 		return EXIT_FAILURE;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 		rc = stress_udp_client(args, mypid, udp_domain, udp_proto,
 				       udp_port, udp_gro, udp_if, udp_max_size);

@@ -212,9 +212,9 @@ static int OPTIMIZE3 stress_branch(stress_args_t *args)
 	for (i = 0; i < SIZEOF_ARRAY(counters); i++)
 		counters[i] = 0ULL;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (;;) {
 L0x000:
@@ -371,7 +371,7 @@ L0x000:
 		J(0x3f0) J(0x3f1) J(0x3f2) J(0x3f3) J(0x3f4) J(0x3f5) J(0x3f6) J(0x3f7)
 		J(0x3f8) J(0x3f9) J(0x3fa) J(0x3fb) J(0x3fc) J(0x3fd) J(0x3fe) J(0x3ff)
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	bogo_counter = stress_bogo_get(args);
 	bogo_thresh = bogo_counter / 10;

@@ -87,9 +87,9 @@ static int stress_fault(stress_args_t *args)
 	if (mapto != MAP_FAILED)
 		stress_set_vma_anon_name(mapto, page_size, "mapping-ro-page");
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 #if defined(HAVE_GETRUSAGE) &&		\
     defined(RUSAGE_SELF) &&		\
@@ -263,7 +263,7 @@ next:
 #endif
 	/* Clean up, most times this is redundant */
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (mapto != MAP_FAILED)
 		(void)munmap(mapto, page_size);

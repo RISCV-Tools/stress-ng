@@ -82,9 +82,9 @@ static int OPTIMIZE3 stress_ptrace(stress_args_t *args)
 {
 	pid_t pid;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 again:
 	pid = fork();
@@ -97,7 +97,7 @@ again:
 			args->name, errno, strerror(errno));
 		return EXIT_FAILURE;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		stress_parent_died_alarm();
 		(void)stress_sched_settings_apply(true);
@@ -199,7 +199,7 @@ again:
 		(void)stress_kill_pid_wait(pid, NULL);
 	}
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return EXIT_SUCCESS;
 }

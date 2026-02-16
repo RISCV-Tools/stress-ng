@@ -426,9 +426,9 @@ static int stress_msg(stress_args_t *args)
 	if (UNLIKELY(!stress_continue(args)))
 		goto cleanup;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	parent_cpu = stress_cpu_get();
 	pid = fork();
@@ -444,7 +444,7 @@ again:
 		rc = EXIT_FAILURE;
 		goto cleanup;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 		rc = stress_msg_receiver(args, msgq_id, msg_types, msg_bytes);
 		_exit(rc);
@@ -462,7 +462,7 @@ again:
 	}
 
 cleanup:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (j = 0; j < n; j++) {
 		if (msgq_ids[j] >= 0)

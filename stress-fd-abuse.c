@@ -2104,7 +2104,7 @@ static int stress_fd_abuse_process(stress_args_t *args, void *context)
 	 *  fds for more of a stress mix.
 	 */
 	pid = fork();
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 	do {
 		size_t j;
 
@@ -2136,7 +2136,7 @@ static int stress_fd_abuse_process(stress_args_t *args, void *context)
 		(void)stress_kill_and_wait(args, pid, SIGKILL, false);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 0; i < n; i++)
 		(void)close(fds[i].fd);
@@ -2174,13 +2174,13 @@ static int stress_fd_abuse(stress_args_t *args)
 		pr_dbg("%s: %zu fd opening operations, %zu fd exercising operations\n",
 			args->name, SIZEOF_ARRAY(open_funcs), SIZEOF_ARRAY(fd_funcs));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = stress_oomable_child(args, NULL, stress_fd_abuse_process, STRESS_OOMABLE_NORMAL);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

@@ -116,9 +116,9 @@ static int stress_zero(stress_args_t *args)
 		return EXIT_FAILURE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (zero_read) {
 		double t;
@@ -271,7 +271,7 @@ static int stress_zero(stress_args_t *args)
 			stress_bogo_inc(args);
 		} while ((rc == EXIT_SUCCESS) && stress_continue(args));
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd);
 
 	(void)munmap(wr_buffer, page_size);

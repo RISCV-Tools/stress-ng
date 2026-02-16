@@ -461,9 +461,9 @@ static int stress_rawdev(stress_args_t *args)
 		pr_dbg("%s: exercising %s (%zu blocks of size %zu bytes)\n",
 			args->name, devpath, blks, blksz);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		if (func(args, fd, buffer, blks, blksz, &metrics[rawdev_method]) < 0) {
@@ -472,7 +472,7 @@ static int stress_rawdev(stress_args_t *args)
 		}
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 0, j = 0; i < SIZEOF_ARRAY(rawdev_methods); i++) {
 		const double duration = metrics[i].duration;

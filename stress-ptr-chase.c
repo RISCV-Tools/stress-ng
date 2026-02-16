@@ -136,9 +136,9 @@ static int stress_ptr_chase(stress_args_t *args)
 		stress_usage_bytes(args, sz, sz * args->instances);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	ptr = ptrs[0];
 	t_start = stress_time_now();
@@ -177,7 +177,7 @@ static int stress_ptr_chase(stress_args_t *args)
 
 	rc = EXIT_SUCCESS;
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)munmap((void *)ptrs, ptrs_size);
 
 tidy_ptrs_mmap:

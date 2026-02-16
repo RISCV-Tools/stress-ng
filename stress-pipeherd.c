@@ -150,9 +150,9 @@ static int stress_pipeherd(stress_args_t *args)
 	for (i = 0; i < pipeherd_procs; i++)
 		pids[i] = -1;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 #if defined(HAVE_GETRUSAGE) &&	\
     defined(RUSAGE_CHILDREN) &&	\
@@ -165,7 +165,7 @@ static int stress_pipeherd(stress_args_t *args)
 
 		pid = fork();
 		if (pid == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			stress_parent_died_alarm();
 			(void)stress_sched_settings_apply(true);
@@ -192,7 +192,7 @@ static int stress_pipeherd(stress_args_t *args)
 	t2 = stress_time_now();
 #endif
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 0; i < pipeherd_procs; i++) {
 		if (pids[i] >= 0)

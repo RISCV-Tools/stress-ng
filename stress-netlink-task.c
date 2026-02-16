@@ -332,16 +332,16 @@ static int stress_netlink_task(stress_args_t *args)
 		return EXIT_FAILURE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		if (UNLIKELY(stress_netlink_taskstats_monitor(args, sock, pid, id, &nivcsw) < 0))
 			break;
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 #if 0
 	/* Some statistics */
 	pr_inf("%s: process %d has %" PRIu64 " involuntary context switches\n",

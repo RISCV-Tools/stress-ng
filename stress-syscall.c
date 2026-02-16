@@ -8985,9 +8985,9 @@ static int stress_syscall(stress_args_t *args)
 
 	syscall_brk_addr = shim_sbrk(0);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	/*
 	 *  First benchmark all system calls, find the ones
@@ -9025,7 +9025,7 @@ static int stress_syscall(stress_args_t *args)
 		stress_syscall_report_syscall_top(args);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	rc = EXIT_SUCCESS;
 
 	if (syscall_mmap_page != MAP_FAILED)

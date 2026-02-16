@@ -124,9 +124,9 @@ static int stress_icmp_flood(stress_args_t *args)
 	servaddr.sin_addr.s_addr = (in_addr_t)addr;
 	(void)shim_memset(&servaddr.sin_zero, 0, sizeof(servaddr.sin_zero));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	(void)shim_memset(pkt, 0, sizeof(pkt));
 	ip_hdr->version = 4;
@@ -186,10 +186,10 @@ static int stress_icmp_flood(stress_args_t *args)
 	rc = EXIT_SUCCESS;
 
 err_socket:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd);
 err:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	return rc;
 }
 

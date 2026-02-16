@@ -194,9 +194,9 @@ static int stress_msync(stress_args_t *args)
 	}
 	stress_set_vma_anon_name(data, page_size, "read-buffer");
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		off_t offset;
@@ -307,13 +307,13 @@ do_next:
 	} while (stress_continue(args));
 
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)data, page_size);
 err_unmap:
 	(void)munmap((void *)buf, sz);
 err:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd);
 	(void)stress_fs_temp_dir_rm_args(args);
 

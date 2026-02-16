@@ -468,9 +468,9 @@ static int stress_acl(stress_args_t *args)
 
 	stress_zero_metrics(metrics, SIZEOF_ARRAY(metrics));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = 0;
 	do {
@@ -508,20 +508,20 @@ static int stress_acl(stress_args_t *args)
 
 	rc = EXIT_SUCCESS;
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)shim_unlink(filename);
 	(void)shim_rmdir(pathname);
 
 tidy_acl_free:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_acl_free(acls, acl_count);
 
 tidy_unmap_acls_tested:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)munmap((void *)acls_tested, acls_tested_size);
 
 tidy_unmap_acls:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)munmap((void *)acls, acls_size);
 
 	return rc;

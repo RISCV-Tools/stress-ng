@@ -252,9 +252,9 @@ static int stress_numacopy(stress_args_t *args)
 		(void)shim_memset(numa_pages[node], 0xff, page_size);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		stress_numacopy_exercise(args, page_size, num_numa_nodes,
@@ -329,7 +329,7 @@ static int stress_numacopy(stress_args_t *args)
 
 	rc = EXIT_SUCCESS;
 err:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 local_page_free:
 	(void)munmap((void *)local_page, page_size);
@@ -346,7 +346,7 @@ numa_mask_free:
 numa_nodes_free:
 	stress_numa_mask_free(numa_nodes);
 deinit:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

@@ -264,9 +264,9 @@ static int stress_led(stress_args_t *args)
 	if (!is_root && (stress_instance_zero(args)))
 		pr_inf("%s: unable to set LED settings, need root privilege\n", args->name);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	led_info_list = stress_led_info_get();
 	if (!led_info_list) {
@@ -284,7 +284,7 @@ static int stress_led(stress_args_t *args)
 		}
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_led_info_free(led_info_list);
 
 	return EXIT_SUCCESS;

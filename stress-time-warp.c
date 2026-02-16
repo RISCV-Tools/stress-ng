@@ -203,9 +203,9 @@ static int stress_time_warp(stress_args_t *args)
 
 	(void)shim_memset(&stress_times, 0, sizeof(stress_times));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	/* Get initial times */
 	for (i = 0; i < SIZEOF_ARRAY(clocks); i++) {
@@ -267,7 +267,7 @@ static int stress_time_warp(stress_args_t *args)
 			rc = EXIT_FAILURE;
 		}
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

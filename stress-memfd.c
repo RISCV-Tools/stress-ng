@@ -278,9 +278,9 @@ static int stress_memfd_child(stress_args_t *args, void *context)
 		stress_usage_bytes(args, mapped_size, mapped_size * args->instances);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		char filename[64];
@@ -553,7 +553,7 @@ buf_unmap:
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (count > 0.0) ? duration / count : 0.0;
 	stress_metrics_set(args, 0, "nanosecs per memfd_create call",

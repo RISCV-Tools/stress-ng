@@ -225,9 +225,9 @@ PRAGMA_UNROLL_N(8)
 	rounded_readahead_bytes = (uint64_t)statbuf.st_size -
 		(uint64_t)(statbuf.st_size % BUF_SIZE);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (statbuf.st_size < (off_t)readahead_bytes) {
 		pr_inf_skip("%s: out of free file space on %s, stressor instance %" PRIu32 " terminating early\n",
@@ -321,12 +321,12 @@ PRAGMA_UNROLL_N(8)
 
 	rc = EXIT_SUCCESS;
 close_finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	if (fd_wr >= 0)
 		(void)close(fd_wr);
 	(void)close(fd);
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	free(buf);
 	(void)stress_fs_temp_dir_rm_args(args);
 

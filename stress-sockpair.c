@@ -238,7 +238,7 @@ again:
 	} else if (pid == 0) {
 		const bool verify = !!(g_opt_flags & OPT_FLAGS_VERIFY);
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 		stress_set_oom_adjustment(args, true);
@@ -372,16 +372,16 @@ static int stress_sockpair(stress_args_t *args)
 {
 	int rc;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (stress_signal_handler(args->name, SIGPIPE, stress_signal_ignore_handler, NULL) < 0)
 		return EXIT_NO_RESOURCE;
 
 	rc = stress_oomable_child(args, NULL, stress_sockpair_oomable, STRESS_OOMABLE_DROP_CAP);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

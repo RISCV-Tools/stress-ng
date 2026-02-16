@@ -184,7 +184,7 @@ static int stress_randlist(stress_args_t *args)
 
 		compact_ptr = (stress_randlist_item_t *)calloc(randlist_items, size);
 		if (!compact_ptr) {
-			stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+			stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 			free(ptrs);
 			stress_randlist_enomem(args);
 			return EXIT_NO_RESOURCE;
@@ -192,7 +192,7 @@ static int stress_randlist(stress_args_t *args)
 
 		for (ptr = compact_ptr, i = 0; i < randlist_items; i++) {
 			if (UNLIKELY(!stress_continue_flag())) {
-				stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+				stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 				stress_randlist_free_ptrs(compact_ptr, ptrs, i, randlist_size);
 				stress_randlist_enomem(args);
 				return EXIT_SUCCESS;
@@ -206,7 +206,7 @@ static int stress_randlist(stress_args_t *args)
 			const size_t size = sizeof(*ptr) + randlist_size;
 
 			if (UNLIKELY(!stress_continue_flag())) {
-				stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+				stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 				stress_randlist_free_ptrs(compact_ptr, ptrs, i, randlist_size);
 				return EXIT_SUCCESS;
 			}
@@ -246,7 +246,7 @@ retry:
 		ptrs[n] = ptr;
 
 		if (UNLIKELY(!stress_continue_flag())) {
-			stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+			stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 			stress_randlist_free_ptrs(compact_ptr, ptrs, n, randlist_size);
 			return EXIT_SUCCESS;
 		}
@@ -263,16 +263,16 @@ retry:
 	head = ptrs[0];
 	free(ptrs);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		stress_randlist_exercise(args, head, randlist_size, verify, &rc);
 		stress_bogo_inc(args);
 	} while ((rc == EXIT_SUCCESS) && stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	pr_dbg("%s: heap allocations: %zu, mmap allocations: %zu\n", args->name, heap_allocs, mmap_allocs);
 

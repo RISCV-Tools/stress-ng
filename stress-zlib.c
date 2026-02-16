@@ -1783,9 +1783,9 @@ static int stress_zlib(stress_args_t *args)
 		return EXIT_FAILURE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 again:
 	parent_cpu = stress_cpu_get();
@@ -1804,7 +1804,7 @@ again:
 
 		return EXIT_FAILURE;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 		stress_parent_died_alarm();
@@ -1864,7 +1864,7 @@ again:
 			}
 		}
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)shared_checksums, sizeof(*shared_checksums));
 

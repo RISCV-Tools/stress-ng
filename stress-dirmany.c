@@ -186,9 +186,9 @@ static int stress_dirmany(stress_args_t *args)
 			dirmany_bytes ? stress_uint64_to_str(sz, sizeof(sz), (uint64_t)dirmany_bytes, 1, true) : "0");
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		uint64_t i_end;
@@ -228,7 +228,7 @@ static int stress_dirmany(stress_args_t *args)
 			rate, STRESS_METRIC_HARMONIC_MEAN);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (total_created == 0)
 		pr_warn("%s: no files were created in %s\n", args->name, pathname);

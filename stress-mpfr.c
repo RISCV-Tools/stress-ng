@@ -383,9 +383,9 @@ static int stress_mpfr(stress_args_t *args)
 	mpfr_init2(r0, precision);
 	mpfr_init2(r1, precision);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		uint32_t w, z;
@@ -418,7 +418,7 @@ static int stress_mpfr(stress_args_t *args)
 		}
 	} while ((rc == EXIT_SUCCESS) && stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	mpfr_clear(r0);
 	mpfr_clear(r1);

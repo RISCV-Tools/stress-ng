@@ -448,9 +448,9 @@ static int stress_prefetch(stress_args_t *args)
 		args->name, l3_data_size >> 10, prefetch_methods[prefetch_method].name);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		for (i = 0; i < SIZEOF_ARRAY(prefetch_info); i++) {
@@ -503,7 +503,7 @@ static int stress_prefetch(stress_args_t *args)
 		success = false;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)l3_data, l3_data_mmap_size);
 

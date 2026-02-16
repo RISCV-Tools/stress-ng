@@ -117,9 +117,9 @@ static int stress_tun(stress_args_t *args)
 	(void)stress_setting_get("tun-port", &tun_port);
 	(void)stress_setting_get("tun-tap", &tun_tap);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		int i, fd, sfd, ret, status, parent_cpu;
@@ -205,7 +205,7 @@ static int stress_tun(stress_args_t *args)
 			ssize_t n;
 			char buffer[4];
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			(void)stress_affinity_change_cpu(args, parent_cpu);
 			stress_parent_died_alarm();
@@ -402,7 +402,7 @@ clean_up:
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 
 	return rc;

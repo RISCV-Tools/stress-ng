@@ -235,10 +235,10 @@ static int stress_mprotect(stress_args_t *args)
 		if (s_pids[i].pid == 0) {
 			int ret;
 
-			stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+			stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 			s_pids[i].pid = getpid();
 			stress_sync_start_wait_s_pid(&s_pids[i]);
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 
 			ret = stress_mprotect_mem(args, page_size, mem, mem_pages, prot_flags, n_flags);
@@ -248,16 +248,16 @@ static int stress_mprotect(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	stress_mprotect_mem(args, page_size, mem, mem_pages, prot_flags, n_flags);
 	if (stress_kill_and_wait_many(args, s_pids, MPROTECT_MAX, SIGALRM, true) == EXIT_FAILURE)
 		rc = EXIT_FAILURE;
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)mem, mem_size);
 

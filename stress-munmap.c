@@ -263,14 +263,14 @@ static int stress_munmap(stress_args_t *args)
 	}
 	stress_munmap_clean_path(ctxt->exec_path);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	while (stress_continue(args)) {
 		VOID_RET(int, stress_oomable_child(args, (void *)ctxt, stress_munmap_child, STRESS_OOMABLE_QUIET));
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = ctxt->count > 0.0 ? ctxt->duration / ctxt->count : 0.0;
 	stress_metrics_set(args, 0, "nanosecs per page munmap()",

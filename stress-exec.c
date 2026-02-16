@@ -377,7 +377,7 @@ static void *stress_exec_from_pthread(void *arg)
 	char buffer[128];
 
 	(void)snprintf(buffer, sizeof(buffer), "%s-pthread-exec", context->args->name);
-	stress_set_proc_name(buffer);
+	stress_proc_name_set(buffer);
 	ret = stress_call_exec_method(context);
 	pthread_exit((void *)&ret);
 
@@ -396,7 +396,7 @@ static void *stress_exec_dummy_pthread(void *arg)
 	char buffer[128];
 
 	(void)snprintf(buffer, sizeof(buffer), "%s-pthread-sleep", context->args->name);
-	stress_set_proc_name(buffer);
+	stress_proc_name_set(buffer);
 	(void)sleep(1);
 
 	pthread_exit((void *)&ret);
@@ -845,9 +845,9 @@ static int stress_exec(stress_args_t *args)
 		goto err_rm;
 	}
 #endif
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		NOCLOBBER uint32_t i, reap_count = 0;
@@ -894,7 +894,7 @@ static int stress_exec(stress_args_t *args)
 				pid = fork();
 				if (pid == 0) {
 					alarm(0);
-					stress_set_proc_state(args->name, STRESS_STATE_RUN);
+					stress_proc_state_set(args->name, STRESS_STATE_RUN);
 					stress_make_it_fail_set();
 					_exit(stress_exec_child(&sph->arg));
 				}
@@ -906,7 +906,7 @@ static int stress_exec(stress_args_t *args)
 				pid = rfork(RFPROC | RFFDG);
 				if (pid == 0) {
 					alarm(0);
-					stress_set_proc_state(args->name, STRESS_STATE_RUN);
+					stress_proc_state_set(args->name, STRESS_STATE_RUN);
 					_exit(stress_exec_child(&sph->arg));
 				}
 				break;
@@ -928,14 +928,14 @@ static int stress_exec(stress_args_t *args)
 			case EXEC_FORK_METHOD_CLONE:
 				stack_top = (char *)stress_stack_top(sph->stack, CLONE_STACK_SIZE);
 				stack_top = (char *)stress_align_stack(stack_top);
-				stress_set_proc_state(args->name, STRESS_STATE_RUN);
+				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 				pid = clone(stress_exec_child, stack_top, CLONE_VM | SIGCHLD, &sph->arg);
 				break;
 #endif
 #if defined(HAVE_SPAWN_H) &&	\
     defined(HAVE_POSIX_SPAWN)
 			case EXEC_FORK_METHOD_SPAWN:
-				stress_set_proc_state(args->name, STRESS_STATE_RUN);
+				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 				if (posix_spawn(&pid, exec_prog, NULL, NULL, sph->arg.argv, sph->arg.env) != 0)
 					pid = -1;
 				break;
@@ -967,7 +967,7 @@ static int stress_exec(stress_args_t *args)
 		}
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if (defined(HAVE_EXECVEAT) ||	\
      defined(HAVE_FEXECVE)) &&	\

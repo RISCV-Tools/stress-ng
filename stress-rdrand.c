@@ -288,9 +288,9 @@ static int stress_rdrand(stress_args_t *args)
 	}
 #endif
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (rdrand_supported) {
 		double time_start, duration, million_bits, rate;
@@ -365,7 +365,7 @@ static int stress_rdrand(stress_args_t *args)
 		stress_metrics_set(args, 1, "million random bits per sec",
 			rate, STRESS_METRIC_HARMONIC_MEAN);
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (average = 0.0, j = 0; j < SIZEOF_ARRAY(counters); j++)
 		average += (double)counters[j];

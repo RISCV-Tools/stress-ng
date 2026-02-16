@@ -360,9 +360,9 @@ static int stress_easy_opcode(stress_args_t *args)
 	/* Force pages resident */
 	(void)shim_memset(opcodes, 0x00, page_size * PAGES);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t = stress_time_now();
 	do {
@@ -390,7 +390,7 @@ again:
 			void *ops_end = (void *)((uint8_t *)ops_begin + ops_size);
 			static volatile uint64_t bogo_ops = 0;
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			(void)stress_sched_settings_apply(true);
 
@@ -447,7 +447,7 @@ finish:
 	rate = (duration > 0.0) ? (double)state->ops * (double)state->bogo_ops / duration : 0.0;
 	stress_metrics_set(args, 0, "easy opcodes exercised per sec", rate, STRESS_METRIC_HARMONIC_MEAN);
 err:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)opcodes, page_size * (2 + PAGES));
 	(void)munmap((void *)state, sizeof(*state));

@@ -1144,13 +1144,13 @@ static int stress_memrate(stress_args_t *args)
 			pr_inf("%s: for optimal speed, use multiples of 1 MB for --memrate-bytes\n", args->name);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = stress_oomable_child(args, context, stress_memrate_child, STRESS_OOMABLE_NORMAL);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rd_mantissa = 1.0;
 	rd_exponent = 0;

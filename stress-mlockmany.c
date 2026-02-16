@@ -140,9 +140,9 @@ static int stress_mlockmany_child(stress_args_t *args, void *context)
 	mlock_size = args->page_size * 1024;
 #endif
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		unsigned int n;
@@ -175,7 +175,7 @@ static int stress_mlockmany_child(stress_args_t *args, void *context)
 				void *ptr = MAP_FAILED;
 				size_t mmap_size = mlock_size;
 
-				stress_set_proc_state(args->name, STRESS_STATE_RUN);
+				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 				stress_make_it_fail_set();
 
 				/* In case we've missed SIGALRM */
@@ -264,7 +264,7 @@ unmap:
 		stress_kill_and_wait_many(args, s_pids, n, SIGKILL, false);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)stress_sync_s_pids_munmap(s_pids, mlockmany_procs);
 

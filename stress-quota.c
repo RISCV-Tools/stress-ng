@@ -409,9 +409,9 @@ static int stress_quota(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (!n_devs) {
 		pr_err("%s: cannot find any candidate block "
@@ -467,7 +467,7 @@ abort:
 	rc = EXIT_SUCCESS;
 
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 0; i < n_devs; i++) {
 		if (devs[i].name)

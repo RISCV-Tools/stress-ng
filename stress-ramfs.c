@@ -425,9 +425,9 @@ static int stress_ramfs_mount(stress_args_t *args)
 {
 	int pid;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 again:
@@ -474,14 +474,14 @@ again:
 				return EXIT_NO_RESOURCE;
 			}
 		} else {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			_exit(stress_ramfs_child(args));
 		}
 	} while (stress_continue(args));
 
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return EXIT_SUCCESS;
 }

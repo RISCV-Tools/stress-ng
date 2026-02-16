@@ -1210,9 +1210,9 @@ static int stress_cache(stress_args_t *args)
 			pr_inf("%s: use --cache-enable-all to enable all cache flags for heavier cache stressing\n", args->name);
 	}
 	(void)shim_memset(buffer, 0, buffer_size);
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (masked_flags) {
 		n_flags = stress_flag_permutation(masked_flags, &flag_permutations);
@@ -1364,7 +1364,7 @@ next:
 
 	stress_put_uint32(total);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (j = 0; j < SIZEOF_ARRAY(metrics); j++) {
 		const double rate = metrics[j].duration > 0.0 ?

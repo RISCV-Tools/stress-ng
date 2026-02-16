@@ -149,9 +149,9 @@ static int stress_mmapfork(stress_args_t *args)
 	}
 #endif
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		size_t i, len;
@@ -171,7 +171,7 @@ static int stress_mmapfork(stress_args_t *args)
 				const pid_t ppid = getppid();
 				size_t len_total;
 
-				stress_set_proc_state(args->name, STRESS_STATE_RUN);
+				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 				stress_make_it_fail_set();
 				stress_parent_died_alarm();
 				(void)stress_sched_settings_apply(true);
@@ -279,7 +279,7 @@ reap:
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(MADV_WIPEONFORK)
 	if (wipe_ptr != MAP_FAILED)

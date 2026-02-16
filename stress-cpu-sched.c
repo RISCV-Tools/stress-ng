@@ -505,7 +505,7 @@ again:
 		const pid_t child_pid = getpid();
 		int cpu_idx;
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 
 #if defined(HAVE_TIMER_CLOCK_REALTIME)
@@ -639,7 +639,7 @@ again:
 		const int cpu_idx = stress_cpu_sched_rand_cpu_idx();
 		const pid_t mypid = getpid();
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 #if defined(HAVE_TIMER_CLOCK_REALTIME)
 		if (timerid != (timer_t)-1) {
@@ -726,7 +726,7 @@ again:
 			int mode;
 #endif
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_parent_died_alarm();
 
 			stress_cpu_sched_set_handler();
@@ -915,12 +915,12 @@ static int stress_cpu_sched(stress_args_t *args)
 #endif
 	stress_set_oom_adjustment(args, false);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = stress_oomable_child(args, NULL, stress_cpu_sched_child, 0);
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(HAVE_SET_MEMPOLICY)
 	if (numa_mask)

@@ -291,12 +291,12 @@ again:
 
 		args->stats->s_pid.oomable_child = pid;
 rewait:
-		stress_set_proc_state(args->name, STRESS_STATE_WAIT);
+		stress_proc_state_set(args->name, STRESS_STATE_WAIT);
 		ret = waitpid(pid, &status, 0);
 		if (ret < 0) {
 			if (t_end < 0.0)
 				t_end = stress_time_now() + WAIT_TIMEOUT;
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			/* No longer alive? */
 			if (errno == ECHILD)
 				goto report;
@@ -322,7 +322,7 @@ rewait:
 				(void)shim_usleep(500000);
 			goto rewait;
 		} else if (WIFSIGNALED(status)) {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			if (not_quiet)
 				pr_dbg("%s: child died: %s (instance %" PRIu32 ")\n",
 					args->name, stress_signal_str(WTERMSIG(status)),
@@ -391,7 +391,7 @@ rewait:
 		int ret;
 
 		if (UNLIKELY(!stress_continue(args))) {
-			stress_set_proc_state(args->name, STRESS_STATE_EXIT);
+			stress_proc_state_set(args->name, STRESS_STATE_EXIT);
 			_exit(EXIT_SUCCESS);
 		}
 
@@ -411,7 +411,7 @@ rewait:
 		 */
 		if (UNLIKELY(!stress_continue(args) ||
 			     (valid_timeout && (stress_time_now() > args->time_end)))) {
-			stress_set_proc_state(args->name, STRESS_STATE_EXIT);
+			stress_proc_state_set(args->name, STRESS_STATE_EXIT);
 			_exit(EXIT_SUCCESS);
 		}
 
@@ -421,7 +421,7 @@ rewait:
 		if (rc != EXIT_SUCCESS)
 			ret = rc;
 
-		stress_set_proc_state(args->name, STRESS_STATE_EXIT);
+		stress_proc_state_set(args->name, STRESS_STATE_EXIT);
 		_exit(ret);
 	}
 

@@ -439,7 +439,7 @@ again:
 			goto again;
 		return;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		_exit(func(args, ctxt));
 	} else {
@@ -512,7 +512,7 @@ again:
 		if (stress_redo_fork(args, errno))
 			goto again;
 	} else if (pid_many == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		do {
 			stress_landlock_many(args, &ctxt, "/", 0);
@@ -520,9 +520,9 @@ again:
 		_exit(0);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		size_t i;
@@ -559,7 +559,7 @@ err:
 	if (pid_many != -1)
 		(void)stress_kill_pid_wait(pid_many, NULL);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return EXIT_SUCCESS;
 }

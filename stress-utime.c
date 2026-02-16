@@ -116,9 +116,9 @@ static int OPTIMIZE3 stress_utime(stress_args_t *args)
 #endif
 	stress_rndstr(hugename, sizeof(hugename));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 #if defined(HAVE_UTIMES)
@@ -527,7 +527,7 @@ STRESS_PRAGMA_POP
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (duration > 0.0) ? count / duration : 0.0;
 	stress_metrics_set(args, 0, "utime calls per sec",

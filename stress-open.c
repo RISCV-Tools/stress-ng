@@ -1137,7 +1137,7 @@ static int stress_open(stress_args_t *args)
 			pid = fork();
 
 			if (pid == 0) {
-				stress_set_proc_state(args->name, STRESS_STATE_RUN);
+				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 				stress_make_it_fail_set();
 				stress_fd_dir(path, &duration, &count);
 				_exit(0);
@@ -1149,9 +1149,9 @@ static int stress_open(stress_args_t *args)
 		all_open_flags |= open_flags[i];
 	open_count = stress_flag_permutation(all_open_flags, &open_perms);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		size_t n;
@@ -1234,7 +1234,7 @@ close_all:
 #endif
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)stress_fs_temp_dir_rm_args(args);
 	(void)munmap((void *)fds, sz);

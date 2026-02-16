@@ -229,9 +229,9 @@ static int OPTIMIZE3 stress_usersyscall(stress_args_t *args)
 	}
 	(void)shim_memset(&siginfo, 0, sizeof(siginfo));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		/*
@@ -356,7 +356,7 @@ static int OPTIMIZE3 stress_usersyscall(stress_args_t *args)
 	stress_metrics_set(args, 0, "nanosecs per syscall",
 		rate * STRESS_DBL_NANOSECOND, STRESS_METRIC_HARMONIC_MEAN);
 err:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

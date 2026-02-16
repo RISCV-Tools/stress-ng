@@ -470,16 +470,16 @@ static int stress_atomic(stress_args_t *args)
 		stress_zero_metrics(atomic_info[i].metrics, STRESS_ATOMIC_MAX_FUNCS);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 
 	for (i = 0; i < STRESS_ATOMIC_MAX_PROCS; i++) {
 		pid_t pid;
 
 		pid = fork();
 		if (pid == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+			stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 			stress_sync_start_wait_s_pid(&atomic_info[i].s_pid);
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			if (stress_atomic_exercise(args, &atomic_info[i], arch_bits) < 0)
 				_exit(EXIT_FAILURE);
@@ -492,7 +492,7 @@ static int stress_atomic(stress_args_t *args)
 
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pid_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (stress_atomic_exercise(args, &atomic_info[n_atomic_procs - 1], arch_bits) < 0)
 		rc = EXIT_FAILURE;
@@ -532,7 +532,7 @@ static int stress_atomic(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)atomic_info, atomic_info_sz);
 

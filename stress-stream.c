@@ -1288,9 +1288,9 @@ case_stream_index_1:
 	init_counter = 0;
 	init_counter_max = verify ? 1 : 64;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (stream_discontiguous) {
 		stress_mmap_discontiguous(a, sz);
@@ -1368,7 +1368,7 @@ case_stream_index_1:
 	}
 
 err_unmap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	if (idx3 != MAP_FAILED)
 		(void)munmap((void *)idx3, sz_idx);
 	if (idx2 != MAP_FAILED)

@@ -1008,9 +1008,9 @@ static int stress_inotify(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_fs_usage_bytes(args, BUF_SIZE, BUF_SIZE * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		for (i = 0; LIKELY(stress_continue(args) && inotify_stressors[i].func); i++) {
@@ -1022,7 +1022,7 @@ static int stress_inotify(stress_args_t *args)
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)stress_fs_temp_dir_rm_args(args);
 
 	return rc;

@@ -392,9 +392,9 @@ static int stress_sockabuse(stress_args_t *args)
 	if (stress_signal_handler(args->name, SIGPIPE, stress_signal_stop_flag_handler, NULL) < 0)
 		return EXIT_NO_RESOURCE;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	parent_cpu = stress_cpu_get();
 	pid = fork();
@@ -409,7 +409,7 @@ again:
 			args->name, errno, strerror(errno));
 		return EXIT_FAILURE;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 
@@ -420,7 +420,7 @@ again:
 		(void)stress_kill_pid_wait(pid, NULL);
 	}
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_net_release_ports(sockabuse_port, sockabuse_port);
 
 	return rc;

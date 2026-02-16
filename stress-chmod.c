@@ -311,9 +311,9 @@ static int stress_chmod(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		mode_t mask = 0;
@@ -346,7 +346,7 @@ static int stress_chmod(stress_args_t *args)
 
 	rc = EXIT_SUCCESS;
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(O_DIRECTORY)
 	if (dfd >= 0)

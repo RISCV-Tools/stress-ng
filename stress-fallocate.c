@@ -159,9 +159,9 @@ static int stress_fallocate(stress_args_t *args)
 
 	pipe_ret = pipe(pipe_fds);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 #if defined(O_SYNC)
@@ -322,7 +322,7 @@ static int stress_fallocate(stress_args_t *args)
 		(void)close(pipe_fds[0]);
 		(void)close(pipe_fds[1]);
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(O_SYNC)
 	if (fd_sync != -1)

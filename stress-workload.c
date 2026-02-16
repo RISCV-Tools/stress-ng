@@ -675,9 +675,9 @@ static int stress_workload(stress_args_t *args)
 
 	(void)stress_workload_set_sched(args, workload_sched);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		stress_workload_exercise(args,
@@ -695,7 +695,7 @@ static int stress_workload(stress_args_t *args)
 					buffer, buffer_len);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (stress_instance_zero(args))
 		stress_workload_bucket_report(args, &slice_offset_bucket);

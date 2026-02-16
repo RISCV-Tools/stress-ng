@@ -60,9 +60,9 @@ static int stress_sigtrap(stress_args_t *args)
 	if (stress_signal_handler(args->name, SIGTRAP, stress_sigtrap_handler, NULL) < 0)
 		return EXIT_NO_RESOURCE;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	while (stress_continue(args)) {
 		switch (stress_mwc1()) {
@@ -86,7 +86,7 @@ static int stress_sigtrap(stress_args_t *args)
 		}
 		stress_bogo_set(args, counter);
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if ((raised > 0) && (counter == 0)) {
 		pr_fail("%s: %" PRIu64 " SIGTRAP%s raised, no SIGTRAPs handled\n",

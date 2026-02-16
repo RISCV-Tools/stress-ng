@@ -146,9 +146,9 @@ static int stress_chdir(stress_args_t *args)
 		goto abort;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		for (i = 0; LIKELY(stress_continue(args) && (i < chdir_dirs)); i++) {
@@ -263,7 +263,7 @@ abort:
 			args->name, cwd, errno, strerror(errno),
 			stress_fs_type_get(cwd));
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	/* force unlink of all files */
 	start_time = stress_time_now();
@@ -287,7 +287,7 @@ tidy:
 	stress_metrics_set(args, 0, "chdir calls per sec",
 		rate, STRESS_METRIC_HARMONIC_MEAN);
 err:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	free(chdir_info);
 
 	return ret;

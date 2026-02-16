@@ -1029,7 +1029,7 @@ void stress_vmstat_start(void)
 		return;
 
 	stress_parent_died_alarm();
-	stress_set_proc_name("stat [periodic]");
+	stress_proc_name_set("stat [periodic]");
 
 	if (vmstat_delay)
 		stress_get_vmstat(&vmstat);

@@ -231,9 +231,9 @@ static int stress_peterson(stress_args_t *args)
 	stress_zero_metrics(&peterson->p0, 1);
 	stress_zero_metrics(&peterson->p1, 1);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	peterson->m.flag[0] = false;
 	peterson->m.flag[1] = false;
@@ -245,7 +245,7 @@ static int stress_peterson(stress_args_t *args)
 		return EXIT_NO_RESOURCE;
 	} else if (pid == 0) {
 		/* Child */
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 		while (stress_continue(args)) {
@@ -269,7 +269,7 @@ static int stress_peterson(stress_args_t *args)
                 }
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	duration = peterson->p0.duration + peterson->p1.duration;
 	count = peterson->p0.count + peterson->p1.count;

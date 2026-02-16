@@ -571,9 +571,9 @@ static int stress_module(stress_args_t *args)
 	if (stress_instance_zero(args))
 		pr_inf("%s: exercising module '%s'\n", args->name, module_name);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	ret = EXIT_SUCCESS;
 	do {
@@ -588,7 +588,7 @@ static int stress_module(stress_args_t *args)
 	} while (stress_continue(args));
 
 out:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (fd >= 0)
 		(void)close(fd);

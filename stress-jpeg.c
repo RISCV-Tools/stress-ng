@@ -441,9 +441,9 @@ static int stress_jpeg(stress_args_t *args)
 		stress_usage_bytes(args, total_size, total_size * args->instances);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t_jpeg = 0.0;
 	t_start = stress_time_now();
@@ -484,7 +484,7 @@ static int stress_jpeg(stress_args_t *args)
 	stress_metrics_set(args, 1, "% compression ratio",
 		ratio, STRESS_METRIC_HARMONIC_MEAN);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if ((size_compressed > 0) && (size_uncompressed > 0)) {
 		pr_dbg("%s: compressed to %.1f%% of original size, %.2f secs of jpeg compute, %.2f jpegs/sec\n",

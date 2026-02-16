@@ -335,10 +335,10 @@ void stress_timer_slack_set(void)
 }
 
 /*
- *  stress_set_proc_name_init()
+ *  stress_proc_name_init()
  *	init setproctitle if supported
  */
-void stress_set_proc_name_init(int argc, char *argv[], char *envp[])
+void stress_proc_name_init(int argc, char *argv[], char *envp[])
 {
 #if defined(HAVE_SETPROCTITLE) && \
     defined(HAVE_SETPROCTITLE_INIT)
@@ -352,10 +352,10 @@ void stress_set_proc_name_init(int argc, char *argv[], char *envp[])
 }
 
 /*
- *  stress_set_proc_name_raw()
+ *  stress_proc_name_raw_set()
  *	set process name as given, no special formatting
  */
-void stress_set_proc_name_raw(const char *name)
+void stress_proc_name_raw_set(const char *name)
 {
 	if (UNLIKELY(!name))
 		return;
@@ -374,7 +374,7 @@ void stress_set_proc_name_raw(const char *name)
 }
 
 /*
- *  stress_set_proc_name_scramble()
+ *  stress_proc_name_scramble()
  *	turn pid and time now into a scrambled process name
  *	to fool any schedulers (e.g. sched_ext) that try to
  *	infer process scheduling policy from a process name
@@ -383,7 +383,7 @@ void stress_set_proc_name_raw(const char *name)
  *	signal context in the future and we need to avoid
  *	changing the mwc state.
  */
-void stress_set_proc_name_scramble(void)
+void stress_proc_name_scramble(void)
 {
 	char name[65];
 	char *ptr;
@@ -461,55 +461,55 @@ void stress_set_proc_name_scramble(void)
 		i += v & 3;
 	}
 	*ptr = '\0';
-	stress_set_proc_name_raw(name);
+	stress_proc_name_raw_set(name);
 }
 
 /*
- *  stress_set_proc_name()
+ *  stress_proc_name_set()
  *	Set process name, we don't care if it fails
  */
-void stress_set_proc_name(const char *name)
+void stress_proc_name_set(const char *name)
 {
 	char long_name[64];
 
 	if (g_opt_flags & OPT_FLAGS_RANDPROCNAME) {
-		stress_set_proc_name_scramble();
+		stress_proc_name_scramble();
 		return;
 	}
 	if (UNLIKELY(!name))
 		return;
 	(void)snprintf(long_name, sizeof(long_name), "%s-%s",
 			g_prog_name, name);
-	stress_set_proc_name_raw(long_name);
+	stress_proc_name_raw_set(long_name);
 }
 
 /*
- *  stress_set_proc_state_str
+ *  stress_proc_name_state_str_set
  *	set process name based on run state string, see
  *	macros STRESS_STATE_*
  */
-void stress_set_proc_state_str(const char *name, const char *str)
+void stress_proc_name_state_str_set(const char *name, const char *str)
 {
 	char long_name[64];
 
 	(void)str;
 	if (g_opt_flags & OPT_FLAGS_RANDPROCNAME) {
-		stress_set_proc_name_scramble();
+		stress_proc_name_scramble();
 		return;
 	}
 	if (UNLIKELY(!name))
 		return;
 	(void)snprintf(long_name, sizeof(long_name), "%s-%s",
 			g_prog_name, name);
-	stress_set_proc_name_raw(long_name);
+	stress_proc_name_raw_set(long_name);
 }
 
 /*
- *  stress_set_proc_state
+ *  stress_proc_state_set
  *	set process name based on run state, see
  *	macros STRESS_STATE_*
  */
-void stress_set_proc_state(const char *name, const int state)
+void stress_proc_state_set(const char *name, const int state)
 {
 	static const char * const stress_states[] = {
 		"start",
@@ -528,7 +528,7 @@ void stress_set_proc_state(const char *name, const int state)
 	if (UNLIKELY((state < 0) || (state >= (int)SIZEOF_ARRAY(stress_states))))
 		return;
 
-	stress_set_proc_state_str(name, stress_states[state]);
+	stress_proc_name_state_str_set(name, stress_states[state]);
 }
 
 /*

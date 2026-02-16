@@ -654,9 +654,9 @@ static int stress_str(stress_args_t *args)
 
 	stress_zero_metrics(metrics, SIZEOF_ARRAY(metrics));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		register char *tmpptr;
@@ -678,7 +678,7 @@ static int stress_str(stress_args_t *args)
 		info.len2 = tmplen;
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	/* dump metrics of methods except for first "all" method */
 	for (i = 1, j = 0; i < SIZEOF_ARRAY(metrics); i++) {

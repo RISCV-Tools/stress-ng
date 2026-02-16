@@ -76,9 +76,9 @@ static int stress_sigrt(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (i = 0; i < MAX_RTSIGS; i++) {
 again:
@@ -96,7 +96,7 @@ again:
 			siginfo_t info ALIGN64;
 			int idx, j;
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			stress_parent_died_alarm();
 			(void)stress_sched_settings_apply(true);
@@ -160,7 +160,7 @@ again:
 		}
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)shim_memset(&s, 0, sizeof(s));
 	for (i = 0; i < MAX_RTSIGS; i++) {
@@ -171,7 +171,7 @@ again:
 	}
 	(void)shim_usleep(250);
 reap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 0; i < MAX_RTSIGS; i++) {
 		if (pids[i] > 0) {

@@ -533,10 +533,10 @@ again:
 			goto again;
 		return -1;
 	} else if (s_pid->pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+		stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 		s_pid->pid = getpid();
 		stress_sync_start_wait_s_pid(s_pid);
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 
 		stress_parent_died_alarm();
@@ -596,16 +596,16 @@ static int stress_sem_sysv(stress_args_t *args)
 			goto reap;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	/* Wait for termination */
 	while (stress_continue(args))
 		(void)shim_pause();
 reap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_kill_and_wait_many(args, s_pids, semaphore_sysv_procs, SIGALRM, true);
 	stress_sync_s_pids_munmap(s_pids, MAX_SEM_SYSV_PROCS);
 

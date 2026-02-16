@@ -201,9 +201,9 @@ static int stress_vecwide(stress_args_t *args)
 	(void)shim_memset(&vec_args->v23, 23, sizeof(vec_args->v23));
 	(void)shim_memset(&vec_args->v3, 3, sizeof(vec_args->v3));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		for (i = 0; i < SIZEOF_ARRAY(stress_vecwide_funcs); i++) {
@@ -274,7 +274,7 @@ static int stress_vecwide(stress_args_t *args)
 			rate, STRESS_METRIC_HARMONIC_MEAN);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)vec_args, vec_args_size);
 

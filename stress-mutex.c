@@ -221,9 +221,9 @@ static int stress_mutex(stress_args_t *args)
 	n_cpus = stress_affinity_cpus_get(&cpus, true);
 #endif
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (i = 0; i < mutex_procs; i++)
 		pthread_info[i].ret = -1;
@@ -260,7 +260,7 @@ static int stress_mutex(stress_args_t *args)
 	while (stress_continue(args))
 		(void)shim_pause();
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 0; i < mutex_procs; i++) {
 		if (pthread_info[i].ret)

@@ -4813,9 +4813,9 @@ static int stress_dev(stress_args_t *args)
 	
 	stress_dev_info_list_state_init(dev_info_list, mmap_dev_states);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		pid_t pid;
@@ -4849,7 +4849,7 @@ again:
 			int r;
 			sys_dev_info_t *sys_dev_info = sys_dev_info_list;
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			stress_parent_died_alarm();
 			(void)stress_sched_settings_apply(true);
@@ -4906,7 +4906,7 @@ again:
 	(void)munmap((void *)mmap_dev_states, mmap_dev_states_size);
 
 deinit:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)shim_pthread_spin_destroy(&lock);
 
 	/*

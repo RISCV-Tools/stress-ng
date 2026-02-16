@@ -314,9 +314,9 @@ static int stress_pci(stress_args_t *args)
 	(void)stress_setting_get("pci-ops-rate", &pci_ops_rate);
 	t_delta = pci_ops_rate > 0 ? (double)args->instances / (double)pci_ops_rate : 0.0;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	ret = sigsetjmp(jmp_env, 1);
 	if (ret) {
@@ -366,7 +366,7 @@ static int stress_pci(stress_args_t *args)
 		}
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (stress_instance_zero(args)) {
 		pr_block_begin();

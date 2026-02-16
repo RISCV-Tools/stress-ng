@@ -70,9 +70,9 @@ static int stress_null(stress_args_t *args)
 
 	(void)shim_memset(buffer, 0xff, sizeof(buffer));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (null_write) {
 		if (stress_instance_zero(args))
@@ -187,7 +187,7 @@ static int stress_null(stress_args_t *args)
 	}
 	(void)close(fd);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (duration > 0.0) ? ((double)bytes / duration) / (double)MB : 0.0;
 	stress_metrics_set(args, 0, "MB per sec /dev/null write rate",

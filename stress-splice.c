@@ -249,9 +249,9 @@ static int stress_splice(stress_args_t *args)
 	 */
 	use_splice_loop = stress_splice_non_block_write_4K(fds3[1]);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		ssize_t ret;
@@ -356,7 +356,7 @@ static int stress_splice(stress_args_t *args)
 
 	rc = EXIT_SUCCESS;
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (duration > 0.0) ? bytes / duration : 0.0;
 	stress_metrics_set(args, 0, "MB per sec splice rate",
@@ -364,28 +364,28 @@ static int stress_splice(stress_args_t *args)
 
 	(void)close(fd_out);
 close_fds4:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fds4[0]);
 	(void)close(fds4[1]);
 close_fds3:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fds3[0]);
 	(void)close(fds3[1]);
 close_fds2:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fds2[0]);
 	(void)close(fds2[1]);
 close_fds1:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fds1[0]);
 	(void)close(fds1[1]);
 close_fd_in:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd_in);
 close_unmap:
 	(void)munmap((void *)buffer, (size_t)buffer_len);
 close_done:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

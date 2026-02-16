@@ -470,9 +470,9 @@ static int stress_madvise(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_usage_bytes(args, ctxt.madvise_bytes, ctxt.madvise_bytes * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		NOCLOBBER uint8_t *buf;
@@ -613,7 +613,7 @@ madv_free_out:
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)close(fd);
 	(void)stress_fs_temp_dir_rm_args(args);

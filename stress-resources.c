@@ -130,9 +130,9 @@ static int stress_resources(stress_args_t *args)
 			resources_num, resources_num == 1 ? "" : "s",
 			resources_procs, resources_procs == 1 ? "" : "es");
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		size_t i, forked, reaped;
@@ -153,7 +153,7 @@ static int stress_resources(stress_args_t *args)
 			if (pid == 0) {
 				size_t n;
 
-				stress_set_proc_state(args->name, STRESS_STATE_RUN);
+				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 				stress_set_oom_adjustment(args, true);
 				VOID_RET(int, stress_capabilities_drop(args->name));
 				stress_make_it_fail_set();
@@ -207,7 +207,7 @@ static int stress_resources(stress_args_t *args)
 		} while (reaped < forked);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	free(resources);
 	(void)stress_sync_s_pids_munmap(s_pids, resources_procs);
 

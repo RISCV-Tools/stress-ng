@@ -286,9 +286,9 @@ static int stress_physpage(stress_args_t *args)
 	if (fd_mem < 0)
 		fd_mem = open("/dev/mem", O_RDONLY);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		void *nptr;
@@ -308,7 +308,7 @@ static int stress_physpage(stress_args_t *args)
 		stress_bogo_inc(args);
 	} while (success && stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (fd_mem >= 0)
 		(void)close(fd_mem);

@@ -108,9 +108,9 @@ static int stress_lsm(stress_args_t *args)
 	}
 	stress_set_vma_anon_name(buf, buf_size, "lsm-data");
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		size_t size, j;
@@ -239,7 +239,7 @@ err:
 		lsm_id_reserved ? "yes" : "no",
 		lsm_id_defined ? "yes" : "no");
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)munmap(buf, buf_size);
 
 	return rc;

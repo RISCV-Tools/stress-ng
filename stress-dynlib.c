@@ -128,9 +128,9 @@ static int stress_dynlib(stress_args_t *args)
 	if (stress_signal_handler(args->name, SIGSEGV, stress_segvhandler, NULL) < 0)
 		return EXIT_NO_RESOURCE;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		size_t i;
@@ -186,7 +186,7 @@ tidy:
 	stress_metrics_set(args, 0, "nanosecs per dlsym lookup",
 		rate * STRESS_DBL_NANOSECOND, STRESS_METRIC_HARMONIC_MEAN);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return EXIT_SUCCESS;
 }

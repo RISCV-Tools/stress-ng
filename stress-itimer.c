@@ -149,9 +149,9 @@ static int stress_itimer(stress_args_t *args)
 	if (stress_signal_handler(args->name, SIGPROF, stress_itimer_handler, NULL) < 0)
 		return EXIT_FAILURE;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	stress_itimer_set(&timer);
 	if (setitimer(ITIMER_PROF, &timer, NULL) < 0) {
@@ -183,7 +183,7 @@ static int stress_itimer(stress_args_t *args)
 			args->name);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)shim_memset(&timer, 0, sizeof(timer));
 	(void)setitimer(ITIMER_PROF, &timer, NULL);

@@ -461,9 +461,9 @@ static int stress_opcode(stress_args_t *args)
 	(void)stress_setting_get("opcode-method", &opcode_method);
 	method = &stress_opcode_methods[opcode_method];
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	op_start = (num_opcodes * (double)args->instance) / args->instances;
 	vstate->opcode = (uint64_t)op_start;
@@ -482,7 +482,7 @@ static int stress_opcode(stress_args_t *args)
 
 			(void)snprintf(buf, sizeof(buf), "opcode-0x%*.*" PRIx64 " [run]",
 				OPCODE_HEX_DIGITS, OPCODE_HEX_DIGITS, vstate->opcode);
-			stress_set_proc_name(buf);
+			stress_proc_name_set(buf);
 		}
 again:
 		jmp_env_set = false;
@@ -504,7 +504,7 @@ again:
 			void *ops_end = (void *)((uint8_t *)ops_begin + ops_size);
 			NOCLOBBER void *ops_ptr;
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			(void)stress_sched_settings_apply(true);
 
@@ -672,7 +672,7 @@ finish:
 	stress_metrics_set(args, 7, "forks per sec",
 		rate, STRESS_METRIC_HARMONIC_MEAN);
 err:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)opcodes, page_size * (PAGES + 2));
 	(void)munmap((void *)state, sizeof(*state));

@@ -115,9 +115,9 @@ static int OPTIMIZE3 stress_fibsearch(stress_args_t *args)
 	}
 	stress_set_vma_anon_name(data, data_size, "fibsearch-data");
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		double t;
@@ -149,7 +149,7 @@ static int OPTIMIZE3 stress_fibsearch(stress_args_t *args)
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (duration > 0.0) ? count / duration : 0.0;
 	stress_metrics_set(args, 0, "fibsearch comparisons per sec",

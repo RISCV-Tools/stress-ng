@@ -301,9 +301,9 @@ static int stress_spinmem(stress_args_t *args)
 	spinmem_reader = spinmem_funcs[spinmem_method].reader;
 	spinmem_writer = spinmem_funcs[spinmem_method].writer;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	pid = fork();
 	if (pid < 0) {
@@ -312,7 +312,7 @@ static int stress_spinmem(stress_args_t *args)
 		rc = EXIT_NO_RESOURCE;
 		goto tidy;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 
 #if defined(HAVE_SCHED_SETAFFINITY)
@@ -388,7 +388,7 @@ completed:
 tidy:
 	if (pid > 0)
 		stress_kill_and_wait(args, pid, SIGKILL, false);
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (count > 0.0) ? duration / count : 0.0;
 	stress_metrics_set(args, 0, "nanoseconds per spin write/read",

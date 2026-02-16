@@ -134,9 +134,9 @@ static int stress_link_generic(
 	mounts_max = stress_mount_get(mnts, MOUNTS_MAX);
 	oldpathlen = strlen(oldpath);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = EXIT_SUCCESS;
 	t_start = stress_time_now();
@@ -292,7 +292,7 @@ static int stress_link_generic(
 err_unlink:
 		/* time to finish, indicate so while the slow unlink occurs */
 		if (UNLIKELY(!stress_continue(args)))
-			stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+			stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 #if defined(O_DIRECTORY)
 		if (temp_dir_fd > 0)
 			fsync(temp_dir_fd);
@@ -309,7 +309,7 @@ err_unlink:
 	rate = (duration > 0.0) ? link_count / duration : 0.0;
 	stress_metrics_set(args, 0, "links created/removed per sec", rate, STRESS_METRIC_HARMONIC_MEAN);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(O_DIRECTORY)
 	if (temp_dir_fd >= 0)

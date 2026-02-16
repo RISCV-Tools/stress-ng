@@ -1775,9 +1775,9 @@ static int OPTIMIZE3 stress_cachehammer(stress_args_t *args)
 	}
 
 	(void)shim_memset(buffer, 0, buffer_size);
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	(void)sigsetjmp(jmp_env, 1);
 	func_index = stress_mwc32modn((uint32_t)N_FUNCS);
@@ -1905,7 +1905,7 @@ static int OPTIMIZE3 stress_cachehammer(stress_args_t *args)
 			pr_inf("%s: disabled%s due to SIGBUS/SEGV/SIGILL\n", args->name, buf);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	mantissa = 1.0;
 	exponent = 0;

@@ -362,9 +362,9 @@ static int stress_sockmany(stress_args_t *args)
 		return EXIT_NO_RESOURCE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	parent_cpu = stress_cpu_get();
 	pid = fork();
@@ -379,7 +379,7 @@ again:
 			args->name, errno, strerror(errno));
 		rc = EXIT_FAILURE;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 
@@ -394,7 +394,7 @@ again:
 	pr_dbg("%s: %d sockets opened at one time\n", args->name, sock_fds->max_fd);
 
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_net_release_ports(sockmany_port, sockmany_port);
 
 	(void)munmap((void *)sock_fds, sizeof(*sock_fds));

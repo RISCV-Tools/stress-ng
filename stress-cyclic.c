@@ -752,9 +752,9 @@ static int stress_cyclic(stress_args_t *args)
 	if (stress_instance_zero(args))
 		pr_dbg("%s: using method '%s'\n", args->name, cyclic_methods[cyclic_method].name);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 again:
 	pid = fork();
@@ -779,7 +779,7 @@ again:
     defined(HAVE_SCHED_GET_PRIORITY_MAX)
 		mypid = getpid();
 #endif
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 
 		/*
@@ -959,7 +959,7 @@ tidy:
 	}
 
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)rt_stats->latencies, rt_stats->latencies_size);
 	(void)munmap((void *)rt_stats, size);

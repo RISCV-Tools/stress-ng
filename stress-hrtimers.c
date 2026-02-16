@@ -218,10 +218,10 @@ static int stress_hrtimers(stress_args_t *args)
 		s_pids[i].pid = fork();
 		if (s_pids[i].pid == 0) {
 			/* Child */
-			stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+			stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 			s_pids[i].pid = getpid();
 			stress_sync_start_wait_s_pid(&s_pids[i]);
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 
 			stress_parent_died_alarm();
@@ -234,10 +234,10 @@ static int stress_hrtimers(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	(void)sigemptyset(&mask);
 	(void)sigaddset(&mask, SIGRTMIN);
@@ -249,7 +249,7 @@ static int stress_hrtimers(stress_args_t *args)
 	} while (stress_continue(args));
 
 reap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	stress_kill_and_wait_many(args, s_pids, PROCS_MAX, SIGALRM, true);
 	end_time = stress_time_now();

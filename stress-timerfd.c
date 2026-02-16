@@ -222,9 +222,9 @@ static int stress_timerfd(stress_args_t *args)
 	}
 #endif
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 #if defined(CLOCK_REALTIME)
 	/* Exercise timerfd_create with invalid flags */
@@ -386,7 +386,7 @@ poll_fail:
 		}
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 
 close_timer_fds:

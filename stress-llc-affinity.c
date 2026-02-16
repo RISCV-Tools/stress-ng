@@ -488,9 +488,9 @@ static int stress_llc_affinity(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_usage_bytes(args, mmap_sz, mmap_sz * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	writes = 0.0;
 	write_duration = 0.0;
@@ -597,7 +597,7 @@ static int stress_llc_affinity(stress_args_t *args)
 	stress_metrics_set(args, 2, "CPU affinity changes per sec",
 		rate, STRESS_METRIC_HARMONIC_MEAN);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)buf, mmap_sz);
 

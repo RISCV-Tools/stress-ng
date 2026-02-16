@@ -190,7 +190,7 @@ static int stress_dup2_race(stress_args_t *args, info_t *info)
 	if (pid < 0) {
 		return -1;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		static_dup2_child(info);
 		_exit(0);
 	} else {
@@ -244,9 +244,9 @@ static int stress_dup(stress_args_t *args)
 		goto tidy_fds;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		size_t n;
@@ -403,7 +403,7 @@ static int stress_dup(stress_args_t *args)
 	} while (stress_continue(args));
 
 tidy_fds:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fds[0]);
 
 #if defined(STRESS_DUP2_RACE)
@@ -414,7 +414,7 @@ tidy_fds:
 	}
 
 tidy_mmap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	if (info != MAP_FAILED) {
 		pr_dbg("%s: dup2: %" PRIu64 " races from %" PRIu64 " attempts (%.2f%%)\n",
 			args->name, info->race_count, info->try_count,

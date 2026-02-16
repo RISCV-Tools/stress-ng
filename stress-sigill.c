@@ -225,9 +225,9 @@ static int stress_sigill(stress_args_t *args)
         const bool verify = !!(g_opt_flags & OPT_FLAGS_VERIFY);
 #endif
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (;;) {
 		struct sigaction action;
@@ -331,7 +331,7 @@ static int stress_sigill(stress_args_t *args)
 		}
 		stress_illegal_op();
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return EXIT_SUCCESS;
 }

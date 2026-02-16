@@ -88,9 +88,9 @@ static int stress_sigchld(stress_args_t *args)
 		return EXIT_FAILURE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		pid_t pid;
@@ -118,7 +118,7 @@ again:
 	} while (stress_continue(args));
 
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	stress_metrics_set(args, 0, "child exited", (double)cld_exited, STRESS_METRIC_TOTAL);
 	stress_metrics_set(args, 1, "child killed", (double)cld_killed, STRESS_METRIC_TOTAL);

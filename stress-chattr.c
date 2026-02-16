@@ -363,9 +363,9 @@ static int stress_chattr(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_fs_usage_bytes(args, args->page_size, args->page_size * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	idx = 0;
 	t = stress_time_now();
@@ -409,7 +409,7 @@ static int stress_chattr(stress_args_t *args)
 
 	duration = stress_time_now() - t;
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (duration > 0.0) ? (double)chattr_count / duration : 0.0;
 	stress_metrics_set(args, 0, "successful chattr flags set per sec",

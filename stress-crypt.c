@@ -151,9 +151,9 @@ static int stress_crypt(stress_args_t *args)
 #if defined(HAVE_CRYPT_R)
 	(void)shim_memset(&data, 0, sizeof(data));
 #endif
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		static const char seedchars[64] ALIGN64 = {
@@ -237,7 +237,7 @@ static int stress_crypt(stress_args_t *args)
 			break;
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 1, j = 0; i < SIZEOF_ARRAY(crypt_methods); i++) {
 		const double duration = crypt_metrics[i].duration;

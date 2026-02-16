@@ -261,7 +261,7 @@ static void stress_zombie_free(void)
 static inline ALWAYS_INLINE int stress_zombie_child(stress_args_t *args)
 {
 	stress_make_it_fail_set();
-	stress_set_proc_state(args->name, STRESS_STATE_ZOMBIE);
+	stress_proc_state_set(args->name, STRESS_STATE_ZOMBIE);
 
 	return 0;
 }
@@ -338,9 +338,9 @@ static int stress_zombie(stress_args_t *args)
         }
 #endif
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		if (zombies.length < zombie_max) {
@@ -394,7 +394,7 @@ static int stress_zombie(stress_args_t *args)
 	stress_metrics_set(args, 0, "created zombies per stressor",
 		(double)max_zombies, STRESS_METRIC_HARMONIC_MEAN);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	/* And reap */
 	while (zombies.head) {

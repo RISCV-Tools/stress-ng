@@ -62,9 +62,9 @@ static int stress_alarm(stress_args_t *args)
 	if (stress_signal_handler(args->name, SIGALRM, stress_signal_ignore_handler, NULL) < 0)
 		return EXIT_FAILURE;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 again:
 	pid = fork();
@@ -79,7 +79,7 @@ again:
 	} else if (pid == 0) {
 		int err_mask = 0;
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 		if (stress_signal_handler(args->name, SIGUSR1, stress_signal_exit_handler, NULL) < 0)
 			_exit(EXIT_FAILURE);
@@ -190,7 +190,7 @@ again:
 			}
 		}
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

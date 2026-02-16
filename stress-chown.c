@@ -228,9 +228,9 @@ static int stress_chown(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 #if defined(HAVE_PATHCONF) &&	\
     defined(_PC_CHOWN_RESTRICTED)
@@ -274,7 +274,7 @@ static int stress_chown(stress_args_t *args)
 	} while (stress_continue(args));
 
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (fd >= 0)
 		(void)close(fd);

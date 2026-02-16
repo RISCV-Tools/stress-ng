@@ -239,9 +239,9 @@ static int OPTIMIZE_GOTO stress_goto(stress_args_t *args)
 
 	(void)stress_setting_get("goto-direction", &goto_direction);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	switch (goto_direction) {
 	case STRESS_GOTO_FORWARD:
@@ -435,7 +435,7 @@ L0x000:
 	stress_metrics_set(args, 0, "million gotos per sec",
 		rate / 1000000.0, STRESS_METRIC_HARMONIC_MEAN);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

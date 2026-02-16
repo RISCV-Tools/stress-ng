@@ -219,9 +219,9 @@ static int stress_dekker(stress_args_t *args)
 	stress_zero_metrics(&dekker->p0, 1);
 	stress_zero_metrics(&dekker->p1, 1);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	parent_cpu = stress_cpu_get();
 	pid = fork();
@@ -230,7 +230,7 @@ static int stress_dekker(stress_args_t *args)
 		return EXIT_NO_RESOURCE;
 	} else if (pid == 0) {
 		/* Child */
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 
@@ -261,7 +261,7 @@ static int stress_dekker(stress_args_t *args)
 	stress_metrics_set(args, 0, "nanosecs per mutex",
 		rate * STRESS_DBL_NANOSECOND, STRESS_METRIC_HARMONIC_MEAN);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)munmap((void *)dekker, sz);
 
 	return rc;

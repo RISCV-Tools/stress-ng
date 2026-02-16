@@ -346,9 +346,9 @@ static int stress_signest(stress_args_t *args)
 
 	jmp_env_ok = true;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t = stress_time_now();
 	do {
@@ -409,7 +409,7 @@ finish:
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rc = EXIT_SUCCESS;
 	if ((raised > 0) && (handled == 0)) {

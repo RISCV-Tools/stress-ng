@@ -697,7 +697,7 @@ mapped_ok:
 		if (stress_mwc1()) {
 			pid = fork();
 			if (pid == 0) {
-				stress_set_proc_state(args->name, STRESS_STATE_RUN);
+				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 				stress_make_it_fail_set();
 
 #if defined(HAVE_MLOCKALL) &&	\
@@ -838,7 +838,7 @@ mappings_unmap:
 			(void)stress_kill_and_wait(args, pid, SIGKILL, false);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(HAVE_LINUX_MEMPOLICY_H)
 	if (numa_mask)
@@ -874,9 +874,9 @@ static int stress_mmaptorture(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_usage_bytes(args, mmap_bytes, mmap_bytes * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t_start = stress_time_now();
 	ret = stress_oomable_child(args, NULL, stress_mmaptorture_child, STRESS_OOMABLE_NORMAL);

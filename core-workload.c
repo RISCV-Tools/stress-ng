@@ -156,7 +156,7 @@ static void stress_workload_procname(const char *name)
 	(void)snprintf(procname, sizeof(procname),
 		"%s-%" PRIx64 "%" PRIx64 "%" PRIx64,
 		name, stress_mwc64(), stress_mwc64(), stress_mwc64());
-	stress_set_proc_name(procname);
+	stress_proc_name_set(procname);
 }
 
 static void OPTIMIZE3 TARGET_CLONES stress_workload_read(void *buffer, const size_t buffer_len)

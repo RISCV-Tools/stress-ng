@@ -384,9 +384,9 @@ static int stress_inode_flags(stress_args_t *args)
 				stress_inode_flags_thread, &pa[i]);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		stress_inode_flags_stressor(args, &data);
@@ -406,13 +406,13 @@ static int stress_inode_flags(stress_args_t *args)
 	stress_inode_flags_ioctl_sane(data.dir_fd);
 	stress_inode_flags_ioctl_sane(data.file_fd);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(data.file_fd);
 tidy_dir_fd:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(data.dir_fd);
 tidy_unlink:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)shim_unlink(file_name);
 	stress_fs_temp_dir_rm_args(args);
 tidy_inode_flag_perms:

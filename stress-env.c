@@ -94,9 +94,9 @@ static int stress_env_child(stress_args_t *args, void *context)
 
 	stress_mwc_reseed();
 	stress_rndstr(value, arg_max);
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	env_max = stress_env_max();
 	stress_mwc_get_seed(&seed_w, &seed_z);
@@ -169,7 +169,7 @@ static int stress_env_child(stress_args_t *args, void *context)
 	} while (stress_continue(args));
 
 reap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)value, arg_max);
 

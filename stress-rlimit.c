@@ -161,9 +161,9 @@ static int stress_rlimit_child(stress_args_t *args, void *ctxt)
 	}
 	stress_set_vma_anon_name(stack, STRESS_MINSIGSTKSZ, "stack");
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	/* Child rlimit stressor */
 	do {
@@ -263,7 +263,7 @@ static int stress_rlimit_child(stress_args_t *args, void *ctxt)
 		}
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)close(context->fd);
 	(void)munmap((void *)stack, STRESS_MINSIGSTKSZ);

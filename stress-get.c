@@ -1068,9 +1068,9 @@ static int stress_get(stress_args_t *args)
 	mypid = getpid();
 	verify = !!(g_opt_flags & OPT_FLAGS_VERIFY);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	i = 0;
 
@@ -1089,7 +1089,7 @@ static int stress_get(stress_args_t *args)
 	/* getlogin can re-set alarm(), so exercise it once at end */
 	stress_getlogin(args);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	stress_mount_free(mnts, mounts_max);
 

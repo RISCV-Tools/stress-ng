@@ -172,9 +172,9 @@ static int stress_sigbus(stress_args_t *args)
 		goto tidy_mmap;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	time_start = stress_time_now();
 
@@ -282,13 +282,13 @@ static int stress_sigbus(stress_args_t *args)
 tidy_exit:
 	rc = EXIT_SUCCESS;
 tidy_mmap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)munmap((void *)ptr, args->page_size * 2);
 tidy_close:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd);
 tidy_dir:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)stress_fs_temp_dir_rm_args(args);
 	return rc;
 }

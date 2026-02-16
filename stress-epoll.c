@@ -177,7 +177,7 @@ again:
 			goto again;
 		return -1;
 	} else if (s_pid->pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		s_pid->pid = getpid();
 		stress_parent_died_alarm();
@@ -1081,14 +1081,14 @@ static int stress_epoll(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = epoll_client(args, mypid, epoll_port, epoll_domain, max_servers);
 reap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_net_release_ports(start_port, end_port);
 
 	stress_kill_and_wait_many(args, s_pids, max_servers, SIGALRM, true);

@@ -1056,9 +1056,9 @@ static int stress_io_uring_child(stress_args_t *args, void *context)
 
 	flags = O_CREAT | O_RDWR | O_TRUNC;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	/*
 	 *  Assume all opcodes are supported
@@ -1109,12 +1109,12 @@ static int stress_io_uring_child(stress_args_t *args, void *context)
 			(void)close(io_uring_file.fd_at);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 #if defined(HAVE_IORING_OP_ASYNC_CANCEL)
 	stress_io_uring_cancel_rdwr(args, &io_uring_file, &submit);
 #endif
 clean:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_close_io_uring(&submit);
 	stress_io_uring_unmap_iovecs(&io_uring_file);
 	(void)shim_unlink(filename);

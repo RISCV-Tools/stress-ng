@@ -235,9 +235,9 @@ static int stress_remap(stress_args_t *args)
 		stress_usage_bytes(args, sz, sz * args->instances);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		/* Reverse pages */
@@ -325,7 +325,7 @@ PRAGMA_UNROLL_N(4)
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	metric = 0;
 	rate = (count > 0.0) ? duration / count : 0.0;

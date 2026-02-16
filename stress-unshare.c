@@ -185,9 +185,9 @@ static int stress_unshare(stress_args_t *args)
 
 	clone_flag_count = stress_flag_permutation(all_flags, &clone_flag_perms);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		size_t n;
@@ -225,7 +225,7 @@ static int stress_unshare(stress_args_t *args)
 				double *count = &unshare_info[n].count;
 
 				/* Child */
-				stress_set_proc_state(args->name, STRESS_STATE_RUN);
+				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 				stress_make_it_fail_set();
 				stress_parent_died_alarm();
 				(void)stress_sched_settings_apply(true);
@@ -297,7 +297,7 @@ static int stress_unshare(stress_args_t *args)
 		total_count += unshare_info[i].count;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	rate = (total_count > 0.0) ? total_duration / total_count : 0.0;
 	stress_metrics_set(args, 0, "nanosecs per unshare call",
 		rate * STRESS_DBL_NANOSECOND, STRESS_METRIC_HARMONIC_MEAN);

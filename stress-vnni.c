@@ -570,9 +570,9 @@ static int stress_vnni(stress_args_t *args)
 			args->name);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		if (UNLIKELY(vnni_method)) {
@@ -582,7 +582,7 @@ static int stress_vnni(stress_args_t *args)
 		}
 	} while (vnni_checksum_okay && stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 1, j = 0; i < SIZEOF_ARRAY(stress_vnni_methods); i++) {
 		if (stress_vnni_data[i].vnni_capable &&

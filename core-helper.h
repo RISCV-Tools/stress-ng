@@ -37,16 +37,14 @@ extern WARN_UNUSED int32_t stress_ticks_per_second_get(void);
 extern WARN_UNUSED int stress_load_average_get(double *min1, double *min5, double *min15);
 extern void stress_parent_died_alarm(void);
 extern int stress_process_dumpable(const bool dumpable);
-
 extern int stress_timer_slack_ns_set(const char *opt);
 extern void stress_timer_slack_set(void);
-
-extern void stress_set_proc_name_init(int argc, char *argv[], char *envp[]);
-extern void stress_set_proc_name_raw(const char *name);
-extern void stress_set_proc_name(const char *name);
-extern void stress_set_proc_name_scramble(void);
-extern void stress_set_proc_state_str(const char *name, const char *str);
-extern void stress_set_proc_state(const char *name, const int state);
+extern void stress_proc_name_init(int argc, char *argv[], char *envp[]);
+extern void stress_proc_name_raw_set(const char *name);
+extern void stress_proc_name_set(const char *name);
+extern void stress_proc_name_scramble(void);
+extern void stress_proc_name_state_str_set(const char *name, const char *str);
+extern void stress_proc_state_set(const char *name, const int state);
 extern size_t stress_munge_underscore(char *dst, const char *src, size_t len);
 extern WARN_UNUSED int stress_strcmp_munged(const char *s1, const char *s2);
 extern WARN_UNUSED uint64_t stress_uint64_zero_get(void);

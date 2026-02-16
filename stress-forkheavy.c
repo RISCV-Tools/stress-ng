@@ -183,9 +183,9 @@ static int stress_forkheavy_child(stress_args_t *args, void *context)
 				forkheavy_args->num_resources,
 				forkheavy_args->pipe_size, min_mem_free, false);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		const bool low_mem_reap = stress_low_memory(MIN_MEM_FREE);
@@ -209,7 +209,7 @@ static int stress_forkheavy_child(stress_args_t *args, void *context)
 			if (forkheavy->pid == 0) {
 				const double duration = stress_time_now() - metrics->t_start;
 
-				stress_set_proc_state(args->name, STRESS_STATE_RUN);
+				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 				stress_make_it_fail_set();
 
 				if (update_metrics && (duration > 0.0) &&
@@ -282,9 +282,9 @@ static int stress_forkheavy(stress_args_t *args)
 
 	stress_set_oom_adjustment(args, false);
 
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 	rc = stress_oomable_child(args, &forkheavy_args, stress_forkheavy_child, STRESS_OOMABLE_DROP_CAP);
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	average = (metrics->count > 0.0) ? metrics->duration / metrics->count : 0.0;
 	stress_metrics_set(args, 0, "microsecs per fork" ,

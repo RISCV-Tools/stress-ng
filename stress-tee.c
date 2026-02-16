@@ -65,7 +65,7 @@ again:
 			args->name, errno, strerror(errno));
 		return -1;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		stress_parent_died_alarm();
 		(void)stress_sched_settings_apply(true);
@@ -241,9 +241,9 @@ static int stress_tee(stress_args_t *args)
 		return EXIT_NO_RESOURCE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	pids[0] = stress_tee_spawn(args, stress_tee_pipe_write, pipe_in);
 	if (pids[0] < 0)
@@ -325,12 +325,12 @@ do_splice:
 		rate / (double)MB, STRESS_METRIC_HARMONIC_MEAN);
 
 tidy_child2:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(pipe_out[1]);
 	(void)stress_kill_pid_wait(pids[1], NULL);
 
 tidy_child1:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(pipe_in[0]);
 	(void)stress_kill_pid_wait(pids[0], NULL);
 tidy_fd:

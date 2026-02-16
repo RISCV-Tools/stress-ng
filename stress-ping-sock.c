@@ -123,9 +123,9 @@ static int stress_ping_sock(stress_args_t *args)
 	rand_port = 1024 + stress_mwc16modn(65535 - 1024);
 	addr.sin_port = htons(rand_port);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t = stress_time_now();
 	do {
@@ -152,7 +152,7 @@ static int stress_ping_sock(stress_args_t *args)
 	} while (stress_continue(args));
 	duration = stress_time_now() - t;
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (duration > 0.0) ? (double)stress_bogo_get(args) / duration : 0.0;
 	stress_metrics_set(args, 0, "ping sendto calls per sec",

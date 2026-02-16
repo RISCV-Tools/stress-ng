@@ -213,7 +213,7 @@ static int stress_mmapcow_exercise(
 
 		/* force child to have different rnd from parent */
 		if (pid == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 
 			rnd = stress_mwc8() & 7;
@@ -441,13 +441,13 @@ static int stress_mmapcow(stress_args_t *args)
 #endif
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	ret = stress_oomable_child(args, &flags, stress_mmapcow_child, STRESS_OOMABLE_NORMAL);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(HAVE_LINUX_MEMPOLICY_H)
 	if (numa_mask)

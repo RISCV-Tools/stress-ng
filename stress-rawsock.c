@@ -293,7 +293,7 @@ again:
 			args->name, errno, strerror(errno));
 		return EXIT_FAILURE;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		(void)stress_affinity_change_cpu(args, parent_cpu);
 		rc = stress_rawsock_client(args, rawsock_port);
@@ -332,13 +332,13 @@ static int stress_rawsock(stress_args_t *args)
 	pr_dbg("%s: process [%d] using socket port %d\n",
 		args->name, (int)args->pid, rawsock_port);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = stress_oomable_child(args, (void *)&rawsock_port, stress_rawsock_child, STRESS_OOMABLE_NORMAL);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_net_release_ports(rawsock_port, rawsock_port);
 
 	return rc;

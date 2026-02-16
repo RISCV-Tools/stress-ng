@@ -86,7 +86,7 @@ static void MLOCKED_TEXT stress_thrash_pagein_handler(int signum)
  */
 static void stress_thrash_state(const char *state)
 {
-	stress_set_proc_state_str("thrash", state);
+	stress_proc_name_state_str_set("thrash", state);
 }
 
 /*

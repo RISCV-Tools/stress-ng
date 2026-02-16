@@ -507,9 +507,9 @@ static int stress_efivar(stress_args_t *args)
 	}
 	stress_set_vma_anon_name(efi_ignore, sz, "efi-ignore-state");
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	pid = fork();
 	if (pid < 0) {
@@ -544,7 +544,7 @@ again:
 		const pid_t mypid = getpid();
 		double rate;
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		stress_parent_died_alarm();
 		stress_set_oom_adjustment(args, true);
@@ -565,7 +565,7 @@ again:
 	}
 
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)efi_ignore, sz);
 	stress_fs_dirent_list_free(efi_dentries, dir_count);

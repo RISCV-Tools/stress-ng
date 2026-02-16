@@ -60,9 +60,9 @@ static int stress_sigxcpu(stress_args_t *args)
 		return EXIT_NO_RESOURCE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		limit.rlim_cur = 0;
@@ -75,7 +75,7 @@ static int stress_sigxcpu(stress_args_t *args)
 		(void)shim_sched_yield();
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	VOID_RET(int, stress_signal_handler(args->name, SIGXCPU, SIG_IGN, NULL));
 

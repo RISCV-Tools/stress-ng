@@ -269,9 +269,9 @@ static int stress_hyperbolic(stress_args_t *args)
 
 	stress_zero_metrics(stress_hyperbolic_metrics, SIZEOF_ARRAY(stress_hyperbolic_metrics));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		if (stress_hyperbolic_exercise(args, hyperbolic_method)) {
@@ -280,7 +280,7 @@ static int stress_hyperbolic(stress_args_t *args)
 		}
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 1, j = 0; i < SIZEOF_ARRAY(stress_hyperbolic_metrics); i++) {
 		if (stress_hyperbolic_metrics[i].duration > 0.0) {

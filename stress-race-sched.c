@@ -371,7 +371,7 @@ static int stress_race_sched_child(stress_args_t *args, void *context)
 				/* child */
 				const pid_t child_pid = getpid();
 
-				stress_set_proc_state(args->name, STRESS_STATE_RUN);
+				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 				stress_make_it_fail_set();
 
 				if (rnd & 0x01)
@@ -449,12 +449,12 @@ static int stress_race_sched(stress_args_t *args)
 
 	stress_set_oom_adjustment(args, false);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = stress_oomable_child(args, NULL, stress_race_sched_child, STRESS_OOMABLE_DROP_CAP);
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

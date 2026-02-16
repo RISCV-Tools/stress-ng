@@ -338,9 +338,9 @@ static int stress_fstat(stress_args_t *args)
 	(void)closedir(dp);
 
 	(void)sigfillset(&set);
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		stat_some = false;
@@ -360,7 +360,7 @@ static int stress_fstat(stress_args_t *args)
 
 	ret = EXIT_SUCCESS;
 free_cache:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	/* Free cache */
 	for (si = stat_info; si; ) {

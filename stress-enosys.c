@@ -4157,9 +4157,9 @@ static int stress_enosys(stress_args_t *args)
 #if defined(STRESS_EXERCISE_X86_SYSCALL)
 	stress_x86syscall_available = stress_cpu_x86_has_syscall();
 #endif
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (i = 0; i < (ssize_t)SIZEOF_ARRAY(skip_syscalls) - 1; i++)
 		syscall_add(skip_syscalls[i]);
@@ -4202,7 +4202,7 @@ again:
 			(void)close(rd_fds[1]);
 			(void)close(wr_fds[0]);
 
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 
 			/* Try to limit child from spawning */
@@ -4262,7 +4262,7 @@ again:
 	stress_metrics_set(args, 0, "syscalls per second", rate, STRESS_METRIC_GEOMETRIC_MEAN);
 
 deinit_free:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	syscall_free();
 
 	return rc;

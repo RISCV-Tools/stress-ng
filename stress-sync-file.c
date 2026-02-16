@@ -153,9 +153,9 @@ static int stress_sync_file(stress_args_t *args)
 #endif
 	(void)shim_unlink(filename);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		shim_off64_t i, offset;
@@ -257,7 +257,7 @@ static int stress_sync_file(stress_args_t *args)
 	} while ((rc == EXIT_SUCCESS) && stress_continue(args));
 
 err:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd);
 	(void)stress_fs_temp_dir_rm_args(args);
 

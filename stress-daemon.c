@@ -132,7 +132,7 @@ static int stress_make_daemon(
 				goto err_close_fds2;
 			(void)umask(0);
 			VOID_RET(int, stress_capabilities_drop(args->name));
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 			sz = write(fd, &rc, sizeof(rc));
 			if (sz != sizeof(rc))
@@ -177,9 +177,9 @@ static int stress_daemon(stress_args_t *args)
 		return EXIT_FAILURE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	pid = fork();
 	if (pid < 0) {
@@ -228,7 +228,7 @@ again:
 	}
 
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

@@ -471,13 +471,13 @@ static int stress_dir(stress_args_t *args)
 #if defined(O_DIRECTORY)
 	dir_fd = open(pathname, O_DIRECTORY | O_RDONLY);
 #endif
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	pid = fork();
 	if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		stress_dir_read_concurrent(args, pathname);
 		_exit(0);
@@ -514,19 +514,19 @@ static int stress_dir(stress_args_t *args)
 		stress_invalid_mkdirat(bad_fd);
 
 		if (UNLIKELY(!stress_continue(args))) {
-			stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+			stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 			stress_dir_tidy(args, i);
 			break;
 		}
 		stress_dir_read(args, pathname);
 		if (UNLIKELY(!stress_continue(args))) {
-			stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+			stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 			stress_dir_tidy(args, i);
 			break;
 		}
 		stress_dir_rename(args, pathname);
 		if (UNLIKELY(!stress_continue(args))) {
-			stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+			stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 			stress_dir_tidy(args, i);
 			break;
 		}
@@ -551,7 +551,7 @@ static int stress_dir(stress_args_t *args)
 	if (dir_fd >= 0)
 		(void)close(dir_fd);
 #endif
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (pid >= 0)
 		(void)stress_kill_pid_wait(pid, NULL);

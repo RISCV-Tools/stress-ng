@@ -511,9 +511,9 @@ static int stress_fanotify(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_fs_usage_bytes(args, 512, 512 * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	pid = fork();
 
@@ -535,7 +535,7 @@ static int stress_fanotify(stress_args_t *args)
 	} else if (pid == 0) {
 		/* Child */
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		(void)stress_sched_settings_apply(true);
 
@@ -746,7 +746,7 @@ static int stress_fanotify(stress_args_t *args)
 		}
 	}
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (pid > 0)
 		(void)stress_kill_pid_wait(pid, NULL);

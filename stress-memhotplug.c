@@ -306,9 +306,9 @@ static int stress_memhotplug(stress_args_t *args)
 
 	segv_count = 0;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
         if (sigsetjmp(jmp_env, 1))
 		goto finish;
@@ -331,7 +331,7 @@ static int stress_memhotplug(stress_args_t *args)
 	} while (stress_continue(args));
 
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	do_jmp = false;
 	(void)stress_signal_restore(args->name, SIGSEGV, &old_action);

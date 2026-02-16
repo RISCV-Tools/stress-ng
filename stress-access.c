@@ -169,10 +169,10 @@ static pid_t stress_access_spawn(
 		/* Concurrent stressor */
 		size_t j = 0;
 
-		stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+		stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 		s_pid->pid = getpid();
 		stress_sync_start_wait_s_pid(s_pid);
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 		stress_make_it_fail_set();
 
@@ -342,10 +342,10 @@ static int stress_access(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		for (i = 0; i < SIZEOF_ARRAY(modes); i++) {
@@ -506,7 +506,7 @@ static int stress_access(stress_args_t *args)
 unmap:
 	(void)munmap((void *)metrics, metrics_size);
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	stress_access_reap(&s_pids[1]);
 	stress_access_reap(&s_pids[0]);

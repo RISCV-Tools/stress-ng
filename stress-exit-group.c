@@ -193,9 +193,9 @@ static int stress_exit_group(stress_args_t *args)
 
 	exit_group_failed = (uint64_t *)stress_mmap_anon_shared(sizeof(*exit_group_failed), PROT_READ | PROT_WRITE);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-        stress_set_proc_state(args->name, STRESS_STATE_RUN);
+        stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	while (stress_continue(args)) {
 		pid_t pid;
@@ -216,7 +216,7 @@ again:
 			(void)pthread_mutex_destroy(&mutex);
 			break;
 		} else if (pid == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			stress_exit_group_child(args);
 		} else {
@@ -232,7 +232,7 @@ again:
 		}
 	}
 
-        stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+        stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (exit_group_failed != MAP_FAILED) {
 		if (*(volatile uint64_t *)exit_group_failed > 0) {

@@ -403,9 +403,9 @@ static int stress_swap_child(stress_args_t *args, void *context)
 		stress_usage_bytes(args, size, size * args->instances);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t = stress_time_now();
 	do {
@@ -543,17 +543,17 @@ static int stress_swap_child(stress_args_t *args, void *context)
 
 	ret = EXIT_SUCCESS;
 tidy_close:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd);
 tidy_rm:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)shim_unlink(filename);
 	(void)stress_fs_temp_dir_rm_args(args);
 tidy_free:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)munmap((void *)page, page_size);
 tidy_ret:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_swap_clean_dir(args);
 	return ret;
 }

@@ -247,9 +247,9 @@ static int stress_mremap_child(stress_args_t *args, void *context)
 #endif
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		uint8_t *buf = NULL, *ptr;
@@ -354,7 +354,7 @@ static int stress_mremap_child(stress_args_t *args, void *context)
 	} while (stress_continue(args));
 
 deinit:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (count > 0.0) ? duration / count : 0.0;
 	stress_metrics_set(args, 0, "nanosecs per mremap call",

@@ -231,9 +231,9 @@ static int stress_loadavg(stress_args_t *args)
 	(void)sigaddset(&set, SIGALRM);
 	(void)sigprocmask(SIG_BLOCK, &set, NULL);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	keep_thread_running_flag = true;
 
@@ -281,7 +281,7 @@ static int stress_loadavg(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(LOADAVG_IO)
 	if (fd >= 0)

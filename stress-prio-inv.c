@@ -432,9 +432,9 @@ static int stress_prio_inv(stress_args_t *args)
 		return EXIT_FAILURE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (i = 0; i < MUTEX_PROCS; i++) {
 		pid_t pid;
@@ -451,7 +451,7 @@ static int stress_prio_inv(stress_args_t *args)
 			rc = EXIT_NO_RESOURCE;
 			goto reap;
 		} else if (pid == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			if (stress_signal_handler(args->name, SIGALRM, stress_signal_exit_handler, NULL) < 0)
 				pr_inf("%s: cannot set SIGALRM signal handler, process termination may not work\n", args->name);
 			stress_make_it_fail_set();
@@ -481,7 +481,7 @@ static int stress_prio_inv(stress_args_t *args)
 		(void)shim_usleep(250000);
 
 reap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	/* Need to send alarm to all children before waitpid'ing them */
 	for (i = 0; i < MUTEX_PROCS; i++) {

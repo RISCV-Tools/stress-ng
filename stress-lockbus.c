@@ -378,9 +378,9 @@ misaligned_done:
 		stress_usage_bytes(args, stressor_bytes, total_bytes);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	duration = 0;
 	count = 0;
@@ -445,7 +445,7 @@ misaligned_done:
 	} while (stress_continue(args));
 
 done:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (count > 0.0) ? duration / count : 0.0;
 	stress_metrics_set(args, 0, "nanosecs per memory lock operation",

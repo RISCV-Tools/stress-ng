@@ -204,11 +204,11 @@ static int stress_icache(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_usage_bytes(args, pages_size, pages_size * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 	ret = stress_icache_func(args, pages, pages_size);
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)pages, pages_size);
 	return ret;

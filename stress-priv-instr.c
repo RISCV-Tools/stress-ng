@@ -535,9 +535,9 @@ static int stress_priv_instr(stress_args_t *args)
 		op_info[i].trapped = false;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		ret = sigsetjmp(jmp_env, 1);
@@ -560,7 +560,7 @@ static int stress_priv_instr(stress_args_t *args)
 	} while (stress_continue(args));
 
 finish:
-        stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+        stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	/* Get an overestimated buffer length */
 	for (len = 0, i = 0; i < SIZEOF_ARRAY(op_info); i++) {

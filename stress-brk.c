@@ -328,13 +328,13 @@ static int stress_brk(stress_args_t *args)
 			args->name);
 	}
 #endif
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = stress_oomable_child(args, NULL, stress_brk_child, STRESS_OOMABLE_DROP_CAP);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	pr_dbg("%s: %" PRIu64 " occurrences of sbrk out of memory\n",
 		args->name, brk_context->out_of_memory);

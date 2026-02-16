@@ -57,7 +57,7 @@ again:
 		return -1;
 	}
 	if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		stress_parent_died_alarm();
 
@@ -193,9 +193,9 @@ static int stress_wait(stress_args_t *args)
 	if (stress_signal_handler(args->name, SIGUSR1, stress_signal_ignore_handler, NULL) < 0)
 		return EXIT_FAILURE;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	pid_r = spawn(args, runner, 0);
 	if (pid_r < 0) {
@@ -386,10 +386,10 @@ static int stress_wait(stress_args_t *args)
 #endif
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)stress_kill_pid_wait(pid_k, NULL);
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)stress_kill_pid_wait(pid_r, NULL);
 
 	return ret;

@@ -332,16 +332,16 @@ static int stress_memcpy(stress_args_t *args)
 	func = stress_memcpy_methods[memcpy_method].func;
 	stress_rndbuf(str3, MEMCPY_MEMSIZE);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		func(str1, str2, str3);
 		stress_bogo_inc(args);
 	} while (memcpy_okay && stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)buf, MEMCPY_MEMSIZE * 3);
 

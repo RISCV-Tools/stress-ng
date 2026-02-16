@@ -75,17 +75,17 @@ static pid_t fifo_spawn(
 	if (s_pid->pid < 0) {
 		return -1;
 	} else if (s_pid->pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+		stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 		s_pid->pid = getpid();
 		stress_sync_start_wait_s_pid(s_pid);
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 
 		stress_parent_died_alarm();
 		(void)stress_sched_settings_apply(true);
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		func(args, name, fifoname, fifo_data_size);
-		stress_set_proc_state(args->name, STRESS_STATE_WAIT);
+		stress_proc_state_set(args->name, STRESS_STATE_WAIT);
 		_exit(EXIT_SUCCESS);
 	} else {
 		stress_sync_start_s_pid_list_add(s_pids_head, s_pid);
@@ -293,10 +293,10 @@ static int stress_fifo(stress_args_t *args)
 	(void)shim_memset(buf, 0xaa, sizeof(buf));
 	buf[0] = 0ULL;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	fd = open(fifoname, O_WRONLY);
 	if (fd < 0) {
@@ -340,14 +340,14 @@ static int stress_fifo(stress_args_t *args)
 		fifo_data_size);
 	stress_metrics_set(args, 0, msg, rate, STRESS_METRIC_HARMONIC_MEAN);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd);
 reap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_kill_and_wait_many(args, s_pids, fifo_readers, SIGALRM, false);
 
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)shim_unlink(fifoname);
 	(void)stress_fs_temp_dir_rm_args(args);
 tidy_pids:

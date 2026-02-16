@@ -299,10 +299,10 @@ again:
 
 		stress_sync_start_wait_s_pid(s_pid);
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		func(args, path);
-		stress_set_proc_state(args->name, STRESS_STATE_WAIT);
+		stress_proc_state_set(args->name, STRESS_STATE_WAIT);
 
 		_exit(EXIT_SUCCESS);
 	} else {
@@ -361,10 +361,10 @@ static int stress_umount(stress_args_t *args)
 	if (stress_umount_spawn(args, realpathname, stress_umount_read_proc_mounts, &s_pids_head, &s_pids[2]) < 0)
 		goto reap;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	/* Wait for SIGALARMs */
 	do {
@@ -373,7 +373,7 @@ static int stress_umount(stress_args_t *args)
 
 	ret = EXIT_SUCCESS;
 reap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_kill_and_wait_many(args, s_pids, STRESS_UMOUNT_PROCS, SIGALRM, true);
 	(void)stress_fs_temp_dir_rm_args(args);
 	(void)stress_sync_s_pids_munmap(s_pids, STRESS_UMOUNT_PROCS);

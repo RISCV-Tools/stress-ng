@@ -812,9 +812,9 @@ static int stress_filename(stress_args_t *args)
 		goto tidy_dir;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	if (UNLIKELY(!stress_continue_flag())) {
 		/* Time to die */
@@ -870,7 +870,7 @@ again:
 	} else {
 		const pid_t mypid = getpid();
 
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		stress_parent_died_alarm();
 		(void)stress_sched_settings_apply(true);
@@ -986,7 +986,7 @@ again:
 	}
 
 tidy_dir:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_filename_tidy(args, pathname, &rc);
 
 	return rc;

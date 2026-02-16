@@ -222,7 +222,7 @@ static void *stress_pthread_func(void *parg)
 	stress_pthread_info_t *pthread_info = (stress_pthread_info_t *)spa->data;
 
 	pthread_info->t_run = t_run;
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 #if defined(HAVE_GET_ROBUST_LIST) &&	\
     defined(HAVE_LINUX_FUTEX_H)
@@ -501,9 +501,9 @@ static int stress_pthread(stress_args_t *args)
 		return EXIT_FAILURE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		uint64_t i, j;
@@ -647,7 +647,7 @@ reap:
 			100.0 * (double)(attempted - limited) / (double)attempted,
 			STRESS_METRIC_GEOMETRIC_MEAN);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(HAVE_PTHREAD_MUTEXATTR_T) &&		\
     defined(HAVE_PTHREAD_MUTEXATTR_INIT) &&		\

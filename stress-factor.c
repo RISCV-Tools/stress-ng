@@ -56,9 +56,9 @@ static int OPTIMIZE3 stress_factor(stress_args_t *args)
 
 	mpz_inits(value, divisor, q, r, tmp, NULL);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		size_t digits;
@@ -132,7 +132,7 @@ abort:
 	stress_metrics_set(args, 1, "millisec per factorization", 1000.0 * rate, STRESS_METRIC_HARMONIC_MEAN);
 	stress_metrics_set(args, 2, "digits in largest factor", (double)max_digits, STRESS_METRIC_MAXIMUM);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return EXIT_SUCCESS;
 }

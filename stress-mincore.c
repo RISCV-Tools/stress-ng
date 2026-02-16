@@ -135,9 +135,9 @@ static int stress_mincore(stress_args_t *args)
 			unmapped = (uint8_t *)MAP_FAILED;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		int i;
@@ -289,7 +289,7 @@ redo: 			errno = 0;
 		rate * STRESS_DBL_NANOSECOND, STRESS_METRIC_HARMONIC_MEAN);
 
 err:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (fdmapped != MAP_FAILED)
 		(void)munmap((void *)fdmapped, page_size);

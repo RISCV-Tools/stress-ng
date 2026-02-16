@@ -235,9 +235,9 @@ static int stress_copy_file(stress_args_t *args)
 #endif
 	(void)shim_unlink(tmp);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		ssize_t copy_ret;
@@ -326,13 +326,13 @@ static int stress_copy_file(stress_args_t *args)
 		rate / (double)MB, STRESS_METRIC_HARMONIC_MEAN);
 
 tidy_out:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd_out);
 tidy_in:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd_in);
 tidy_dir:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)stress_fs_temp_dir_rm_args(args);
 
 	return rc;

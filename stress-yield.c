@@ -283,9 +283,9 @@ static int stress_yield(stress_args_t *args)
 	stress_set_vma_anon_name(metrics, metrics_size, "metrics");
 	stress_zero_metrics(metrics, yielders);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (i = 0; LIKELY(stress_continue_flag() && (i < yielders)); i++) {
 		pids[i] = fork();
@@ -294,7 +294,7 @@ static int stress_yield(stress_args_t *args)
 				", yielder %zu), errno=%d (%s)\n",
 				args->name, args->instance, i, errno, strerror(errno));
 		} else if (pids[i] == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			stress_parent_died_alarm();
 			(void)stress_sched_settings_apply(true);
@@ -328,7 +328,7 @@ static int stress_yield(stress_args_t *args)
 
 	/* Parent, wait for children */
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	for (duration = 0.0, count = 0.0, i = 0; i < yielders; i++) {
 		if (pids[i] > 0) {
 			(void)stress_kill_pid_wait(pids[i], NULL);

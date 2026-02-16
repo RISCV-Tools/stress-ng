@@ -533,9 +533,9 @@ redo:
 			varyload_ms);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (controller) {
 		for (i = 1; i < args->instances; i++) {
@@ -584,7 +584,7 @@ redo:
 		} while (stress_continue(args));
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)buffer, buffer_len);
 exit_free_pids:

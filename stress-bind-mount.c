@@ -222,9 +222,9 @@ static int stress_bind_mount(stress_args_t *args)
 	int ret, rc = EXIT_SUCCESS;
 	char path[PATH_MAX];
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	(void)stress_fs_temp_dir(path, sizeof(path), args->name, getpid(), args->instance);
 	ret = mkdir(path, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
@@ -240,7 +240,7 @@ static int stress_bind_mount(stress_args_t *args)
 			break;
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)shim_rmdir(path);
 

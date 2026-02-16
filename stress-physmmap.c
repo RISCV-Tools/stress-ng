@@ -201,9 +201,9 @@ static int stress_physmmap(stress_args_t *args)
 		return EXIT_NO_RESOURCE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	if (stress_instance_zero(args)) {
 		for (physmmap = physmmap_head; physmmap; physmmap = physmmap->next)
@@ -307,7 +307,7 @@ done:
 	stress_metrics_set(args, 1, "/dev/mem mmaps failed", (double)mmaps_failed, STRESS_METRIC_TOTAL);
 	stress_metrics_set(args, 2, "/dev/mem pages mapped", (double)max_pages_mapped, STRESS_METRIC_TOTAL);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)close(fd_mem);
 	stress_physmmap_free_ranges(physmmap_head);

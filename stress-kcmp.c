@@ -204,9 +204,9 @@ static int stress_kcmp(stress_args_t *args)
 	}
 #endif
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	pid1 = fork();
 	if (pid1 < 0) {
@@ -224,7 +224,7 @@ again:
 #endif
 		return EXIT_FAILURE;
 	} else if (pid1 == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		stress_parent_died_alarm();
 		(void)stress_sched_settings_apply(true);
@@ -342,7 +342,7 @@ reap:
 		(void)close(fd1);
 	}
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(HAVE_SYS_EPOLL_H) &&	\
     NEED_GLIBC(2,3,2)

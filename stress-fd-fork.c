@@ -195,9 +195,9 @@ static int stress_fd_fork(stress_args_t *args)
 		goto tidy_fds;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	t_start = stress_time_now();
 	do {
@@ -237,7 +237,7 @@ static int stress_fd_fork(stress_args_t *args)
 			if (pids[i] < 0) {
 				continue;
 			} else if (pids[i] == 0) {
-				stress_set_proc_state(args->name, STRESS_STATE_RUN);
+				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 				stress_make_it_fail_set();
 				if (rnd) {
 					stress_fd_close(fds, fd_fork_fds, info);
@@ -263,7 +263,7 @@ static int stress_fd_fork(stress_args_t *args)
 	} while (stress_continue(args));
 
 tidy_fds:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_fd_close(fds, fd_fork_fds, info);
 
 	if (stress_instance_zero(args)) {

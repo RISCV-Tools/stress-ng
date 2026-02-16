@@ -93,9 +93,9 @@ static int stress_mmapmany_child(stress_args_t *args, void *context)
 	if (stress_instance_zero(args))
 		stress_usage_bytes(args, max * 2 * page_size, max * 2 * page_size * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		size_t i, n;
@@ -157,7 +157,7 @@ static int stress_mmapmany_child(stress_args_t *args, void *context)
 		}
 	} while ((rc == EXIT_SUCCESS) && stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(HAVE_LINUX_MEMPOLICY_H)
 	if (numa_mask)

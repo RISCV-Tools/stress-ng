@@ -315,9 +315,9 @@ static int stress_waitcpu(stress_args_t *args)
 			SIZEOF_ARRAY(stress_waitcpu_method) > 1 ? "s" : "",
 			str);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		for (i = 0; LIKELY((i < SIZEOF_ARRAY(stress_waitcpu_method)) && stress_continue(args)); i++) {
@@ -338,7 +338,7 @@ static int stress_waitcpu(stress_args_t *args)
 		}
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 0, j = 0; i < SIZEOF_ARRAY(stress_waitcpu_method); i++) {
 		double rate = 0.0;

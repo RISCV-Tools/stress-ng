@@ -695,9 +695,9 @@ static int stress_sctp(stress_args_t *args)
 
 	ret = EXIT_FAILURE;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	parent_cpu = stress_cpu_get();
 	pid = fork();
@@ -710,7 +710,7 @@ again:
 			args->name, errno, strerror(errno));
 		return EXIT_FAILURE;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		 (void)stress_affinity_change_cpu(args, parent_cpu);
 		ret = stress_sctp_client(args, mypid, sctp_port, sctp_domain,
@@ -733,7 +733,7 @@ finish:
 	if (sigpipe_count)
 		pr_dbg("%s: caught %" PRIu64 " SIGPIPE signals\n", args->name, sigpipe_count);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	stress_net_release_ports(sctp_port, sctp_port);
 
 	return ret;

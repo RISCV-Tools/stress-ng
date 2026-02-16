@@ -141,7 +141,7 @@ static void stress_resched_spawn(
 
 	pid = fork();
 	if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_make_it_fail_set();
 		stress_resched_child(args, idx, max_prio, yields);
 	} else if (pid > 0) {
@@ -200,9 +200,9 @@ static int stress_resched(stress_args_t *args)
 	}
 	stress_set_vma_anon_name(yields, yields_size, "yield-stats");
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	/* Start off one child process per positive nice level */
 	for (i = 0; LIKELY(stress_continue(args) && (i < s_pids_max)); i++)
@@ -231,7 +231,7 @@ static int stress_resched(stress_args_t *args)
 
 	if (stress_kill_and_wait_many(args, s_pids, s_pids_max, SIGALRM, true) == EXIT_FAILURE)
 		rc = EXIT_FAILURE;
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	/*
 	 *  Dump stats for just instance 0 to reduce output

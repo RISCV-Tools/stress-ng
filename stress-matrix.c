@@ -1025,14 +1025,14 @@ static int stress_matrix(stress_args_t *args)
 	if (stress_instance_zero(args))
 		stress_usage_bytes(args, 3 * matrix_mmap_size, 3 * matrix_mmap_size * args->instances);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = stress_matrix_exercise(args, matrix_method, matrix_yx, matrix_size,
 				    matrix_byte_size, matrix_mmap_size);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

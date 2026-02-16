@@ -252,10 +252,10 @@ again:
 	} else if (s_pid->pid == 0) {
 		int ret = EXIT_SUCCESS;
 
-		stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+		stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 		s_pid->pid = getpid();
 		stress_sync_start_wait_s_pid(s_pid);
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 		if (!stress_apparmor_stress_continue_inc(args, false))
 			goto abort;
@@ -711,10 +711,10 @@ static int stress_apparmor(stress_args_t *args)
 		apparmor_spawn(args, apparmor_funcs[i], &s_pids_head, &s_pids[i]);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	while (stress_apparmor_stress_continue_inc(args, false)) {
 #if defined(HAVE_SELECT)
@@ -724,7 +724,7 @@ static int stress_apparmor(stress_args_t *args)
 #endif
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	/* Wakeup, time to die */
 	stress_kill_and_wait_many(args, s_pids, MAX_APPARMOR_FUNCS, SIGALRM, true);

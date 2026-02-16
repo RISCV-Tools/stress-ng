@@ -3080,13 +3080,13 @@ static int OPTIMIZE3 stress_cpu(stress_args_t *args)
 	if (cpu_load == 0) {
 		(void)sleep((unsigned int)g_opt_timeout);
 
-		stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+		stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 		return EXIT_SUCCESS;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 
 	/*
@@ -3099,7 +3099,7 @@ static int OPTIMIZE3 stress_cpu(stress_args_t *args)
 		} while ((rc == EXIT_SUCCESS) && stress_continue(args));
 		stress_cpu_fp_subnormals_enable();
 
-		stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+		stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 		return rc;
 	}
 
@@ -3194,7 +3194,7 @@ static int OPTIMIZE3 stress_cpu(stress_args_t *args)
 			args->name);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

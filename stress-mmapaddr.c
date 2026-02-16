@@ -119,9 +119,9 @@ static int stress_mmapaddr_child(stress_args_t *args, void *context)
 
 	(void)stress_setting_get("mmapaddr-mlock", &mmapaddr_mlock);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		uint8_t *addr, *map_addr, *remap_addr;
@@ -220,7 +220,7 @@ unmap:
 		stress_bogo_inc(args);
 	} while (stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return EXIT_SUCCESS;
 }

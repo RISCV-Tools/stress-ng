@@ -372,9 +372,9 @@ static int stress_bad_altstack(stress_args_t *args)
 	 */
 	(void)munmap(MAP_FAILED, 0);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		pid_t pid;
@@ -433,14 +433,14 @@ again:
 				}
 			}
 		} else {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			_exit(stress_bad_altstack_child(args));
 		}
 	} while (stress_continue(args));
 
 finish:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 #if defined(O_TMPFILE)
 	if (bus_stack != MAP_FAILED)

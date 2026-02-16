@@ -608,12 +608,12 @@ static int stress_clone(stress_args_t *args)
 
 	stress_set_oom_adjustment(args, false);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = stress_oomable_child(args, &shared->metrics, stress_clone_child, STRESS_OOMABLE_DROP_CAP);
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	if (flag_perms)
 		free(flag_perms);

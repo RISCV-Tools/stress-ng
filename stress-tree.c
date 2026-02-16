@@ -1019,9 +1019,9 @@ static int stress_tree(stress_args_t *args)
 		nodes[i].value = (uint32_t)i;
 	stress_tree_shuffle(nodes, tree_size);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		func(args, tree_size, nodes, metrics, &rc);
@@ -1069,7 +1069,7 @@ tidy:
 		pr_dbg("%s: %.2f tree ops per second (geometric mean of per stressor tree op rates)\n",
 			args->name, geomean);
 	}
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	free(nodes);
 
 	return rc;

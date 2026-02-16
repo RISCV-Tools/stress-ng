@@ -128,9 +128,9 @@ static int stress_mtx(stress_args_t *args)
 		return EXIT_FAILURE;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (i = 0; i < mtx_procs; i++) {
 		pthread_info[i].args = args;
@@ -157,7 +157,7 @@ static int stress_mtx(stress_args_t *args)
 	while (stress_continue(args))
 		(void)shim_pause();
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 0; i < mtx_procs; i++) {
 		if (pthread_info[i].ret)

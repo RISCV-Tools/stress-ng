@@ -2919,9 +2919,9 @@ static int stress_sysinval(stress_args_t *args)
 
 	(void)shim_memset(current_context->crash_count, 0, sizeof(current_context->crash_count));
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	rc = stress_oomable_child(args, NULL, stress_sysinval_child, STRESS_OOMABLE_DROP_CAP);
 
@@ -2973,7 +2973,7 @@ static int stress_sysinval(stress_args_t *args)
 	stress_bogo_set(args, current_context->counter);
 
 tidy:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	if (stress_syscall_exercised && (stress_syscall_exercised != MAP_FAILED))
 		(void)munmap((void *)stress_syscall_exercised, stress_syscall_exercised_sz);
 	if (hash_table && (hash_table != MAP_FAILED))
@@ -2992,7 +2992,7 @@ tidy:
 		(void)close((int)fds[0]);
 
 err_dir:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)stress_fs_temp_dir_rm_args(args);
 
 	return rc;

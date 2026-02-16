@@ -107,9 +107,9 @@ static int stress_xattr(stress_args_t *args)
 	if (hugevalue)
 		(void)shim_memset(hugevalue, 'X', hugevalue_sz - 1);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		int i, j;
@@ -607,10 +607,10 @@ static int stress_xattr(stress_args_t *args)
 out_finished:
 	rc = EXIT_SUCCESS;
 out_close:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)close(fd);
 out:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	free(hugevalue);
 	(void)shim_unlink(filename);
 	(void)stress_fs_temp_dir_rm_args(args);

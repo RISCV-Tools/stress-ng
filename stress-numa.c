@@ -312,9 +312,9 @@ static int stress_numa(stress_args_t *args)
 
 	stress_numa_stats_read(&stats_begin);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	node = stress_numa_next_node(0, numa_nodes);
 	if (node < 0)
@@ -739,7 +739,7 @@ static int stress_numa(stress_args_t *args)
 
 	rc = EXIT_SUCCESS;
 err:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)munmap((void *)buf, numa_bytes);
 
 pages_free:
@@ -755,7 +755,7 @@ numa_mask_free:
 numa_nodes_free:
 	stress_numa_mask_free(numa_nodes);
 deinit:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	return rc;
 }

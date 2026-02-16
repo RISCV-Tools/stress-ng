@@ -335,10 +335,10 @@ static int stress_flock(stress_args_t *args)
 		if (s_pids[i].pid < 0) {
 			goto reap;
 		} else if (s_pids[i].pid == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+			stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 			s_pids[i].pid = getpid();
 			stress_sync_start_wait_s_pid(&s_pids[i]);
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 
 			stress_parent_died_alarm();
@@ -350,20 +350,20 @@ static int stress_flock(stress_args_t *args)
 		}
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_sync_start_cont_list(s_pids_head);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	stress_flock_child(args, filename, bad_fd, true);
 	rc = EXIT_SUCCESS;
 reap:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	stress_kill_and_wait_many(args, s_pids, MAX_FLOCK_STRESSORS, SIGALRM, true);
 	(void)shim_unlink(filename);
 err:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 	(void)stress_fs_temp_dir_rm_args(args);
 err_free_s_pids:
 	(void)stress_sync_s_pids_munmap(s_pids, MAX_FLOCK_STRESSORS);

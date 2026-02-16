@@ -340,9 +340,9 @@ static int stress_mseal(stress_args_t *args)
 		if (munmap(no_mapping, mapping_size) < 0)
 			no_mapping = MAP_FAILED;
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		size_t i;
@@ -355,7 +355,7 @@ static int stress_mseal(stress_args_t *args)
 		stress_bogo_inc(args);
 	} while (keep_running && stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	rate = (mseal_duration > 0.0) ? mseal_count / mseal_duration : 0.0;
 	stress_metrics_set(args, 0, "mseal calls per sec", rate, STRESS_METRIC_HARMONIC_MEAN);

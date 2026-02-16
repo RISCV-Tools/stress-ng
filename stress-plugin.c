@@ -309,9 +309,9 @@ static int stress_plugin(stress_args_t *args)
 	if (stress_instance_zero(args))
 		pr_dbg("%s: exercising plugin method '%s'\n", args->name, stress_plugin_methods[plugin_method].name);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		pid_t pid;
@@ -329,7 +329,7 @@ again:
 			goto err;
 		}
 		if (pid == 0) {
-			stress_set_proc_state(args->name, STRESS_STATE_RUN);
+			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			(void)stress_sched_settings_apply(true);
 
@@ -390,7 +390,7 @@ finish:
 		}
 	}
 err:
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	free(stress_plugin_methods);
 	(void)dlclose(stress_plugin_so_dl);

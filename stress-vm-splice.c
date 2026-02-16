@@ -114,9 +114,9 @@ static int stress_vm_splice(stress_args_t *args)
 	stress_rndbuf((void *)data, page_size);
 	prime = stress_prime64_get(vm_splice_bytes);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	(void)shim_memset((void *)buf, 0, sz);
 	do {
@@ -193,7 +193,7 @@ static int stress_vm_splice(stress_args_t *args)
 	stress_metrics_set(args, 1, "vm-splice calls per sec",
 		rate, STRESS_METRIC_HARMONIC_MEAN);
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	(void)munmap((void *)data, page_size);
 	(void)munmap((void *)buf, sz);

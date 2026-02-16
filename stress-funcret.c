@@ -456,15 +456,15 @@ static int stress_funcret(stress_args_t *args)
 
 	stress_zero_metrics(stress_funcret_metrics, NUM_STRESS_FUNCRET_METHODS);
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		success = stress_funcret_exercise(args, funcret_method);
 	} while (success && stress_continue(args));
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	for (i = 1, j = 0; i < NUM_STRESS_FUNCRET_METHODS; i++) {
 		const double rate = (stress_funcret_metrics[i].duration > 0) ?

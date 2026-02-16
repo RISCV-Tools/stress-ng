@@ -339,9 +339,9 @@ static int stress_sigsegv(stress_args_t *args)
 	}
 #endif
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	mask = 0;
 	last_mask = 0;
@@ -565,7 +565,7 @@ tidy:
 #if defined(HAVE_SIGSEGV_READ_TSC)
 	stress_enable_readtsc();
 #endif
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 #if defined(HAVE_MADVISE) &&	\
     defined(MADV_GUARD_INSTALL)
 	if (guard_ptr)

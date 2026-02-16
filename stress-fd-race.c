@@ -886,9 +886,9 @@ static int stress_fd_race(stress_args_t *args)
 		goto tidy_fds;
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_SYNC_WAIT);
+	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
-	stress_set_proc_state(args->name, STRESS_STATE_RUN);
+	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 again:
 	pid = fork();
 	if (pid < 0) {
@@ -902,7 +902,7 @@ again:
 			args->name, errno, strerror(errno));
 		goto tidy_barrier;
 	} else if (pid == 0) {
-		stress_set_proc_state(args->name, STRESS_STATE_RUN);
+		stress_proc_state_set(args->name, STRESS_STATE_RUN);
 		stress_set_oom_adjustment(args, false);
 		rc = stress_race_fd_client(&context);
 		_exit(rc);
@@ -914,7 +914,7 @@ again:
 		(void)shim_waitpid(pid, &status, 0);
 	}
 
-	stress_set_proc_state(args->name, STRESS_STATE_DEINIT);
+	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 tidy_barrier:
 	(void)pthread_barrier_destroy(&context.barrier);
 tidy_fds:
