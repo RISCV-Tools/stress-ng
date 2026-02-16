@@ -22,7 +22,7 @@
 #include "stress-ng.h"
 
 extern size_t stress_memory_page_size_get(void);
-extern int stress_get_meminfo(size_t *freemem, size_t *totalmem,
+extern int stress_memory_info_get(size_t *freemem, size_t *totalmem,
         size_t *freeswap, size_t *totalswap);
 extern void stress_memory_limits_get(size_t *shmall, size_t *freemem,
 	size_t *totalmem, size_t *freeswap, size_t *totalswap);

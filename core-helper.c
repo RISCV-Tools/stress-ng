@@ -780,7 +780,7 @@ void stress_runinfo(void)
 		stress_get_libc_version(),
 		stress_endian_str());
 #endif
-	if (stress_get_meminfo(&freemem, &totalmem, &freeswap, &totalswap) == 0) {
+	if (stress_memory_info_get(&freemem, &totalmem, &freeswap, &totalswap) == 0) {
 		char ram_t[32], ram_f[32], ram_s[32];
 
 		stress_uint64_to_str(ram_t, sizeof(ram_t), (uint64_t)totalmem, 1, false);

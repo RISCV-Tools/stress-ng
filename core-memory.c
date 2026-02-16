@@ -89,10 +89,10 @@ size_t stress_memory_page_size_get(void)
 }
 
 /*
- *  stress_get_meminfo()
+ *  stress_memory_info_get()
  *	wrapper for linux sysinfo
  */
-int stress_get_meminfo(
+int stress_memory_info_get(
 	size_t *freemem,
 	size_t *totalmem,
 	size_t *freeswap,
@@ -205,7 +205,7 @@ void stress_memory_limits_get(
 	if (UNLIKELY(!shmall || !freemem || !totalmem || !freeswap || !totalswap))
 		return;
 
-	(void)stress_get_meminfo(freemem, totalmem, freeswap, totalswap);
+	(void)stress_memory_info_get(freemem, totalmem, freeswap, totalswap);
 #if defined(__linux__)
 	if (LIKELY(stress_fs_file_read("/proc/sys/kernel/shmall", buf, sizeof(buf)) > 0)) {
 		if (sscanf(buf, "%zu", shmall) == 1)
@@ -229,7 +229,7 @@ char *stress_get_memfree_str(void)
 	static char buf[96];
 
 	(void)shim_memset(buf, 0, sizeof(buf));
-	if (stress_get_meminfo(&freemem, &totalmem, &freeswap, &totalswap) < 0)
+	if (stress_memory_info_get(&freemem, &totalmem, &freeswap, &totalswap) < 0)
 		return buf;
 
 	if ((freemem == 0) && (totalmem == 0) && (freeswap == 0) && (totalswap == 0))
@@ -280,7 +280,7 @@ bool stress_memory_low_check(const size_t requested)
 	static double threshold = -1.0;
 	bool low_memory = false;
 
-	if (stress_get_meminfo(&freemem, &totalmem, &freeswap, &totalswap) == 0) {
+	if (stress_memory_info_get(&freemem, &totalmem, &freeswap, &totalswap) == 0) {
 		/*
 		 *  Threshold not set, then get
 		 */
