@@ -24,7 +24,7 @@
 extern size_t stress_memory_page_size_get(void);
 extern int stress_get_meminfo(size_t *freemem, size_t *totalmem,
         size_t *freeswap, size_t *totalswap);
-extern void stress_get_memlimits(size_t *shmall, size_t *freemem,
+extern void stress_memory_limits_get(size_t *shmall, size_t *freemem,
 	size_t *totalmem, size_t *freeswap, size_t *totalswap);
 extern WARN_UNUSED char *stress_get_memfree_str(void);
 extern void stress_memory_ksm_merge(const int flag);

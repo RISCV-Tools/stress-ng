@@ -180,7 +180,7 @@ void stress_config_check(void)
 	}
 #endif
 
-	stress_get_memlimits(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
+	stress_memory_limits_get(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
 	freetotal = freemem + freeswap;
 	if (!(g_opt_flags & OPT_FLAGS_OOM_AVOID) &&
 	    (((freemem > 0) && (freemem < (size_t)(256 * MB))) ||

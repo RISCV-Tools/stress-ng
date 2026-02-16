@@ -153,7 +153,7 @@ static int stress_forkheavy_child(stress_args_t *args, void *context)
 	bool forkheavy_mlock = false;
 	size_t num_resources, shmall, freemem, totalmem, freeswap, totalswap, min_mem_free;
 
-	stress_get_memlimits(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
+	stress_memory_limits_get(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
 	min_mem_free = (freemem / 100) * 2;
 	if (min_mem_free < MIN_MEM_FREE)
 		min_mem_free = MIN_MEM_FREE;

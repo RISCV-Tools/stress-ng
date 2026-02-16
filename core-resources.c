@@ -203,7 +203,7 @@ size_t stress_resources_allocate(
       defined(HAVE_MQUEUE_H))
 	(void)args;
 #endif
-	stress_get_memlimits(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
+	stress_memory_limits_get(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
 	if ((freemem > 0) && (freemem < min_mem_free))
 		return 0;
 
@@ -320,7 +320,7 @@ size_t stress_resources_allocate(
 		if (UNLIKELY(!stress_continue_flag()))
 			break;
 
-		stress_get_memlimits(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
+		stress_memory_limits_get(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
 		if (UNLIKELY((freemem > 0) && (freemem < min_mem_free)))
 			break;
 

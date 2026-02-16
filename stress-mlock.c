@@ -313,7 +313,7 @@ static int stress_mlock_child(stress_args_t *args, void *context)
 	const size_t mappings_per_page = page_size / sizeof(*mappings);
 	const bool oom_avoid = !!(g_opt_flags & OPT_FLAGS_OOM_AVOID);
 
-	stress_get_memlimits(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
+	stress_memory_limits_get(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
 
 	(void)context;
 

@@ -681,7 +681,7 @@ static int stress_shm_sysv_child(
 			double t;
 
 			/* Try hard not to overcommit at this current time */
-			stress_get_memlimits(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
+			stress_memory_limits_get(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
 			shmall /= instances;
 			freemem /= instances;
 			if ((shmall > page_size) && sz > shmall)

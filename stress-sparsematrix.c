@@ -1191,7 +1191,7 @@ static void *mmap_create(const uint64_t n, const uint32_t x, const uint32_t y)
 	size_t shmall, freemem, totalmem, freeswap, totalswap;
 	uint64_t max_phys, total_free, max_size_t;
 
-	stress_get_memlimits(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
+	stress_memory_limits_get(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
 
 	(void)n;
 

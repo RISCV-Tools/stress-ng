@@ -139,7 +139,7 @@ static inline bool enough_memory(void)
 	size_t shmall, freemem, totalmem, freeswap, totalswap;
 	bool enough;
 
-	stress_get_memlimits(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
+	stress_memory_limits_get(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
 
 	enough = (freemem == 0) ? true : freemem > (8 * MB);
 

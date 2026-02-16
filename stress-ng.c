@@ -812,7 +812,7 @@ static void MLOCKED_TEXT stress_stats_handler(int signum)
 		if (ret > 0)
 			VOID_RET(ssize_t, write(fd, buffer, len + ret));
 	}
-	stress_get_memlimits(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
+	stress_memory_limits_get(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
 	if ((totalmem > 0) || (freeswap > 0)) {
 		ret = snprintf(hdr, sizeof(buffer) - len,
 			"Mem Free: %zu MB, Mem Total: %zu MB\n",
@@ -3478,7 +3478,7 @@ next_opt:
 				size_t shmall, freemem, totalmem, freeswap, totalswap, bytes;
 
 				bytes = (size_t)stress_get_uint64_byte_memory(optarg, 1);
-				stress_get_memlimits(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
+				stress_memory_limits_get(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
 				if ((freemem > 0) && (bytes > freemem / 2)) {
 					char buf[32];
 

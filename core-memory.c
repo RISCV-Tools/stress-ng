@@ -188,11 +188,11 @@ int stress_get_meminfo(
 }
 
 /*
- *  stress_get_memlimits()
+ *  stress_memory_limits_get()
  *	get SHMALL and memory in system
  *	these are set to zero on failure
  */
-void stress_get_memlimits(
+void stress_memory_limits_get(
 	size_t *shmall,
 	size_t *freemem,
 	size_t *totalmem,

@@ -149,7 +149,7 @@ static int stress_mlockmany_child(stress_args_t *args, void *context)
 		size_t shmall, freemem, totalmem, freeswap, totalswap, last_freeswap, last_totalswap;
 
 		stress_sync_init_pids(s_pids, mlockmany_procs);
-		stress_get_memlimits(&shmall, &freemem, &totalmem, &last_freeswap, &last_totalswap);
+		stress_memory_limits_get(&shmall, &freemem, &totalmem, &last_freeswap, &last_totalswap);
 
 		for (n = 0; LIKELY(stress_continue(args) && (n < mlockmany_procs)); n++) {
 			pid_t pid;
@@ -160,7 +160,7 @@ static int stress_mlockmany_child(stress_args_t *args, void *context)
 				break;
 			}
 
-			stress_get_memlimits(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
+			stress_memory_limits_get(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
 
 			/* We detected swap being used, bail out */
 			if (last_freeswap > freeswap)
@@ -192,7 +192,7 @@ static int stress_mlockmany_child(stress_args_t *args, void *context)
 				/* unlock all mlocked memory */
 				shim_munlockall();
 
-				stress_get_memlimits(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
+				stress_memory_limits_get(&shmall, &freemem, &totalmem, &freeswap, &totalswap);
 				/* We detected swap being used, bail out */
 				if (last_freeswap > freeswap)
 					_exit(0);
