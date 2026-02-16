@@ -48,6 +48,7 @@ const stress_workload_method_t workload_methods[] = {
 	{ "pause",	STRESS_WORKLOAD_METHOD_PAUSE },
 	{ "procname",	STRESS_WORKLOAD_METHOD_PROCNAME },
 	{ "random",	STRESS_WORKLOAD_METHOD_RANDOM },
+	{ "strnum",	STRESS_WORKLOAD_METHOD_STRNUM },
 	{ "sqrt",	STRESS_WORKLOAD_METHOD_SQRT },
 	{ "vecfp",	STRESS_WORKLOAD_METHOD_VECFP },
 };
@@ -203,6 +204,30 @@ static void OPTIMIZE3 TARGET_CLONES stress_workload_read(void *buffer, const siz
 #endif
 }
 
+static void OPTIMIZE3 TARGET_CLONES stress_workload_strnum(
+	const double v,
+	void *buffer,
+	const size_t buffer_len)
+{
+	long double ld;
+	double d;
+	float f;
+	int i;
+	long l;
+	long ll;
+
+	(void)snprintf(buffer, buffer_len, "%f", v);
+	(void)sscanf(buffer, "%f", &f);
+	(void)sscanf(buffer, "%Lf", &ld);
+	i = atoi(buffer);
+	l = atol(buffer);
+	ll = atoll(buffer);
+	ld = (long double)i * (long double)l * (long double)ll;
+	(void)snprintf(buffer, buffer_len, "%Lf", ld * 1.0E-6);
+	(void)sscanf(buffer, "%lf", &d);
+	stress_put_float((float)d);
+}
+
 static void stress_workload_sqrt(const double v1, const double v2)
 {
 	double r;
@@ -295,6 +320,10 @@ void stress_workload_waste_time(
 		while (stress_time_now() < t_end)
 			shim_memmove(buffer, buffer + 1, buffer_len - 1);
 		break;
+	case STRESS_WORKLOAD_METHOD_STRNUM:
+		while ((t = stress_time_now()) < t_end)
+			stress_workload_strnum(t, buffer, buffer_len);
+		break;
 	case STRESS_WORKLOAD_METHOD_SQRT:
 		while ((t = stress_time_now()) < t_end)
 			stress_workload_sqrt(t, t_end);
@@ -355,6 +384,9 @@ void stress_workload_waste_time(
 				break;
 			case STRESS_WORKLOAD_METHOD_GETPID:
 				(void)getpid();
+				break;
+			case STRESS_WORKLOAD_METHOD_STRNUM:
+				stress_workload_strnum(t, buffer, buffer_len);
 				break;
 			case STRESS_WORKLOAD_METHOD_SQRT:
 				stress_workload_sqrt(t, t_end);

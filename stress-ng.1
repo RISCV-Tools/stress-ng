@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, may be w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH STRESS-NG 1 "9 February 2026"
+.TH STRESS-NG 1 "16 February 2026"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -9866,6 +9866,9 @@ T}
 random	T{
 a random mix of all the workload methods, changing the workload method on every spin-loop.
 T}
+strnum	T{
+a mix of string to/from numeric conversions, can make x86 systems hot.
+T}
 sqrt	T{
 perform double precision floating point sqrt(3) and hypot(3) math operations.
 T}
@@ -10858,6 +10861,9 @@ where possible, change the stressor process name.
 T}
 random	T{
 a random mix of all the workload methods, changing the workload method on every spin-loop.
+T}
+strnum	T{
+a mix of string to/from numeric conversions, can make x86 systems hot.
 T}
 sqrt	T{
 perform double precision floating point sqrt(3) and hypot(3) math operations.
