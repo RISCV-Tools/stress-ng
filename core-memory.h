@@ -32,7 +32,7 @@ extern WARN_UNUSED bool stress_memory_low_check(const size_t requested);
 extern WARN_UNUSED uint64_t stress_memory_phys_size_get(void);
 extern void stress_memory_usage_get(stress_args_t *args,
 	const size_t vm_per_instance, const size_t vm_total);
-extern WARN_UNUSED void *stress_align_address(const void *addr, const size_t alignment);
+extern WARN_UNUSED void *stress_memory_address_align(const void *addr, const size_t alignment);
 extern void stress_set_vma_anon_name(const void *addr, const size_t size,
 	const char *name);
 extern int stress_swapoff(const char *path);

@@ -796,7 +796,7 @@ static int stress_hdd(stress_args_t *args)
 		(void)stress_fs_temp_dir_rm_args(args);
 		return rc;
 	}
-	buf = (uint8_t *)stress_align_address(alloc_buf, BUF_ALIGNMENT);
+	buf = (uint8_t *)stress_memory_address_align(alloc_buf, BUF_ALIGNMENT);
 #endif
 	(void)shim_memset(buf, stress_mwc8(), hdd_write_size);
 	(void)stress_fs_temp_filename_args(args,

@@ -134,13 +134,13 @@ static int stress_bad_altstack_child(stress_args_t *args)
 	(void)sigaltstack(NULL, &old_ss);
 
 	/* Exercise disable SS_DISABLE */
-	ss.ss_sp = stress_align_address(stack, STACK_ALIGNMENT);
+	ss.ss_sp = stress_memory_address_align(stack, STACK_ALIGNMENT);
 	ss.ss_size = stress_minsigstksz;
 	ss.ss_flags = SS_DISABLE;
 	(void)sigaltstack(&ss, NULL);
 
 	/* Exercise invalid flags */
-	ss.ss_sp = stress_align_address(stack, STACK_ALIGNMENT);
+	ss.ss_sp = stress_memory_address_align(stack, STACK_ALIGNMENT);
 	ss.ss_size = stress_minsigstksz;
 	ss.ss_flags = ~0;
 	(void)sigaltstack(&ss, NULL);
@@ -149,7 +149,7 @@ static int stress_bad_altstack_child(stress_args_t *args)
 	(void)sigaltstack(NULL, NULL);
 
 	/* Exercise less than minimum allowed stack size, ENOMEM */
-	ss.ss_sp = stress_align_address(stack, STACK_ALIGNMENT);
+	ss.ss_sp = stress_memory_address_align(stack, STACK_ALIGNMENT);
 	ss.ss_size = stress_minsigstksz - 1;
 	ss.ss_flags = 0;
 	(void)sigaltstack(&ss, NULL);

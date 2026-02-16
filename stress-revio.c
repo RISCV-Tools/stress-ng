@@ -349,7 +349,7 @@ static int stress_revio(stress_args_t *args)
 		(void)stress_fs_temp_dir_rm_args(args);
 		return rc;
 	}
-	buf = (uint8_t *)stress_align_address(alloc_buf, BUF_ALIGNMENT);
+	buf = (uint8_t *)stress_memory_address_align(alloc_buf, BUF_ALIGNMENT);
 #endif
 
 	stress_rndbuf(buf, DEFAULT_REVIO_WRITE_SIZE);
