@@ -355,8 +355,9 @@ uint64_t stress_memory_phys_size_get(void)
 {
 #if defined(STRESS_SC_PAGES)
 	uint64_t phys_pages;
-	const size_t page_size = stress_memory_page_size_get();
+	const uint64_t page_size = (uint64_t)stress_memory_page_size_get();
 	const uint64_t max_pages = ~0ULL / page_size;
+	const uint64_t max_size = ~(page_size - 1);
 	long int ret;
 
 	errno = 0;
@@ -365,10 +366,8 @@ uint64_t stress_memory_phys_size_get(void)
 		return 0ULL;
 
 	phys_pages = (uint64_t)ret;
-	/* Avoid overflow */
-	if (UNLIKELY(phys_pages > max_pages))
-		phys_pages = max_pages;
-	return phys_pages * page_size;
+	/* truncate to max_size rather than overflow */
+	return UNLIKELY(phys_pages > max_pages) ? max_size : phys_pages * page_size;
 #else
 	UNEXPECTED
 	return 0ULL;
