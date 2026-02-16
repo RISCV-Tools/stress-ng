@@ -1728,7 +1728,7 @@ static int OPTIMIZE3 stress_cachehammer(stress_args_t *args)
 	if (local_buffer == MAP_FAILED) {
 		pr_inf_skip("%s: cannot mmap %zu bytes%s, skipping stressor\n",
 			args->name, local_buffer_size,
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 
@@ -1737,7 +1737,7 @@ static int OPTIMIZE3 stress_cachehammer(stress_args_t *args)
 	if (local_page == MAP_FAILED) {
 		pr_inf_skip("%s: cannot mmap %zu bytes%s, skipping stressor\n",
 			args->name, page_size,
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		ret = EXIT_NO_RESOURCE;
 		goto unmap_local_buffer;
 	}
@@ -1757,7 +1757,7 @@ static int OPTIMIZE3 stress_cachehammer(stress_args_t *args)
 		MAP_SHARED, fd, 0);
 	if (file_page == MAP_FAILED) {
 		pr_inf_skip("%s: cannot mmap %zu bytes%s, skipping stressor\n",
-			args->name, page_size, stress_get_memfree_str());
+			args->name, page_size, stress_memory_free_get());
 		ret = EXIT_NO_RESOURCE;
 		goto close_fd;
 	}

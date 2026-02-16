@@ -76,7 +76,7 @@ static int stress_full(stress_args_t *args)
 			MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (buffer == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu bytes%s, errno=%d (%s), skipping stressor\n",
-			args->name, buffer_size, stress_get_memfree_str(),
+			args->name, buffer_size, stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}

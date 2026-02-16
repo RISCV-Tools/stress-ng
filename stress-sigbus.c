@@ -135,7 +135,7 @@ static int stress_sigbus(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte read only pages%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, page_size * 2,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto tidy_close;
 	}

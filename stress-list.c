@@ -542,7 +542,7 @@ static int stress_list(stress_args_t *args)
 	if (!entries) {
 		pr_inf_skip("%s: malloc failed allocating %zu list entries, "
 			"out of memory%s, skipping stressor\n",
-			args->name, n, stress_get_memfree_str());
+			args->name, n, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 	entries_end = entries + n;

@@ -160,7 +160,7 @@ static int stress_stackmmap(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte signal stressor%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, (size_t)STRESS_SIGSTKSZ,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		(void)close(fd);
 		goto tidy_dir;
@@ -174,14 +174,14 @@ static int stress_stackmmap(stress_args_t *args)
 			pr_inf_skip("%s: mmap failed of %zu bytes on file %s%s, errno=%d (%s),"
 				"skipping stressor\n",
 				args->name, (size_t)MMAPSTACK_SIZE, filename,
-				stress_get_memfree_str(), errno, strerror(errno));
+				stress_memory_free_get(), errno, strerror(errno));
 			rc = EXIT_NO_RESOURCE;
 			(void)close(fd);
 			goto tidy_stack_sig;
 		}
 		pr_fail("%s: mmap failed of %zu bytes failed%s, errno=%d (%s)\n",
 			args->name, (size_t)MMAPSTACK_SIZE,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		(void)close(fd);
 		goto tidy_stack_sig;
 	}

@@ -2028,7 +2028,7 @@ static int stress_show_stressors(void)
 				if (!newstr) {
 					pr_err("cannot allocate %zu byte temporary buffer%s\n",
 						(size_t)(len + buffer_len + 1),
-						stress_get_memfree_str());
+						stress_memory_free_get());
 					free(str);
 					return -1;
 				}
@@ -2728,7 +2728,7 @@ static void *stress_map_page(int prot, char *prot_str, size_t page_size)
 	ptr = stress_mmap_anon_shared(page_size, prot);
 	if (ptr == MAP_FAILED) {
 		pr_err("cannot mmap %s %zu byte shared page%s, errno=%d (%s)\n",
-			prot_str, page_size, stress_get_memfree_str(),
+			prot_str, page_size, stress_memory_free_get(),
 			errno, strerror(errno));
 	}
 	return ptr;
@@ -2754,7 +2754,7 @@ static inline void stress_shared_map(const int32_t num_procs)
 	g_shared = (stress_shared_t *)stress_mmap_anon_shared(sz,  PROT_READ | PROT_WRITE);
 	if (g_shared == MAP_FAILED) {
 		pr_err("cannot mmap %zu byte shared memory region%s, errno=%d (%s)\n",
-			sz, stress_get_memfree_str(), errno, strerror(errno));
+			sz, stress_memory_free_get(), errno, strerror(errno));
 		stress_stressors_free();
 		exit(EXIT_FAILURE);
 	}
@@ -2824,7 +2824,7 @@ STRESS_PRAGMA_POP
 	g_shared->checksum.checksums = (stress_checksum_t *)stress_mmap_anon_shared(sz, PROT_READ | PROT_WRITE);
 	if (g_shared->checksum.checksums == MAP_FAILED) {
 		pr_err("cannot mmap %zu byte checksums%s, errno=%d (%s)\n",
-			sz, stress_get_memfree_str(),
+			sz, stress_memory_free_get(),
 			errno, strerror(errno));
 		goto err_unmap_shared;
 	}
@@ -3040,7 +3040,7 @@ static stress_stressor_t *stress_find_proc_info(const stress_t *stressor)
 	ss = (stress_stressor_t *)calloc(1, sizeof(*ss));
 	if (!ss) {
 		(void)fprintf(stderr, "cannot allocate %zu byte stressor state info%s\n",
-			sizeof(*ss), stress_get_memfree_str());
+			sizeof(*ss), stress_memory_free_get());
 		exit(EXIT_FAILURE);
 	}
 	ss->stressor = stressor;
@@ -3222,7 +3222,7 @@ static void stress_with(const int32_t instances)
 		ss = stress_find_proc_info(&stressors[i]);
 		if (!ss) {
 			(void)fprintf(stderr, "cannot %zu byte allocate stressor state info%s\n",
-				sizeof(*ss), stress_get_memfree_str());
+				sizeof(*ss), stress_memory_free_get());
 			exit(EXIT_FAILURE);
 		}
 		ss->instances = instances;
@@ -3252,7 +3252,7 @@ static void stress_enable_all_stressors(const int32_t instances)
 
 		if (!ss) {
 			(void)fprintf(stderr, "cannot %zu byte allocate stressor state info%s\n",
-				sizeof(*ss), stress_get_memfree_str());
+				sizeof(*ss), stress_memory_free_get());
 			exit(EXIT_FAILURE);
 		}
 		ss->instances = instances;
@@ -3646,7 +3646,7 @@ static void stress_alloc_proc_stats(
 	*stats = (stress_stats_t **)calloc((size_t)n, sizeof(stress_stats_t *));
 	if (!*stats) {
 		pr_err("cannot allocate stats array of %" PRId32 " elements%s\n",
-			n, stress_get_memfree_str());
+			n, stress_memory_free_get());
 		stress_stressors_free();
 		exit(EXIT_FAILURE);
 	}

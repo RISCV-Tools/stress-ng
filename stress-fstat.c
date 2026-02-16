@@ -318,14 +318,14 @@ static int stress_fstat(stress_args_t *args)
 		if ((si = (stress_stat_info_t *)calloc(1, sizeof(*si))) == NULL) {
 			pr_err("%s: out of memory allocating %zu bytes%s\n",
 				args->name, sizeof(*si),
-				stress_get_memfree_str());
+				stress_memory_free_get());
 			(void)closedir(dp);
 			goto free_cache;
 		}
 		if ((si->path = shim_strdup(path)) == NULL) {
 			pr_err("%s: out of memory allocating %zu bytes%s\n",
 				args->name, strlen(path),
-				stress_get_memfree_str());
+				stress_memory_free_get());
 			free(si);
 			(void)closedir(dp);
 			goto free_cache;

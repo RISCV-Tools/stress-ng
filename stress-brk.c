@@ -304,7 +304,7 @@ static int stress_brk(stress_args_t *args)
 	brk_context = (brk_context_t *)stress_mmap_anon_shared(sizeof(*brk_context), PROT_READ | PROT_WRITE);
 	if (brk_context == MAP_FAILED) {
 		pr_inf_skip("%s: cannot mmap brk context region%s, errno=%d (%s), skipping stressor\n",
-			args->name, stress_get_memfree_str(),
+			args->name, stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}

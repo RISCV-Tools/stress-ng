@@ -74,7 +74,7 @@ static int stress_mmapmany_child(stress_args_t *args, void *context)
 	if (UNLIKELY(!mappings)) {
 		pr_fail("%s: malloc of %zu bytes failed%s, out of memory\n",
 			args->name, (size_t)max * sizeof(*mappings),
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 

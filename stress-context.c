@@ -147,7 +147,7 @@ static int stress_context_init(
 					MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (context_data->stack == MAP_FAILED) {
 		pr_fail("%s: failed to mmap %d bytes for stack%s, errno=%d (%s)\n",
-			args->name, STACK_ALLOC, stress_get_memfree_str(),
+			args->name, STACK_ALLOC, stress_memory_free_get(),
 			errno, strerror(errno));
 		return -1;
 	}
@@ -184,7 +184,7 @@ static int stress_context(stress_args_t *args)
 	if (context == MAP_FAILED) {
 		pr_inf("%s: failed to allocate %d x %zu bytes for context buffers%s, skipping stressor\n",
 			args->name, STRESS_CONTEXTS, sizeof(context_data_t),
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(context, context_size, "context-data");

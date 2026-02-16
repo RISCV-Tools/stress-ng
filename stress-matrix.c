@@ -860,7 +860,7 @@ static inline int stress_matrix_exercise(
 		PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (a == MAP_FAILED) {
 		pr_fail("%s: matrix allocation failed, out of memory%s, errno=%d (%s)\n",
-			args->name, stress_get_memfree_str(),
+			args->name, stress_memory_free_get(),
 			errno, strerror(errno));
 		goto tidy_ret;
 	}
@@ -871,7 +871,7 @@ static inline int stress_matrix_exercise(
 		PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (b == MAP_FAILED) {
 		pr_fail("%s: matrix allocation failed, out of memory%s, errno=%d (%s)\n",
-			args->name, stress_get_memfree_str(),
+			args->name, stress_memory_free_get(),
 			errno, strerror(errno));
 		goto tidy_a;
 	}
@@ -882,7 +882,7 @@ static inline int stress_matrix_exercise(
 		PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (r == MAP_FAILED) {
 		pr_fail("%s: matrix allocation failed, out of memory%s, errno=%d (%s)\n",
-			args->name, stress_get_memfree_str(),
+			args->name, stress_memory_free_get(),
 			errno, strerror(errno));
 		goto tidy_b;
 	}
@@ -894,7 +894,7 @@ static inline int stress_matrix_exercise(
 			PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 		if (s == MAP_FAILED) {
 			pr_fail("%s: matrix allocation failed, out of memory%s, errno=%d (%s)\n",
-				args->name, stress_get_memfree_str(),
+				args->name, stress_memory_free_get(),
 				errno, strerror(errno));
 			goto tidy_r;
 		}

@@ -620,7 +620,7 @@ static int stress_pipe(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte read buffer%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, buf_rd_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		(void)close(pipefds[0]);
 		(void)close(pipefds[1]);
 		return EXIT_NO_RESOURCE;
@@ -636,7 +636,7 @@ static int stress_pipe(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte write buffer%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, buf_wr_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		(void)munmap((void *)buf_rd, buf_rd_size);
 		(void)close(pipefds[0]);
 		(void)close(pipefds[1]);

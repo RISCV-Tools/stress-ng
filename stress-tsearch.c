@@ -65,7 +65,7 @@ static int stress_tsearch(stress_args_t *args)
 
 	if ((data = (int32_t *)calloc(n, sizeof(*data))) == NULL) {
 		pr_fail("%s: failed to allocate %zu integers%s, skipping stressor\n",
-			args->name, n, stress_get_memfree_str());
+			args->name, n, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 

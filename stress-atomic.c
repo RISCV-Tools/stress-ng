@@ -460,7 +460,7 @@ static int stress_atomic(stress_args_t *args)
 	if (atomic_info == MAP_FAILED) {
 		pr_inf_skip("%s: could not mmap share metrics of "
 			"%zu bytes%s, skipping stressor\n",
-			args->name, atomic_info_sz, stress_get_memfree_str());
+			args->name, atomic_info_sz, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(atomic_info, atomic_info_sz, "atomic-data");

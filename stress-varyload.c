@@ -517,7 +517,7 @@ redo:
 		pr_inf_skip("%s: failed to mmap %zu byte buffer%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, buffer_len,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto exit_free_pids;
 	}

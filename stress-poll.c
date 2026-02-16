@@ -120,14 +120,14 @@ static int OPTIMIZE3 stress_poll(stress_args_t *args)
 	if (!pipe_fds) {
 		pr_inf_skip("%s: out of memory allocating %zu pipe file descriptors%s, "
 			"skipping stressor\n",
-			args->name, max_fds, stress_get_memfree_str());
+			args->name, max_fds, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 	poll_fds = (struct pollfd *)calloc(max_fds, sizeof(*poll_fds));
 	if (!poll_fds) {
 		pr_inf("%s: out of memory allocating %zu poll file descriptors%s, "
 			"skipping stressor\n",
-			args->name, max_fds, stress_get_memfree_str());
+			args->name, max_fds, stress_memory_free_get());
 		free(pipe_fds);
 		return EXIT_NO_RESOURCE;
 	}
@@ -140,7 +140,7 @@ static int OPTIMIZE3 stress_poll(stress_args_t *args)
 	if (!rnd_fds_index) {
 		pr_inf("%s: out of memory allocating %zu randomized poll indices%s, "
 			"skipping stressor\n",
-			args->name, max_fds, stress_get_memfree_str());
+			args->name, max_fds, stress_memory_free_get());
 		free(poll_fds);
 		free(pipe_fds);
 		return EXIT_NO_RESOURCE;

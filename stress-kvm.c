@@ -368,7 +368,7 @@ static int stress_kvm(stress_args_t *args)
 			PROT_READ | PROT_WRITE, MAP_SHARED, vcpu_fd, 0);
 		if (run == MAP_FAILED) {
 			pr_fail("%s: mmap on vcpu_fd failed%s, errno=%d (%s)\n",
-				args->name, stress_get_memfree_str(),
+				args->name, stress_memory_free_get(),
 				errno, strerror(errno));
 			goto tidy_vcpu_fd;
 		}

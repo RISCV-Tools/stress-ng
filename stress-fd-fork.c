@@ -140,7 +140,7 @@ static int stress_fd_fork(stress_args_t *args)
 	stress_set_vma_anon_name(fds, fds_size, "fds");
 	if (fds == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu file descriptors%s, skipping stressor\n",
-			args->name, fd_fork_fds, stress_get_memfree_str());
+			args->name, fd_fork_fds, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 
@@ -150,7 +150,7 @@ static int stress_fd_fork(stress_args_t *args)
 	if (info == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu bytes%s, errno=%d (%s), "
 			"skipping stressor\n",
-			args->name, sizeof(*info), stress_get_memfree_str(),
+			args->name, sizeof(*info), stress_memory_free_get(),
 			errno, strerror(errno));
 		(void)munmap((void *)fds, fds_size);
 		return EXIT_NO_RESOURCE;

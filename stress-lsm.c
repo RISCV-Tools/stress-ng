@@ -102,7 +102,7 @@ static int stress_lsm(stress_args_t *args)
 	if (buf == MAP_FAILED) {
 		pr_inf_skip("%s: cannot mmap %zu byte sized buffer%s, errno=%d (%s),"
 			"skipping stressor\n",
-			args->name, buf_size, stress_get_memfree_str(),
+			args->name, buf_size, stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}

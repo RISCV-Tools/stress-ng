@@ -139,7 +139,7 @@ static void stress_fiemap_ioctl(
 		fiemap = (struct fiemap *)calloc(1, sizeof(*fiemap));
 		if (UNLIKELY(!fiemap)) {
 			pr_err("%s: out of memory allocating fiemap%s\n",
-				args->name, stress_get_memfree_str());
+				args->name, stress_memory_free_get());
 			break;
 		}
 		fiemap->fm_length = ~0UL;
@@ -173,7 +173,7 @@ static void stress_fiemap_ioctl(
 			sizeof(*fiemap) + extents_size);
 		if (UNLIKELY(!tmp)) {
 			pr_fail("%s: realloc failed%s, errno=%d (%s)\n",
-				args->name, stress_get_memfree_str(),
+				args->name, stress_memory_free_get(),
 				errno, strerror(errno));
 			free(fiemap);
 			break;

@@ -280,7 +280,7 @@ static int stress_memhotplug(stress_args_t *args)
 	mem_info = (stress_mem_info_t *)calloc(n, sizeof(*mem_info));
 	if (!mem_info) {
 		pr_inf_skip("%s: failed to allocate %zu mem_info structs%s, skipping stressor\n",
-			args->name, n, stress_get_memfree_str());
+			args->name, n, stress_memory_free_get());
 		(void)closedir(dir);
 		return EXIT_NO_RESOURCE;
 	}

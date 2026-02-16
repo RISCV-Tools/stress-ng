@@ -192,7 +192,7 @@ static int OPTIMIZE3 stress_hsearch(stress_args_t *args)
 	keys = (char **)calloc(max, sizeof(*keys));
 	if (!keys) {
 		pr_err("%s: cannot allocate %zu keys%s\n",
-			args->name, max, stress_get_memfree_str());
+			args->name, max, stress_memory_free_get());
 		goto free_hash;
 	}
 
@@ -206,7 +206,7 @@ static int OPTIMIZE3 stress_hsearch(stress_args_t *args)
 		if (!keys[i]) {
 			pr_err("%s: cannot allocate %zu byte key%s\n",
 				args->name, strlen(buffer),
-				stress_get_memfree_str());
+				stress_memory_free_get());
 			goto free_all;
 		}
 
@@ -215,7 +215,7 @@ static int OPTIMIZE3 stress_hsearch(stress_args_t *args)
 
 		if (hsearch_func(e, ENTER) == NULL) {
 			pr_err("%s: cannot allocate new hash item%s\n",
-				args->name, stress_get_memfree_str());
+				args->name, stress_memory_free_get());
 			goto free_all;
 		}
 	}

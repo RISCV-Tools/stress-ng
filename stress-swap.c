@@ -349,7 +349,7 @@ static int stress_swap_child(stress_args_t *args, void *context)
 			MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (page == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap 1 page%s, errno=%d (%s), skipping stressor\n",
-			args->name, stress_get_memfree_str(), errno, strerror(errno));
+			args->name, stress_memory_free_get(), errno, strerror(errno));
 		ret = EXIT_NO_RESOURCE;
 		goto tidy_ret;
 	}

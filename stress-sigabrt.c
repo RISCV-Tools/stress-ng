@@ -72,7 +72,7 @@ static int stress_sigabrt(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte sigabrt information%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, sizeof(*sigabrt_info),
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name((void *)sigabrt_info, sizeof(*sigabrt_info), "state");

@@ -445,7 +445,7 @@ static int stress_sockfd(stress_args_t *args)
 	fds = (int *)malloc(fds_size);
 	if (!fds) {
 		pr_inf_skip("%s: failed to allocate %zd file descriptors%s, skipping stressor\n",
-			args->name, max_fd, stress_get_memfree_str());
+			args->name, max_fd, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 

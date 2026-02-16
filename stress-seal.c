@@ -76,7 +76,7 @@ static int stress_seal(stress_args_t *args)
 		pr_inf_skip("%s: failed to allocate %zu byte buffer%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, page_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(buf, page_size, "write-buffer");
@@ -169,7 +169,7 @@ static int stress_seal(stress_args_t *args)
 				goto next;
 			pr_fail("%s: mmap of %jd bytes failed%s, errno=%d (%s)\n",
 				args->name, (intmax_t)sz,
-				stress_get_memfree_str(), errno, strerror(errno));
+				stress_memory_free_get(), errno, strerror(errno));
 			(void)close(fd);
 			goto err;
 		}

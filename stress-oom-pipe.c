@@ -199,7 +199,7 @@ static int stress_oom_pipe(stress_args_t *args)
 	if (buffer == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu byte pipe write buffer%s, "
 			"errno=%d (%s), skipping stressor\n",
-			args->name, buffer_size, stress_get_memfree_str(),
+			args->name, buffer_size, stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
@@ -218,7 +218,7 @@ static int stress_oom_pipe(stress_args_t *args)
 		if (!context.fds) {
 			pr_inf_skip("%s: cannot allocate %zu file descriptors%s, skipping stressor\n",
 				args->name, context.max_fd,
-				stress_get_memfree_str());
+				stress_memory_free_get());
 			(void)munmap(buffer, buffer_size);
 			return EXIT_NO_RESOURCE;
 		}

@@ -393,7 +393,7 @@ static int stress_msg(stress_args_t *args)
 	if (!msgq_ids) {
 		pr_inf_skip("%s: failed to allocate %zu item msgq id array%s, "
 			"skipping stressor\n", args->name, max_ids,
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 

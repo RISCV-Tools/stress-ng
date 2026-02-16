@@ -198,7 +198,7 @@ static int stress_heapsort(stress_args_t *args)
 	if (data == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu 32 bit integers%s, "
 			"errno=%d (%s), skipping stressor\n", args->name, n,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	(void)stress_madvise_collapse(data, data_size);

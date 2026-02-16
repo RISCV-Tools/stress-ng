@@ -234,7 +234,7 @@ static int stress_flipflop(stress_args_t *args)
 	dist = (uint64_t *)calloc(2 * flipflop_bits, sizeof(uint64_t));
 	if (!dist) {
 		pr_inf_skip("%s: failed to allocate dist array%s, skipping stressor\n",
-			args->name, stress_get_memfree_str());
+			args->name, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 
@@ -259,7 +259,7 @@ static int stress_flipflop(stress_args_t *args)
 	bits = (uint64_t *)calloc(bits_size, 1);
 	if (!bits) {
 		pr_inf_skip("%s: failed to allocate %zu bytes%s, skipping stressor\n",
-			args->name, bits_size, stress_get_memfree_str());
+			args->name, bits_size, stress_memory_free_get());
 		rc = EXIT_NO_RESOURCE;
 		goto free_dist;
 	}
@@ -271,7 +271,7 @@ static int stress_flipflop(stress_args_t *args)
 							MAP_ANONYMOUS | MAP_SHARED, -1, 0);
 	if (workers == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap workers array%s, errno=%d (%s), skipping stressor\n",
-			args->name, stress_get_memfree_str(), errno, strerror(errno));
+			args->name, stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto free_bits;
 	}

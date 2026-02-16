@@ -270,7 +270,7 @@ static int stress_forkheavy(stress_args_t *args)
 	metrics = (stress_metrics_t *)stress_mmap_anon_shared(sizeof(*metrics), PROT_READ | PROT_WRITE);
 	if (metrics == MAP_FAILED) {
 		pr_inf_skip("%s: failed to memory map %zu bytes%s, skipping stressor\n",
-			args->name, sizeof(*metrics), stress_get_memfree_str());
+			args->name, sizeof(*metrics), stress_memory_free_get());
 		free(forkheavy_args.resources);
 		return EXIT_NO_RESOURCE;
 	}

@@ -140,7 +140,7 @@ static int stress_ring_pipe(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %d size buffer%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, STRESS_RING_PIPE_SIZE_MAX,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		goto err_ret;
 	}
 	stress_set_vma_anon_name(buf, STRESS_RING_PIPE_SIZE_MAX, "ring-pipe-buffer");
@@ -149,14 +149,14 @@ static int stress_ring_pipe(stress_args_t *args)
 	if (!pipe_fds) {
 		pr_inf_skip("%s: failed to allocate %zu pipe file descriptors%s, "
 			"skipping stressor\n", args->name, ring_pipe_num,
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		goto err_unmap_buf;
 	}
 	poll_fds = (struct pollfd *)calloc(ring_pipe_num, sizeof(*poll_fds));
 	if (!poll_fds) {
 		pr_inf_skip("%s: cannot allocate %zu poll descriptors%s, "
 			"skipping stressor\n", args->name, ring_pipe_num,
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		goto err_free_pipe_fds;
 	}
 

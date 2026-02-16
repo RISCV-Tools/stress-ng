@@ -149,7 +149,7 @@ static int OPTIMIZE3 stress_bitonicsort(stress_args_t *args)
 	if (data == MAP_FAILED) {
 		pr_inf_skip("%s: mmap failed allocating %zu 32 bit integers%s, "
 			"skipping stressor\n", args->name, n,
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 	(void)stress_madvise_collapse(data, data_size);

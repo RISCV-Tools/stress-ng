@@ -169,7 +169,7 @@ static int stress_switch_pipe(
 	if (UNLIKELY(buf == MAP_FAILED)) {
 		pr_fail("%s: failed to mmap %zu byte pipe read/write buffer%s, errno=%d (%s)\n",
 			args->name, buf_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		(void)close(pipefds[0]);
 		(void)close(pipefds[1]);
 		return EXIT_FAILURE;

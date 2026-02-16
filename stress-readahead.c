@@ -141,7 +141,7 @@ static int stress_readahead(stress_args_t *args)
 	if (ret || !buf) {
 		rc = stress_exit_status(errno);
 		pr_err("%s: cannot allocate %d byte buffer%s\n",
-			args->name, BUF_SIZE, stress_get_memfree_str());
+			args->name, BUF_SIZE, stress_memory_free_get());
 		(void)stress_fs_temp_dir_rm_args(args);
 		return rc;
 	}

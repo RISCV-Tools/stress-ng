@@ -182,7 +182,7 @@ redo:
 				goto next;
 			}
 			pr_err("%s: mmap of 1 byte failed%s, errno=%d (%s)\n",
-				args->name, stress_get_memfree_str(),
+				args->name, stress_memory_free_get(),
 				errno, strerror(errno));
 			(void)close(fd);
 			break;

@@ -243,7 +243,7 @@ static int stress_mmapfiles(stress_args_t *args)
 		pr_inf("%s: cannot mmap %zu byte mmap file information%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, sizeof(*mmapfile_info),
-			stress_get_memfree_str(),
+			stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}

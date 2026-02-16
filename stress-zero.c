@@ -88,7 +88,7 @@ static int stress_zero(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte read buffer%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, page_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(rd_buffer, page_size, "read-buffer");
@@ -101,7 +101,7 @@ static int stress_zero(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte write buffer%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, page_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		(void)munmap(rd_buffer, page_size);
 		return EXIT_NO_RESOURCE;
 	}

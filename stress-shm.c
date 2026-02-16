@@ -197,7 +197,7 @@ static int stress_shm_posix_child(
 			if (UNLIKELY(addr == MAP_FAILED)) {
 				ok = false;
 				pr_fail("%s: failed to mmap %zu bytes%s, errno=%d (%s)\n",
-					args->name, sz, stress_get_memfree_str(),
+					args->name, sz, stress_memory_free_get(),
 					errno, strerror(errno));
 				rc = EXIT_FAILURE;
 				(void)close(shm_fd);
@@ -443,7 +443,7 @@ again:
 			if (!shm_names) {
 				pr_fail("%s: failed to allocate %zu bytes%s, out of memory\n",
 					args->name, shm_posix_objects * SHM_NAME_LEN,
-					stress_get_memfree_str());
+					stress_memory_free_get());
 				(void)close(pipefds[0]);
 				(void)close(pipefds[1]);
 				rc = EXIT_NO_RESOURCE;

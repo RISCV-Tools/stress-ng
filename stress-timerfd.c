@@ -167,7 +167,7 @@ static int stress_timerfd(stress_args_t *args)
 	if (!timerfds) {
 		pr_inf_skip("%s: failed to allocate %d timerfd file descriptors%s, "
 			"skipping stressor\n", args->name,
-			timerfd_fds, stress_get_memfree_str());
+			timerfd_fds, stress_memory_free_get());
 		rc = EXIT_NO_RESOURCE;
 		goto close_file_fd;
 	}
@@ -179,7 +179,7 @@ static int stress_timerfd(stress_args_t *args)
 	if (!pollfds) {
 		pr_inf_skip("%s: failed to allocate %d pollfd file descriptors%s, "
 			"skipping stressor\n", args->name,
-			timerfd_fds, stress_get_memfree_str());
+			timerfd_fds, stress_memory_free_get());
 		rc = EXIT_NO_RESOURCE;
 		goto free_timerfds;
 	}

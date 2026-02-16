@@ -264,7 +264,7 @@ static int stress_setup_io_uring(
 	if (submit->sq_mmap == MAP_FAILED) {
 		pr_inf_skip("%s: could not mmap submission queue buffer%s, "
 			"errno=%d (%s), skipping stressor\n",
-			args->name, stress_get_memfree_str(),
+			args->name, stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
@@ -278,7 +278,7 @@ static int stress_setup_io_uring(
 		if (submit->cq_mmap == MAP_FAILED) {
 			pr_inf_skip("%s: could not mmap completion queue buffer%s, "
 				"errno=%d (%s), skipping stressor\n",
-				args->name, stress_get_memfree_str(),
+				args->name, stress_memory_free_get(),
 				errno, strerror(errno));
 			(void)munmap(submit->sq_mmap, submit->sq_size);
 			return EXIT_NO_RESOURCE;
@@ -300,7 +300,7 @@ static int stress_setup_io_uring(
 	if (submit->sqes_mmap == MAP_FAILED) {
 		pr_inf_skip("%s: count not mmap submission queue buffer%s, "
 			"errno=%d (%s), skipping stressor\n",
-			args->name, stress_get_memfree_str(),
+			args->name, stress_memory_free_get(),
 			errno, strerror(errno));
 		if (submit->cq_mmap != submit->sq_mmap)
 			(void)munmap(submit->cq_mmap, submit->cq_size);
@@ -1029,7 +1029,7 @@ static int stress_io_uring_child(stress_args_t *args, void *context)
 			io_uring_file.iovecs[i].iov_base = NULL;
 			pr_inf_skip("%s: cannot mmap allocate iovec iov_base%s, errno=%d (%s), "
 				"skipping stressor\n", args->name,
-				stress_get_memfree_str(),
+				stress_memory_free_get(),
 				errno, strerror(errno));
 			stress_io_uring_unmap_iovecs(&io_uring_file);
 			return EXIT_NO_RESOURCE;

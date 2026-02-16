@@ -198,7 +198,7 @@ static int stress_locka_contention(
 		locka_info = stress_locka_info_new();
 		if (UNLIKELY(!locka_info)) {
 			pr_err("%s: calloc failed, out of memory%s\n",
-				args->name, stress_get_memfree_str());
+				args->name, stress_memory_free_get());
 			return -1;
 		}
 		locka_info->offset = offset;

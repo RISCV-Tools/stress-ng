@@ -49,7 +49,7 @@ static int stress_msyncmany_child(stress_args_t *args, void *context)
 	if (!mappings) {
 		pr_fail("%s: calloc of %zu bytes failed%s, out of memory\n",
 			args->name, (size_t)max * sizeof(*mappings),
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 
@@ -77,7 +77,7 @@ static int stress_msyncmany_child(stress_args_t *args, void *context)
 
 	if (!mapped) {
 		pr_inf("%s: no mappings made, out of resources%s\n",
-			args->name, stress_get_memfree_str());
+			args->name, stress_memory_free_get());
 		rc = EXIT_NO_RESOURCE;
 		goto finish;
 	}

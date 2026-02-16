@@ -317,7 +317,7 @@ static int stress_min_nanosleep(stress_args_t *args)
 		pr_inf("%s: failed to mmap an array of %zu bytes%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, max_delay * sizeof(*delay),
-			stress_get_memfree_str(),
+			stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}

@@ -125,7 +125,7 @@ static int stress_insertionsort(stress_args_t *args)
 	if (data == MAP_FAILED) {
 		pr_inf_skip("%s: mmap failed allocating %zu 32 bit integers%s, "
 			"errno = %d (%s), skipping stressor\n",
-			args->name, n, stress_get_memfree_str(),
+			args->name, n, stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}

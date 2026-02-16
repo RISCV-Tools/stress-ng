@@ -126,7 +126,7 @@ static int stress_netdev(stress_args_t *args)
 		if (UNLIKELY(!ifc.ifc_buf)) {
 			pr_fail("%s: failed to allocate %zu byte interface buffer%s\n",
 				args->name, (size_t)ifc.ifc_len,
-				stress_get_memfree_str());
+				stress_memory_free_get());
 			rc = EXIT_NO_RESOURCE;
 			break;
 		}

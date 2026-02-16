@@ -249,7 +249,7 @@ static int stress_nanosleep(stress_args_t *args)
 		pr_inf_skip("%s: could not allocate context for %" PRIu32
 			" pthreads%s, skipping stressor\n",
 			args->name, nanosleep_threads,
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 

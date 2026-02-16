@@ -179,7 +179,7 @@ static int stress_msync(stress_args_t *args)
 	if (buf == MAP_FAILED) {
 		pr_err("%s: failed to mmap memory of size %" PRIu64 " bytes%s, errno=%d (%s)\n",
 			args->name, sz,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto err;
 	}
@@ -188,7 +188,7 @@ static int stress_msync(stress_args_t *args)
 	if (data == MAP_FAILED) {
 		pr_err("%s: failed to mmap memory of size %zu bytes%s, errno=%d (%s)\n",
 			args->name, page_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto err_unmap;
 	}

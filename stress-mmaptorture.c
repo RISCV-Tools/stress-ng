@@ -424,7 +424,7 @@ static int stress_mmaptorture_child(stress_args_t *args, void *context)
 	data = (char *)malloc(page_size);
 	if (UNLIKELY(!data)) {
 		pr_fail("%s: malloc of %zu bytes failed%s, out of memory\n",
-			args->name, page_size, stress_get_memfree_str());
+			args->name, page_size, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 
@@ -432,7 +432,7 @@ static int stress_mmaptorture_child(stress_args_t *args, void *context)
 	if (UNLIKELY(!mappings)) {
 		pr_fail("%s: calloc of %zu bytes failed%s, out of memory\n",
 			args->name, (size_t)MMAP_MAPPINGS_MAX * sizeof(*mappings),
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		free(data);
 		return EXIT_NO_RESOURCE;
 	}
@@ -866,7 +866,7 @@ static int stress_mmaptorture(stress_args_t *args)
 	if (mmap_stats == MAP_FAILED) {
 		pr_inf_skip("%s: cannot mmap %zu bytes stats shared page%s, "
 			"errno=%d (%s), skipping stressor\n", args->name,
-			sizeof(*mmap_stats), stress_get_memfree_str(),
+			sizeof(*mmap_stats), stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}

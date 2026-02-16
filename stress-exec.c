@@ -780,7 +780,7 @@ static int stress_exec(stress_args_t *args)
 			MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (stress_pid_hash_table == MAP_FAILED) {
 		pr_inf_skip("%s: failed to allocate %zu byte PID hash table%s, skipping stressor\n",
-			args->name, stress_pid_hash_table_size, stress_get_memfree_str());
+			args->name, stress_pid_hash_table_size, stress_memory_free_get());
 		rc = EXIT_NO_RESOURCE;
 		goto err_free_ld_library_path;
 	}
@@ -792,7 +792,7 @@ static int stress_exec(stress_args_t *args)
 			MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (stress_pid_cache == MAP_FAILED) {
 		pr_inf_skip("%s: failed to allocate %zu byte PID hash cache%s, skipping stressor\n",
-			args->name, cache_max, stress_get_memfree_str());
+			args->name, cache_max, stress_memory_free_get());
 		rc = EXIT_NO_RESOURCE;
 		goto err_unmap_pid_hash_table;
 	}

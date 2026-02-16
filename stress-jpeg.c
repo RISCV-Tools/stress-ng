@@ -393,7 +393,7 @@ static int stress_jpeg(stress_args_t *args)
 		pr_inf_skip("%s: cannot allocate RGB buffer of size %" PRId32 " x %" PRId32 " x %d%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, x_max, y_max, 3,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(rgb, rgb_size, "rgb-data");
@@ -405,7 +405,7 @@ static int stress_jpeg(stress_args_t *args)
 		pr_inf_skip("%s: cannot allocate row pointer array of size %" PRId32 " x %zu%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, y_max, sizeof(*row_pointer),
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		(void)munmap((void *)rgb, rgb_size);
 		return EXIT_NO_RESOURCE;
 	}

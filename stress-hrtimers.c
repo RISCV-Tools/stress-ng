@@ -195,7 +195,7 @@ static int stress_hrtimers(stress_args_t *args)
 	s_pids = stress_sync_s_pids_mmap(PROCS_MAX);
 	if (s_pids == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %d PIDs%s, skipping stressor\n",
-			args->name, PROCS_MAX, stress_get_memfree_str());
+			args->name, PROCS_MAX, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 

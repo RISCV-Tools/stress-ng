@@ -463,7 +463,7 @@ static int OPTIMIZE3 stress_far_branch(stress_args_t *args)
 	if (!funcs) {
 		pr_inf_skip("%s: cannot allocate %zu function "
 			"pointers%s, skipping stressor\n",
-			args->name, max_funcs, stress_get_memfree_str());
+			args->name, max_funcs, stress_memory_free_get());
 		(void)close(fd);
 		return EXIT_NO_RESOURCE;
 	}
@@ -471,7 +471,7 @@ static int OPTIMIZE3 stress_far_branch(stress_args_t *args)
 	if (!pages) {
 		pr_inf_skip("%s: cannot allocate %zu page "
 			"pointers%s, skipping stressor\n",
-			args->name, n_pages, stress_get_memfree_str());
+			args->name, n_pages, stress_memory_free_get());
 		free(funcs);
 		(void)close(fd);
 		return EXIT_NO_RESOURCE;
@@ -500,7 +500,7 @@ static int OPTIMIZE3 stress_far_branch(stress_args_t *args)
 
 	if (n_pages_mapped == 0) {
 		pr_inf("%s: failed to mmap pages%s, skipping stressor\n",
-			args->name, stress_get_memfree_str());
+			args->name, stress_memory_free_get());
 	}
 	if (n_pages_failed > 0) {
 		pr_inf("fixing failed mappings\n");

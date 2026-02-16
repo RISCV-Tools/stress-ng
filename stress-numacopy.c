@@ -206,7 +206,7 @@ static int stress_numacopy(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap pages array of %ld elements%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, num_numa_nodes,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto metrics_free;
 	}
@@ -219,7 +219,7 @@ static int stress_numacopy(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap a local page%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto numa_pages_free;
 	}

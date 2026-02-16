@@ -451,7 +451,7 @@ static int stress_dfp(stress_args_t *args)
 			MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (dfp_data == MAP_FAILED) {
 		pr_inf_skip("%s: failed to allocate %d decimal floating point elements%s, skipping stressor\n",
-			args->name, DFP_ELEMENTS, stress_get_memfree_str());
+			args->name, DFP_ELEMENTS, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(dfp_data, mmap_size, "dfp-data");

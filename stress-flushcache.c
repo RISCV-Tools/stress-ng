@@ -295,7 +295,7 @@ static int stress_flushcache_child(stress_args_t *args, void *ctxt)
 			MAP_ANONYMOUS | MAP_SHARED, -1, 0);
 	if (context->d_addr == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu bytes%s, skipping stressor\n",
-			args->name, context->d_bytes, stress_get_memfree_str());
+			args->name, context->d_bytes, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(context->d_addr, context->d_bytes, "d-cache");
@@ -365,7 +365,7 @@ static int stress_flushcache(stress_args_t *args)
 	context.i_addr = stress_mmap_anon_shared(context.i_bytes, PROT_READ | PROT_WRITE | PROT_EXEC);
 	if (context.i_addr == MAP_FAILED) {
 		pr_inf_skip("%s: could not mmap %zu sized page%s, skipping stressor\n",
-			args->name, context.i_bytes, stress_get_memfree_str());
+			args->name, context.i_bytes, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(context.i_addr, context.i_bytes, "i-cache");

@@ -109,7 +109,7 @@ static int OPTIMIZE3 stress_fibsearch(stress_args_t *args)
 				MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (data == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu bytes%s, errno=%d (%s), skipping stressor\n",
-			args->name, data_size, stress_get_memfree_str(),
+			args->name, data_size, stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}

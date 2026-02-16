@@ -336,7 +336,7 @@ static int stress_easy_opcode(stress_args_t *args)
 	if (state == MAP_FAILED) {
 		pr_inf_skip("%s: mmap of %zu bytes failed%s, errno=%d (%s) "
 			"skipping stressor\n",
-			args->name, args->page_size, stress_get_memfree_str(),
+			args->name, args->page_size, stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
@@ -351,7 +351,7 @@ static int stress_easy_opcode(stress_args_t *args)
 	if (opcodes == MAP_FAILED) {
 		pr_fail("%s: mmap of %zu bytes failed%s, errno=%d (%s)\n",
 			args->name, page_size * (2 + PAGES),
-			stress_get_memfree_str(),
+			stress_memory_free_get(),
 			errno, strerror(errno));
 		(void)munmap((void *)state, sizeof(*state));
 		return EXIT_NO_RESOURCE;

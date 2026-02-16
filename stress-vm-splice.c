@@ -77,7 +77,7 @@ static int stress_vm_splice(stress_args_t *args)
 	if (buf == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu bytes buffer%s, errno=%d (%s), skipping stressor\n",
 			args->name, sz,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name((void *)buf, sz, "iov-buffer");
@@ -86,7 +86,7 @@ static int stress_vm_splice(stress_args_t *args)
 	if (data == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu sized buffer%s, errno=%d (%s), skipping stressor\n",
 			args->name, page_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		(void)munmap((void *)buf, sz);
 		return EXIT_NO_RESOURCE;
 	}

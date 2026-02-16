@@ -295,7 +295,7 @@ static int stress_sigsegv(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte read only page%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, args->page_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(ro_ptr, args->page_size, "ro-page");
@@ -307,7 +307,7 @@ static int stress_sigsegv(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte PROT_NONE page%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, args->page_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		(void)munmap((void *)ro_ptr, args->page_size);
 		return EXIT_NO_RESOURCE;
 	}
@@ -322,7 +322,7 @@ static int stress_sigsegv(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte guard page%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, args->page_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		(void)munmap((void *)none_ptr, args->page_size);
 		(void)munmap((void *)ro_ptr, args->page_size);
 		return EXIT_NO_RESOURCE;

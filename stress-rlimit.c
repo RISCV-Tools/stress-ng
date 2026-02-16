@@ -152,7 +152,7 @@ static int stress_rlimit_child(stress_args_t *args, void *ctxt)
 	if (stack == MAP_FAILED) {
 		pr_inf("%s: failed to mmap %zu byte signal stack%s, errno=%d (%s)\n",
 			args->name, (size_t)STRESS_MINSIGSTKSZ,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 

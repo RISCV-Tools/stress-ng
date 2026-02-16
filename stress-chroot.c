@@ -420,7 +420,7 @@ static int stress_chroot(stress_args_t *args)
 			MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 	if (data == MAP_FAILED) {
 		pr_inf_skip("%s: cannot mmap metrics shared data%s, skipping stressor\n",
-			args->name, stress_get_memfree_str());
+			args->name, stress_memory_free_get());
 		return EXIT_FAILURE;
 	}
 	stress_set_vma_anon_name(data, sizeof(*data), "metrics");

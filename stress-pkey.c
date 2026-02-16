@@ -47,7 +47,7 @@ static int stress_pkey(stress_args_t *args)
 	if (pages == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu pages%s, errno=%d (%s), "
 			"skipping stressor\n",
-			args->name, pages_size, stress_get_memfree_str(),
+			args->name, pages_size, stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}

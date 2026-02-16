@@ -258,7 +258,7 @@ static int stress_numa(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap status array of %zu elements%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, num_pages,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto old_numa_mask_free;
 	}
@@ -272,7 +272,7 @@ static int stress_numa(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap dest_nodes array of %zu elements%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, num_pages,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto status_free;
 	}
@@ -286,7 +286,7 @@ static int stress_numa(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap pages array of %zu elements%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, num_pages,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto dest_nodes_free;
 	}
@@ -302,7 +302,7 @@ static int stress_numa(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap a region of %zu bytes%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, numa_bytes,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto pages_free;
 	}

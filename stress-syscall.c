@@ -8943,7 +8943,7 @@ static int stress_syscall(stress_args_t *args)
 	if (syscall_2_pages == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu bytes%s, errno=%d (%s), "
 			"skipping stressor\n", args->name, args->page_size * 2,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		goto err_rmdir;
 	}
 	stress_uint8rnd4((uint8_t *)syscall_2_pages, syscall_2_pages_size);
@@ -8955,7 +8955,7 @@ static int stress_syscall(stress_args_t *args)
 	if (syscall_shared_info == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu bytes%s, errno=%d (%s), "
 			"skipping stressor\n", args->name, sizeof(*syscall_shared_info),
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		goto err_unmap_syscall_page;
 	}
 

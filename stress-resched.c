@@ -176,7 +176,7 @@ static int stress_resched(stress_args_t *args)
 	s_pids = stress_sync_s_pids_mmap((size_t)s_pids_max);
 	if (s_pids == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %d PIDs%s, skipping stressor\n",
-			args->name, s_pids_max, stress_get_memfree_str());
+			args->name, s_pids_max, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 	stress_sync_init_pids(s_pids, s_pids_max);
@@ -194,7 +194,7 @@ static int stress_resched(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte yield counter array%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, yields_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto tidy_s_pids;
 	}

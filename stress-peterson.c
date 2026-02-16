@@ -222,7 +222,7 @@ static int stress_peterson(stress_args_t *args)
 	if (peterson == MAP_FAILED) {
 		pr_inf_skip("%s: cannot mmap %zu bytes for peterson shared struct%s, "
 			"errno=%d (%s), skipping stressor\n",
-			args->name, sz, stress_get_memfree_str(),
+			args->name, sz, stress_memory_free_get(),
 			errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}

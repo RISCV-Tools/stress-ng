@@ -532,7 +532,7 @@ static int stress_l1cache(stress_args_t *args)
 		pr_inf_skip("%s: cannot mmap cache %" PRIu32" byte test buffer%s, "
 			"skipping stressor, errno=%d (%s)\n",
 			args->name, l1cache_size << 2,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(cache, l1cache_size, "l1cache");

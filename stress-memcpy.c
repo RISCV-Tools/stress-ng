@@ -309,7 +309,7 @@ static int stress_memcpy(stress_args_t *args)
 	if (buf == MAP_FAILED) {
 		pr_inf("%s: mmap of %d bytes failed%s, errno=%d (%s)\n",
 			args->name, MEMCPY_MEMSIZE * 3,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(buf, 3 * MEMCPY_MEMSIZE, "memcpy-buffer");

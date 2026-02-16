@@ -82,7 +82,7 @@ static int stress_pty(stress_args_t *args)
 		pr_inf_skip("%s: allocation of %zu pty array failed%s, "
 			"skipping stressor\n",
 			args->name, (size_t)pty_max,
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 

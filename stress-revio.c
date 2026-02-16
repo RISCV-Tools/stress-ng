@@ -334,7 +334,7 @@ static int stress_revio(stress_args_t *args)
 		rc = stress_exit_status(errno);
 		pr_err("%s: failed to allocate %zu byte buffer%s\n",
 			args->name, (size_t)DEFAULT_REVIO_WRITE_SIZE,
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		(void)stress_fs_temp_dir_rm_args(args);
 		return rc;
 	}
@@ -345,7 +345,7 @@ static int stress_revio(stress_args_t *args)
 	if (!alloc_buf) {
 		pr_err("%s: failed to allocate %zu buffer%s\n",
 			args->name, (size_t)DEFAULT_REVIO_WRITE_SIZE + BUF_ALIGNMENT,
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		(void)stress_fs_temp_dir_rm_args(args);
 		return rc;
 	}

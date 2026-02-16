@@ -903,7 +903,7 @@ static inline void *stress_stream_mmap(
 	if (!ptr || (ptr == MAP_FAILED)) {
 		pr_err("%s: failed to mmap %" PRIu64 " bytes%s, errno=%d (%s)\n",
 			args->name, sz,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		ptr = MAP_FAILED;
 	} else {
 		stress_set_vma_anon_name(ptr, sz, "stream-buffer");

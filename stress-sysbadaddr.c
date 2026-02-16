@@ -2559,7 +2559,7 @@ static int stress_sysbadaddr(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte anonymous state structure%s, "
 		       "errno=%d (%s), skipping stressor\n",
 			args->name, sizeof(*state),
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		ret = EXIT_NO_RESOURCE;
 		goto cleanup;
 	}
@@ -2571,7 +2571,7 @@ static int stress_sysbadaddr(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte anonymous read-only page%s, "
 		       "errno=%d (%s), skipping stressor\n",
 			args->name, page_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		ret = EXIT_NO_RESOURCE;
 		goto cleanup;
 	}
@@ -2585,7 +2585,7 @@ static int stress_sysbadaddr(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte anonymous read-write page%s, "
 		       "errno=%d (%s), skipping stressor\n",
 			args->name, page_size << 1,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		ret = EXIT_NO_RESOURCE;
 		goto cleanup;
 	}
@@ -2599,7 +2599,7 @@ static int stress_sysbadaddr(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte anonymous execute-only page%s, "
 		       "errno=%d (%s), skipping stressor\n",
 			args->name, page_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		ret = EXIT_NO_RESOURCE;
 		goto cleanup;
 	}
@@ -2612,7 +2612,7 @@ static int stress_sysbadaddr(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu anonymous prot-none page%s, "
 		       "errno=%d (%s), skipping stressor\n",
 			args->name, page_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		ret = EXIT_NO_RESOURCE;
 		goto cleanup;
 	}
@@ -2624,7 +2624,7 @@ static int stress_sysbadaddr(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte anonymous write-only page%s, "
 		       "errno=%d (%s), skipping stressor\n",
 			args->name, page_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		ret = EXIT_NO_RESOURCE;
 		goto cleanup;
 	}

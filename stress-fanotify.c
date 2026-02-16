@@ -598,7 +598,7 @@ static int stress_fanotify(stress_args_t *args)
 		if ((ret != 0) || (buffer == NULL)) {
 			pr_err("%s: posix_memalign: cannot allocate 4K "
 				"aligned buffer%s\n", args->name,
-				stress_get_memfree_str());
+				stress_memory_free_get());
 			rc = EXIT_NO_RESOURCE;
 			goto tidy;
 		}

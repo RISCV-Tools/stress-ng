@@ -382,7 +382,7 @@ static int stress_rawdev(stress_args_t *args)
 		pr_inf_skip("%s: cannot allocate %zu byte metrics table%s, "
 			"skipping stressor\n",
 			args->name, SIZEOF_ARRAY(rawdev_methods),
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 

@@ -513,7 +513,7 @@ static int stress_mcontend(stress_args_t *args)
 			MAP_PRIVATE, fd, 0);
 	if (data[0] == MAP_FAILED) {
 		pr_inf("%s: mmap of %zu bytes failed%s, errno=%d (%s)\n",
-			args->name, page_size, stress_get_memfree_str(),
+			args->name, page_size, stress_memory_free_get(),
 			errno, strerror(errno));
 		(void)close(fd);
 		(void)stress_fs_temp_dir_rm_args(args);
@@ -526,7 +526,7 @@ static int stress_mcontend(stress_args_t *args)
 			MAP_PRIVATE, fd, 0);
 	if (data[1] == MAP_FAILED) {
 		pr_inf("%s: mmap of %zu bytes failed%s, errno=%d (%s)\n",
-			args->name, page_size, stress_get_memfree_str(),
+			args->name, page_size, stress_memory_free_get(),
 			errno, strerror(errno));
 		(void)munmap(data[0], page_size);
 		(void)close(fd);

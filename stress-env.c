@@ -83,7 +83,7 @@ static int stress_env_child(stress_args_t *args, void *context)
 		if (value == MAP_FAILED) {
 			pr_inf_skip("%s: could not allocate %zu bytes for environment variable value%s, "
 				"errno=%d (%s), skipping stressor\n",
-				args->name, arg_max, stress_get_memfree_str(),
+				args->name, arg_max, stress_memory_free_get(),
 				errno, strerror(errno));
 			return EXIT_NO_RESOURCE;
 		}

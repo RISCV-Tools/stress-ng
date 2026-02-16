@@ -428,7 +428,7 @@ static int stress_prefetch(stress_args_t *args)
 		pr_inf_skip("%s: cannot mmap %zu bytes%s, errno=%d (%s), "
 			"skipping stressor\n",
 			args->name, l3_data_mmap_size,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(l3_data, l3_data_mmap_size, "l3data");

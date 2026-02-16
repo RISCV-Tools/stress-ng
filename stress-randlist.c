@@ -175,7 +175,7 @@ static int stress_randlist(stress_args_t *args)
 	ptrs = (stress_randlist_item_t **)calloc((size_t)randlist_items, sizeof(stress_randlist_item_t *));
 	if (!ptrs) {
 		pr_inf_skip("%s: cannot allocate %" PRIu32 " temporary pointers%s, skipping stressor\n",
-			args->name, randlist_items, stress_get_memfree_str());
+			args->name, randlist_items, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 

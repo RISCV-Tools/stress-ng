@@ -357,7 +357,7 @@ static int stress_prio_inv(stress_args_t *args)
 		pr_inf_skip("%s: cannot mmap %zu byte prio_inv_info structure%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, sizeof(*prio_inv_info),
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(prio_inv_info, sizeof(*prio_inv_info), "state");

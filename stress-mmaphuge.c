@@ -295,7 +295,7 @@ static int stress_mmaphuge(stress_args_t *args)
 	if (!context->bufs) {
 		pr_inf_skip("%s: cannot allocate %zu byte buffer array%s, skipping stressor\n",
 			args->name, context->mmaphuge_mmaps * sizeof(*context->bufs),
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		(void)stress_munmap_anon_shared(context, sizeof(*context));
 		return EXIT_NO_RESOURCE;
 	}

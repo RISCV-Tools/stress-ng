@@ -216,13 +216,13 @@ void stress_memory_limits_get(
 }
 
 /*
- *  stress_get_memfree_str()
+ *  stress_memory_free_get()
  *	get size of memory that's free in a string, non-reentrant
  *	note the ' ' space is prefixed before valid strings so the
  *	output can be used in messages such as:
  *	   pr_fail("out of memory%s\n", stress_uint64_to_str());
  */
-char *stress_get_memfree_str(void)
+char *stress_memory_free_get(void)
 {
         size_t freemem = 0, totalmem = 0, freeswap = 0, totalswap = 0;
 	char freemem_str[32], freeswap_str[32];

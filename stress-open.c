@@ -1121,7 +1121,7 @@ static int stress_open(stress_args_t *args)
 		if (fds == MAP_FAILED) {
 			pr_inf_skip("%s: cannot mmap %zu file descriptors%s, "
 				"errno=%d (%s), skipping stressor\n",
-				args->name, open_max, stress_get_memfree_str(),
+				args->name, open_max, stress_memory_free_get(),
 				errno, strerror(errno));
 			return EXIT_NO_RESOURCE;
 		}

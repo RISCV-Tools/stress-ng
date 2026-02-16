@@ -959,7 +959,7 @@ static inline void *stress_memrate_mmap(stress_args_t *args, uint64_t sz)
 	/* Coverity Scan believes NULL can be returned, doh */
 	if (!ptr || (ptr == MAP_FAILED)) {
 		pr_err("%s: failed to mmap %" PRIu64 " K%s, errno=%d (%s)\n",
-			args->name, sz / 1024, stress_get_memfree_str(),
+			args->name, sz / 1024, stress_memory_free_get(),
 			errno, strerror(errno));
 		ptr = MAP_FAILED;
 	} else {
@@ -1123,7 +1123,7 @@ static int stress_memrate(stress_args_t *args)
 	if (context->memrate_stats == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %zu byte statistics buffer%s, "
 			"errno=%d (%s), skipping stressor\n",
-			args->name, memrate_stats_size, stress_get_memfree_str(),
+			args->name, memrate_stats_size, stress_memory_free_get(),
 			errno, strerror(errno));
 		rc = EXIT_NO_RESOURCE;
 		goto unmap_context;

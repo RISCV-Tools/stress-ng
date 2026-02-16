@@ -226,7 +226,7 @@ static int stress_stack_child(stress_args_t *args, void *context)
 		pr_inf_skip("%s: failed to mmap %zu byte signal stack%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, (size_t)STRESS_SIGSTKSZ,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(altstack, STRESS_SIGSTKSZ, "altstack");

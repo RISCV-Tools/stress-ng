@@ -186,7 +186,7 @@ static int stress_splice(stress_args_t *args)
 	if (buffer == MAP_FAILED) {
 		pr_inf("%s: failed to mmap %zu byte write buffer%s, errno=%d (%s)\n",
 			args->name, (size_t)buffer_len,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		goto close_done;
 	}
 	stress_set_vma_anon_name(buffer, buffer_len, "write-buffer");

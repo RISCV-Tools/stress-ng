@@ -674,7 +674,7 @@ static int stress_fp(stress_args_t *args)
 			MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (fp_data == MAP_FAILED) {
 		pr_inf_skip("%s: failed to mmap %d floating point elements%s, skipping stressor\n",
-			args->name, FP_ELEMENTS, stress_get_memfree_str());
+			args->name, FP_ELEMENTS, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(fp_data, mmap_size, "fp-data");

@@ -1424,7 +1424,7 @@ static int stress_sock(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %d byte I/O buffer%s, errno=%d (%s), "
 			"skipping stressor\n",
 			args->name, MMAP_BUF_SIZE,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(mmap_buffer, MMAP_BUF_SIZE, "io-buffer");

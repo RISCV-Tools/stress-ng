@@ -573,7 +573,7 @@ static int stress_workload(stress_args_t *args)
 		pr_inf_skip("%s: failed to mmap %zu byte buffer%s, "
 			"errno=%d (%s), skipping stressor\n",
 			args->name, buffer_len,
-			stress_get_memfree_str(), errno, strerror(errno));
+			stress_memory_free_get(), errno, strerror(errno));
 		return EXIT_NO_RESOURCE;
 	}
 	(void)stress_madvise_nohugepage(buffer, buffer_len);
@@ -603,7 +603,7 @@ static int stress_workload(stress_args_t *args)
 		if (!threads) {
 			pr_inf_skip("%s: failed to allocate %" PRIu32 " thread "
 				"descriptors%s, skipping stressor\n",
-				args->name, workload_threads, stress_get_memfree_str());
+				args->name, workload_threads, stress_memory_free_get());
 			rc = EXIT_NO_RESOURCE;
 			goto exit_close_mq;
 		}
@@ -662,7 +662,7 @@ static int stress_workload(stress_args_t *args)
 	if (!workload) {
 		pr_inf_skip("%s: cannot allocate %" PRIu32 " scheduler workload timings%s, "
 			"skipping stressor\n", args->name, max_quanta,
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		rc = EXIT_NO_RESOURCE;
 #if defined(WORKLOAD_THREADED)
 		goto exit_free_threads;

@@ -101,7 +101,7 @@ static int stress_reboot(stress_args_t *args)
 	if (!stack) {
 		pr_inf_skip("%s: cannot allocate %zu byte stack%s, skipping stressor\n",
 			args->name, (size_t)CLONE_STACK_SIZE,
-			stress_get_memfree_str());
+			stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 #endif

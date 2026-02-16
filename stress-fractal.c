@@ -350,7 +350,7 @@ static int stress_fractal(stress_args_t *args)
 					MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (info.data == MAP_FAILED) {
 		pr_inf_skip("%s: cannot mmap fractal data buffer of %zu bytes%s, skipping stressor\n",
-			args->name, data_sz, stress_get_memfree_str());
+			args->name, data_sz, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
 	stress_set_vma_anon_name(info.data, data_sz, "fractal-data");
