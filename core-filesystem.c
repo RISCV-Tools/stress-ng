@@ -979,7 +979,7 @@ size_t stress_fs_max_pipe_size_get(void)
 		return max_pipe_size;
 
 #if defined(F_SETPIPE_SZ)
-	page_size = stress_get_page_size();
+	page_size = stress_memory_page_size_get();
 
 	/*
 	 *  Try and find maximum pipe size directly
@@ -1012,7 +1012,7 @@ size_t stress_fs_max_pipe_size_get(void)
 ret:
 	max_pipe_size = sz;
 #else
-	max_pipe_size = stress_get_page_size();
+	max_pipe_size = stress_memory_page_size_get();
 #endif
 	return max_pipe_size;
 }

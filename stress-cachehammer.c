@@ -93,7 +93,7 @@ static bool CONST hammer_valid(void)
 static void stress_cachehammer_init(const uint32_t instances)
 {
 	int fd;
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	ssize_t ret;
 	uint8_t *page;
 

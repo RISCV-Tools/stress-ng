@@ -331,7 +331,7 @@ int stress_mmap_stats(void *addr, const size_t length, stress_mmap_stats_t *stat
 {
 #if defined(__linux__)
 	int fd;
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	uintptr_t virt_addr, phys_addr, prev_phys_addr = PHYS_ADDR_UNKNOWN;
 	const uintptr_t virt_begin = (uintptr_t)addr;
 	const uintptr_t virt_end = virt_begin + length;
@@ -483,7 +483,7 @@ void OPTIMIZE3 stress_mmap_populate_forward(
 	const size_t len,
 	const int prot)
 {
-	register const size_t page_size = stress_get_page_size();
+	register const size_t page_size = stress_memory_page_size_get();
 	register volatile uint8_t *ptr = (uint8_t *)addr;
 	register const uint8_t *ptr_end = (uint8_t *)addr + len;
 
@@ -519,7 +519,7 @@ void OPTIMIZE3 stress_mmap_populate_reverse(
 	const size_t len,
 	const int prot)
 {
-	register const size_t page_size = stress_get_page_size();
+	register const size_t page_size = stress_memory_page_size_get();
 	register volatile uint8_t *ptr = (uint8_t *)(((uintptr_t)addr + len - 1) & ~(page_size - 1));
 	register const uint8_t *ptr_start = (uint8_t *)addr;
 

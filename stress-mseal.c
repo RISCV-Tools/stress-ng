@@ -37,7 +37,7 @@ static double mseal_count;		/* mseal call count */
 static void stress_mseal_mapping_size(size_t *size)
 {
 	if (*size == 0)
-		*size = stress_get_page_size() * 2;
+		*size = stress_memory_page_size_get() * 2;
 }
 
 static int stress_mseal_expect_addr(

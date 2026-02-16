@@ -384,7 +384,7 @@ void stress_madvise_pid_all_pages(
 		int n;
 		unsigned int major, minor;
 		uint64_t inode;
-		const size_t page_size = stress_get_page_size();
+		const size_t page_size = stress_memory_page_size_get();
 		char prot[5];
 
 		n = sscanf(buf, "%p-%p %4s %p %x:%x %" PRIu64 " %4095s\n",

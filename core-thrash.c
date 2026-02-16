@@ -101,7 +101,7 @@ static size_t stress_thrash_read_proc_maps(
 	FILE *fp;
 	size_t n = 0;
 	char buffer[4096];
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	const uintmax_t end_max = (~(uintmax_t)0) - (page_size - 1);
 
 	if (pid == (pid_t)-1) {
@@ -170,7 +170,7 @@ static void stress_thrash_pagein_self(
 	const size_t n_maps)
 {
 	int ret;
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	struct sigaction bus_action, segv_action;
 	size_t i;
 	static const char name[] = "core-thrash";
@@ -221,7 +221,7 @@ static int stress_pagein_proc(const pid_t pid)
 	stress_proc_maps_t proc_maps[MAX_PROC_MAPS];
 	int fdmem, rc = 0;
 	size_t i, n_maps;
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 
 	if ((pid == parent_pid) || (pid == getpid()))
 		return 0;
@@ -525,7 +525,7 @@ static void stress_thrash_move_pages(
 	const size_t n_maps,
 	stress_numa_mask_t *numa_nodes)
 {
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	long int node = 0;
 	size_t i;
 	uint16_t j;

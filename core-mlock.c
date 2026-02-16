@@ -28,7 +28,7 @@
 int stress_mlock_region(const void *addr_start, const void *addr_end)
 {
 #if defined(HAVE_MLOCK)
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	const void *m_addr_start =
 		(void *)((uintptr_t)addr_start & ~(page_size - 1));
 	const void *m_addr_end =

@@ -177,7 +177,7 @@ static void stress_proc_self_mem(stress_args_t *args, const int fd)
 {
 	uint8_t *page, *buf;
 	const uint8_t rnd = stress_mwc8();
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	off_t offset;
 
 	buf = (uint8_t *)malloc(page_size);

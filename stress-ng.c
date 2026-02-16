@@ -1841,7 +1841,7 @@ static void MLOCKED_TEXT stress_run(
 {
 	double time_start, time_finish;
 	int32_t started_instances = 0;
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	int64_t backoff = DEFAULT_BACKOFF;
 	int32_t ionice_class = UNDEFINED;
 	int32_t ionice_level = UNDEFINED;
@@ -2742,7 +2742,7 @@ static void *stress_map_page(int prot, char *prot_str, size_t page_size)
  */
 static inline void stress_shared_map(const int32_t num_procs)
 {
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	size_t len = sizeof(stress_shared_t) +
 		     (sizeof(stress_stats_t) * (size_t)num_procs);
 	size_t sz = (len + (page_size << 1)) & ~(page_size - 1);
@@ -2885,7 +2885,7 @@ void stress_shared_readonly(void)
  */
 void stress_shared_unmap(void)
 {
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 
 	(void)stress_munmap_anon_shared((void *)g_shared->mapped.page_wo, page_size);
 	(void)stress_munmap_anon_shared((void *)g_shared->mapped.page_ro, page_size);
@@ -3293,7 +3293,7 @@ static void stress_enable_classes(const uint32_t classifier)
  */
 static void stress_parse_limit(const char *opt, const char *option)
 {
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	uint64_t u64 = stress_get_uint64_byte(opt);
 
 	/* round down to page boundary */
@@ -4022,7 +4022,7 @@ int main(int argc, char **argv, char **envp)
 	stress_stressor_list.tail = NULL;
 	stress_mwc_reseed();
 
-	(void)stress_get_page_size();
+	(void)stress_memory_page_size_get();
 	stressor_set_defaults();
 
 	if (stress_cpus_configured_get() < 0) {

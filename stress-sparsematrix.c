@@ -1186,7 +1186,7 @@ err:
 
 static void *mmap_create(const uint64_t n, const uint32_t x, const uint32_t y)
 {
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	static sparse_mmap_t m;
 	size_t shmall, freemem, totalmem, freeswap, totalswap;
 	uint64_t max_phys, total_free, max_size_t;
@@ -1228,7 +1228,7 @@ static void *mmap_create(const uint64_t n, const uint32_t x, const uint32_t y)
 static void mmap_destroy(void *handle, size_t *objmem)
 {
 	sparse_mmap_t *m = (sparse_mmap_t *)handle;
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	unsigned char *vec;
 	size_t pages;
 

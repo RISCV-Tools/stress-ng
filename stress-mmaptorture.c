@@ -273,7 +273,7 @@ static void stress_mmaptorture_init(const uint32_t instances)
 {
 	char path[PATH_MAX];
 	const pid_t pid = getpid();
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 
 	mmap_bytes = DEFAULT_MMAPTORTURE_BYTES;
 	if (!stress_setting_get("mmaptorture-bytes", &mmap_bytes)) {

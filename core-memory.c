@@ -50,10 +50,10 @@
 #define PAGE_4K				(1 << PAGE_4K_SHIFT)
 
 /*
- *  stress_get_page_size()
+ *  stress_memory_page_size_get()
  *	get page_size
  */
-size_t stress_get_page_size(void)
+size_t stress_memory_page_size_get(void)
 {
 	static size_t page_size = 0;
 
@@ -162,7 +162,7 @@ int stress_get_meminfo(
 		vm_statistics64_data_t vm_stat;
 		mach_port_t host = mach_host_self();
 		natural_t count = HOST_VM_INFO64_COUNT;
-		size_t page_size = stress_get_page_size();
+		size_t page_size = stress_memory_page_size_get();
 		int ret;
 
 		/* zero vm_stat, keep cppcheck silent */
@@ -355,7 +355,7 @@ uint64_t stress_get_phys_mem_size(void)
 {
 #if defined(STRESS_SC_PAGES)
 	uint64_t phys_pages;
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 	const uint64_t max_pages = ~0ULL / page_size;
 	long int ret;
 
@@ -637,7 +637,7 @@ int stress_get_pid_memory_usage(
 	}
 	(void)fclose(fp);
 
-	page_size = stress_get_page_size();
+	page_size = stress_memory_page_size_get();
 	*total *= page_size;
 	*resident *= page_size;
 	*shared *= page_size;

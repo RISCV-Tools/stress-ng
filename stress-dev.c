@@ -1548,7 +1548,7 @@ static void stress_dev_mem_mmap_linux(
 {
 	void *ptr;
 	char *buffer;
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 
 #if !defined(STRESS_ARCH_X86)
 	/* voidify for non-x86 */
@@ -2864,7 +2864,7 @@ static void stress_dev_port_linux(
 {
 	off_t off;
 	uint8_t *ptr;
-	const size_t page_size = stress_get_page_size();
+	const size_t page_size = stress_memory_page_size_get();
 
 	VOID_ARGS(args, fd, devpath);
 

@@ -270,7 +270,7 @@ static int stress_ramfs_child(stress_args_t *args)
 	bool ramfs_fill = false;
 	int i = 0;
 	int rc = EXIT_SUCCESS;
-	const uint64_t page_size = (uint64_t)stress_get_page_size();
+	const uint64_t page_size = (uint64_t)stress_memory_page_size_get();
 	const uint64_t page_mask = ~(page_size - 1);
 
 	if (stress_signal_handler(args->name, SIGALRM,

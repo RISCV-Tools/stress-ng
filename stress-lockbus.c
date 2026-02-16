@@ -159,7 +159,7 @@ static size_t lockbus_buffer_size = (size_t)(DEFAULT_LOCKBUS_BYTES >> 1);
 
 static void stress_lockbus_init(const uint32_t instances)
 {
-	const size_t pages2_size = stress_get_page_size() << 1;
+	const size_t pages2_size = stress_memory_page_size_get() << 1;
 
 	(void)instances;
 
@@ -371,7 +371,7 @@ misaligned_done:
 #endif
 
 	if (stress_instance_zero(args)) {
-		const size_t page_size = stress_get_page_size();
+		const size_t page_size = stress_memory_page_size_get();
 		const size_t total_bytes = lockbus_buffer_size + (lockbus_buffer_size * args->instances);
 		const size_t stressor_bytes = ((total_bytes / args->instances) + page_size - 1) & ~(page_size - 1);
 
