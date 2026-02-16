@@ -480,6 +480,9 @@ static bool OPTIMIZE3 stress_strnum_sscanf_ld(stress_args_t *args, const stress_
 	return true;
 }
 
+#if defined(HAVE_STRFROMF) || 	\
+    defined(HAVE_STRFROMD) ||	\
+    defined(HAVE_STRFROML)
 static inline ALWAYS_INLINE OPTIMIZE3 size_t stress_strnum_trunc_posn(const char *str, const int dec_pl)
 {
 	char *ptr;
@@ -490,6 +493,7 @@ static inline ALWAYS_INLINE OPTIMIZE3 size_t stress_strnum_trunc_posn(const char
 	}
 	return 0;
 }
+#endif
 
 #if defined(HAVE_STRFROMF)
 static bool OPTIMIZE3 stress_strnum_strfromf(stress_args_t *args, const stress_strnum_method_t *this)
