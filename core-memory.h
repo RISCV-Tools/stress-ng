@@ -37,7 +37,7 @@ extern void stress_memory_anon_name_set(const void *addr, const size_t size,
 	const char *name);
 extern int stress_memory_swap_off(const char *path);
 extern bool stress_memory_readable(const void *addr, const size_t len);
-extern WARN_UNUSED int stress_get_pid_memory_usage(const pid_t pid,
+extern WARN_UNUSED int stress_memory_usage_by_pid_get(const pid_t pid,
 	size_t *total, size_t *resident, size_t *shared);
 extern void stress_memory_compact(void);
 

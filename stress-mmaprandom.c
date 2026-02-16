@@ -1759,7 +1759,7 @@ static void stress_mmaprandom_clone(mr_ctxt_t *ctxt, const int idx)
 	if (ctxt->oom_avoid) {
 		size_t total, resident, shared;
 
-		if (stress_get_pid_memory_usage(getpid(), &total, &resident, &shared) < 0) {
+		if (stress_memory_usage_by_pid_get(getpid(), &total, &resident, &shared) < 0) {
 			/* Can't get memory, random guess at 128MB */
 			total = 128 * MB;
 		}
@@ -1796,7 +1796,7 @@ static void stress_mmaprandom_fork(mr_ctxt_t *ctxt, const int idx)
 	if (ctxt->oom_avoid) {
 		size_t total, resident, shared;
 
-		if (stress_get_pid_memory_usage(getpid(), &total, &resident, &shared) < 0) {
+		if (stress_memory_usage_by_pid_get(getpid(), &total, &resident, &shared) < 0) {
 			/* Can't get memory, random guess at 128MB */
 			total = 128 * MB;
 		}

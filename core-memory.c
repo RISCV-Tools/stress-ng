@@ -486,11 +486,11 @@ bool stress_memory_readable(const void *addr, const size_t len)
 }
 
 /*
- *  stress_get_pid_memory_usage()
+ *  stress_memory_usage_by_pid_get()
  *	get total, resident and shared memory (in bytes)
  *	used by process with PID pid
  */
-int stress_get_pid_memory_usage(
+int stress_memory_usage_by_pid_get(
 	const pid_t pid,
 	size_t *total,
 	size_t *resident,
