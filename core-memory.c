@@ -348,10 +348,10 @@ update:
 #endif
 
 /*
- *  stress_get_phys_mem_size()
+ *  stress_memory_phys_size_get()
  *	get size of physical memory still available, 0 if failed
  */
-uint64_t stress_get_phys_mem_size(void)
+uint64_t stress_memory_phys_size_get(void)
 {
 #if defined(STRESS_SC_PAGES)
 	uint64_t phys_pages;
@@ -385,7 +385,7 @@ void stress_usage_bytes(
 	const size_t vm_per_instance,
 	const size_t vm_total)
 {
-	const uint64_t total_phys_mem = stress_get_phys_mem_size();
+	const uint64_t total_phys_mem = stress_memory_phys_size_get();
 	char s1[32], s2[32], s3[32];
 
 	pr_inf("%s: using %sB per stressor instance (total %sB of %sB available memory)\n",

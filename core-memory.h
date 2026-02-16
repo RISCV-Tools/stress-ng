@@ -29,7 +29,7 @@ extern void stress_get_memlimits(size_t *shmall, size_t *freemem,
 extern WARN_UNUSED char *stress_get_memfree_str(void);
 extern void stress_memory_ksm_merge(const int flag);
 extern WARN_UNUSED bool stress_memory_low_check(const size_t requested);
-extern WARN_UNUSED uint64_t stress_get_phys_mem_size(void);
+extern WARN_UNUSED uint64_t stress_memory_phys_size_get(void);
 extern void stress_usage_bytes(stress_args_t *args,
 	const size_t vm_per_instance, const size_t vm_total);
 extern WARN_UNUSED void *stress_align_address(const void *addr, const size_t alignment);

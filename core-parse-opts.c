@@ -618,7 +618,7 @@ uint64_t stress_get_uint64_byte_memory(
 	const char *const str,
 	const uint32_t instances)
 {
-	const uint64_t phys_mem = stress_get_phys_mem_size();
+	const uint64_t phys_mem = stress_memory_phys_size_get();
 	bool percentage;
 
 	return stress_get_uint64_percent(str, instances, phys_mem, &percentage,
