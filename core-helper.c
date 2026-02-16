@@ -317,10 +317,10 @@ int stress_timer_slack_ns_set(const char *opt)
 }
 
 /*
- *  stress_set_timer_slack()
+ *  stress_timer_slack_set()
  *	set timer slack
  */
-void stress_set_timer_slack(void)
+void stress_timer_slack_set(void)
 {
 #if defined(HAVE_PRCTL) && 		\
     defined(HAVE_SYS_PRCTL_H) &&	\

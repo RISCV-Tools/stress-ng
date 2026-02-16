@@ -1646,7 +1646,7 @@ static int MLOCKED_TEXT stress_run_child(
 	}
 	stress_parent_died_alarm();
 	stress_process_dumpable(false);
-	stress_set_timer_slack();
+	stress_timer_slack_set();
 
 	if (g_opt_flags & OPT_FLAGS_KSM)
 		stress_ksm_memory_merge(1);
