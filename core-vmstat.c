@@ -1238,7 +1238,7 @@ void stress_vmstat_start(void)
 				iostat_count = 0;
 		}
 #endif
-		if (status_sleep == status_delay) {
+		if ((status_delay > 0) && (status_sleep == status_delay)) {
 			const double runtime = round(stress_time_now() - g_shared->time_started);
 
 			pr_inf("status: %" PRIu32 " run, %" PRIu32 " exit, %" PRIu32 " reap, %" PRIu32 " fail, %" PRIu32 " SIGALRM, %s\n",
