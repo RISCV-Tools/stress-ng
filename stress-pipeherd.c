@@ -86,7 +86,7 @@ static int stress_pipeherd(stress_args_t *args)
 	int fd[2];
 	stress_pipeherd_data_t data;
 	uint32_t check = stress_mwc32();
-	pid_t pids[MAX_PIPEHERD_PROCS];
+	stress_pid_t s_pids[MAX_PIPEHERD_PROCS];
 	int i, rc, pipeherd_procs = DEFAULT_PIPEHERD_PROCS;
 	ssize_t sz;
 	bool pipeherd_yield = false;
@@ -147,8 +147,7 @@ static int stress_pipeherd(stress_args_t *args)
 		return EXIT_FAILURE;
 	}
 
-	for (i = 0; i < pipeherd_procs; i++)
-		pids[i] = -1;
+	stress_sync_init_pids(s_pids, pipeherd_procs);
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
@@ -174,9 +173,9 @@ static int stress_pipeherd(stress_args_t *args)
 			(void)close(fd[1]);
 			_exit(rc);
 		} else if (pid < 0) {
-			pids[i] = -1;
+			s_pids[i].pid = -1;
 		} else {
-			pids[i] = pid;
+			s_pids[i].pid = pid;
 		}
 	}
 
@@ -194,10 +193,7 @@ static int stress_pipeherd(stress_args_t *args)
 
 	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
-	for (i = 0; i < pipeherd_procs; i++) {
-		if (pids[i] >= 0)
-			(void)stress_kill_pid_wait(pids[i], NULL);
-	}
+	(void)stress_kill_and_wait_many(args, s_pids, pipeherd_procs, SIGKILL, false);
 
 	(void)close(fd[0]);
 	(void)close(fd[1]);
