@@ -157,6 +157,24 @@ int stress_kill_and_wait(
 }
 
 /*
+ *  stress_kill_many()
+ *	send signal signum to n_pids in s_pids array
+ */
+void stress_kill_many(
+	const stress_pid_t *s_pids,
+	const size_t n_pids,
+	const int signum)
+{
+	const pid_t mypid = getpid();
+	size_t i;
+
+	for (i = 0; i < n_pids; i++) {
+		if ((s_pids[i].pid > 1) && (s_pids[i].pid != mypid))
+			stress_kill_sig(s_pids[i].pid, signum);
+	}
+}
+
+/*
  *  stress_kill_and_wait_many()
  *	kill and wait on an array of pids. Kill first, then reap.
  *	Avoid killing pids < init and oneself to catch any stupid
@@ -172,16 +190,13 @@ int stress_kill_and_wait_many(
 	const int signum,
 	const bool set_stress_force_killed_bogo)
 {
-	size_t i;
 	const pid_t mypid = getpid();
+	size_t i;
 	int rc = EXIT_SUCCESS;
 
-
 	/* Kill first */
-	for (i = 0; i < n_pids; i++) {
-		if ((s_pids[i].pid > 1) && (s_pids[i].pid != mypid))
-			stress_kill_sig(s_pids[i].pid, signum);
-	}
+	stress_kill_many(s_pids, n_pids, signum);
+
 	/* Then reap */
 	for (i = 0; i < n_pids; i++) {
 		if ((s_pids[i].pid > 1) && (s_pids[i].pid != mypid)) {
