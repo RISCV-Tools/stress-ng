@@ -666,9 +666,9 @@ been used and referenced to help keep the citations list relevant.
 Many thanks to the following contributors to stress-ng (in alphabetical order):
 
 Abdul Haleem, Aboorva Devarajan, Adriand Martin, Adrian Ratiu,
-Aleksandar N. Kostadinov, Alexander Kanavin, Alexandru Ardelean,
-Alfonso Sánchez-Beato, Allen H, Amit Singh Tomar, Andrey Gelman,
-André Wild, Anisse Astier, Anton Eliasson, Arjan van de Ven,
+Aleksandar N. Kostadinov, Alexander Chuprunov, Alexander Kanavin,
+Alexandru Ardelean, Alfonso Sánchez-Beato, Allen H, Amit Singh Tomar,
+Andrey Gelman, André Wild, Anisse Astier, Anton Eliasson, Arjan van de Ven,
 Artur Malchanau, Baruch Siach, Bernd Kuhls, Bryan W. Lewis,
 Camille Constans, Carlos Santos, Christian Ehrhardt, Christian Franke,
 Christopher Brown, Chunyu Hu, Daniel Andriesse, Daniel Hodges,
