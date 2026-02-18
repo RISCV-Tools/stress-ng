@@ -196,12 +196,14 @@ static int stress_unlink(stress_args_t *args)
 	int ret, rc = EXIT_SUCCESS;
 	char *filenames[UNLINK_FILES];
 	char pathname[PATH_MAX];
-	pid_t pids[UNLINK_PROCS];
+	stress_pid_t s_pids[UNLINK_PROCS];
 	stress_metrics_t *metrics;
 	const size_t metrics_sz = sizeof(*metrics) * (UNLINK_PROCS + 1);
 	double duration = 0.0, count = 0.0, rate;
 
 	register size_t i;
+
+	stress_sync_init_pids(s_pids, UNLINK_PROCS);
 
 	metrics = (stress_metrics_t *)stress_mmap_populate(NULL, metrics_sz,
 					PROT_READ | PROT_WRITE,
@@ -248,32 +250,29 @@ static int stress_unlink(stress_args_t *args)
 	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (i = 0; i < UNLINK_PROCS; i++) {
-		pids[i] = fork();
+		s_pids[i].pid = fork();
 
-		if (pids[i] == 0) {
+		if (s_pids[i].pid == 0) {
 			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_unlink_exercise(args, false, &metrics[i], filenames);
 			_exit(EXIT_SUCCESS);
 		}
 	}
 
+
 	stress_unlink_exercise(args, true, &metrics[UNLINK_PROCS], filenames);
+
+	(void)stress_kill_many(s_pids, UNLINK_PROCS, SIGALRM);
 
 	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
 	duration = metrics[UNLINK_PROCS].duration;
 	count = metrics[UNLINK_PROCS].count;
 
+	(void)stress_kill_and_wait_many(args, s_pids, UNLINK_PROCS, SIGKILL, false);
+
 	for (i = 0; i < UNLINK_PROCS; i++) {
-		const pid_t pid = pids[i];
-
-		if (pid > 1) {
-			int status;
-
-			(void)kill(pid, SIGALRM);
-			if (shim_waitpid(pid, &status, 0) < 0)
-				(void)stress_kill_and_wait(args, pid, SIGKILL, false);
-
+		if (s_pids[i].pid > 1) {
 			duration += metrics[i].duration;
 			count += metrics[i].count;
 		}
