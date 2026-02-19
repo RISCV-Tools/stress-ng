@@ -207,7 +207,7 @@ static int stress_yield(stress_args_t *args)
 #if defined(HAVE_SCHED_GETAFFINITY)
 	cpu_set_t mask;
 #endif
-	pid_t *pids;
+	stress_pid_t *s_pids;
 	size_t i, yield_sched = SIZE_MAX;
 
 	if (!stress_setting_get("yield-procs", &yield_procs)) {
@@ -260,8 +260,8 @@ static int stress_yield(stress_args_t *args)
 	}
 	max_ops_per_yielder = (yielders > 0) ? args->bogo.max_ops / yielders : 0.0;
 
-	pids = (pid_t *)calloc(yielders, sizeof(*pids));
-	if (!pids) {
+	s_pids = (stress_pid_t *)calloc(yielders, sizeof(*s_pids));
+	if (!s_pids) {
 		pr_inf_skip("%s: failed to allocate %" PRIu32
 			" pids%s, skipping stressor\n",
 			args->name, yielders, stress_memory_free_get());
@@ -277,23 +277,24 @@ static int stress_yield(stress_args_t *args)
 		pr_err("%s: failed to mmap %zu bytes%s, errno=%d (%s)\n",
 			args->name, metrics_size,
 			stress_memory_free_get(), errno, strerror(errno));
-		free(pids);
+		free(s_pids);
 		return EXIT_NO_RESOURCE;
 	}
 	stress_memory_anon_name_set(metrics, metrics_size, "metrics");
 	stress_zero_metrics(metrics, yielders);
+	stress_sync_init_pids(s_pids, yielders);
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (i = 0; LIKELY(stress_continue_flag() && (i < yielders)); i++) {
-		pids[i] = fork();
-		if (pids[i] < 0) {
+		s_pids[i].pid = fork();
+		if (s_pids[i].pid < 0) {
 			pr_dbg("%s: fork failed (instance %" PRIu32
 				", yielder %zu), errno=%d (%s)\n",
 				args->name, args->instance, i, errno, strerror(errno));
-		} else if (pids[i] == 0) {
+		} else if (s_pids[i].pid == 0) {
 			stress_proc_state_set(args->name, STRESS_STATE_RUN);
 			stress_make_it_fail_set();
 			stress_parent_died_alarm();
@@ -329,9 +330,10 @@ static int stress_yield(stress_args_t *args)
 	/* Parent, wait for children */
 
 	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
+	stress_kill_and_wait_many(args, s_pids, yielders, SIGKILL, false);
+
 	for (duration = 0.0, count = 0.0, i = 0; i < yielders; i++) {
-		if (pids[i] > 0) {
-			(void)stress_kill_pid_wait(pids[i], NULL);
+		if (s_pids[i].pid > 0) {
 			duration += metrics[i].duration;
 			count += metrics[i].count;
 		}
@@ -343,7 +345,7 @@ static int stress_yield(stress_args_t *args)
 		ns, STRESS_METRIC_HARMONIC_MEAN);
 
 	(void)munmap((void *)metrics, metrics_size);
-	free(pids);
+	free(s_pids);
 
 	return EXIT_SUCCESS;
 }
