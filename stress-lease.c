@@ -178,7 +178,7 @@ static int stress_lease(stress_args_t *args)
 {
 	char filename[PATH_MAX];
 	int ret, fd;
-	pid_t l_pids[MAX_LEASE_BREAKERS];
+	stress_pid_t s_pids[MAX_LEASE_BREAKERS];
 	uint64_t i, lease_breakers = DEFAULT_LEASE_BREAKERS;
 	double t1 = 0.0, t2 = 0.0, dt;
 
@@ -189,7 +189,7 @@ static int stress_lease(stress_args_t *args)
 			lease_breakers = MIN_LEASE_BREAKERS;
 	}
 
-	(void)shim_memset(l_pids, 0, sizeof(l_pids));
+	stress_sync_init_pids(s_pids, MAX_LEASE_BREAKERS);
 
 	if (stress_signal_handler(args->name, SIGIO, stress_lease_handler, NULL) < 0)
 		return EXIT_FAILURE;
@@ -214,8 +214,8 @@ static int stress_lease(stress_args_t *args)
 	 *  start lease breaker child processes
 	 */
 	for (i = 0; i < lease_breakers; i++) {
-		l_pids[i] = stress_lease_spawn(args, filename);
-		if (l_pids[i] < 0) {
+		s_pids[i].pid = stress_lease_spawn(args, filename);
+		if (s_pids[i].pid < 0) {
 			pr_err("%s: failed to start all the lease breaker processes\n", args->name);
 			ret = EXIT_FAILURE;
 			goto reap;
@@ -240,11 +240,7 @@ static int stress_lease(stress_args_t *args)
 reap:
 	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
 
-	for (i = 0; i < lease_breakers; i++) {
-		if (l_pids[i])
-			(void)stress_kill_pid_wait(l_pids[i], NULL);
-	}
-
+	(void)stress_kill_and_wait_many(args, s_pids, lease_breakers, SIGKILL, false);
 	(void)shim_unlink(filename);
 	(void)stress_fs_temp_dir_rm_args(args);
 
