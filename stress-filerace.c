@@ -1594,9 +1594,11 @@ static int stress_filerace(stress_args_t *args)
 {
 	int rc = EXIT_SUCCESS;
 	char pathname[PATH_MAX - 256];
-	pid_t pids[MAX_FILERACE_PROCS];
+	stress_pid_t s_pids[MAX_FILERACE_PROCS];
 	size_t i, children = 0;
 	size_t filerace_procs = DEFAULT_FILERACE_PROCS;
+
+	stress_sync_init_pids(s_pids, MAX_FILERACE_PROCS);
 
 	if (!stress_setting_get("filerace-procs", &filerace_procs)) {
 		if (g_opt_flags & OPT_FLAGS_MAXIMIZE)
@@ -1631,11 +1633,11 @@ static int stress_filerace(stress_args_t *args)
 	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	for (i = 0; i < filerace_procs; i++) {
-		pids[i] = fork();
+		s_pids[i].pid = fork();
 
-		if (pids[i] < 0) {
+		if (s_pids[i].pid < 0) {
 			continue;
-		} else if (pids[i] == 0) {
+		} else if (s_pids[i].pid == 0) {
 			stress_filerace_child(args, pathname, false);
 			_exit(EXIT_SUCCESS);
 		} else {
@@ -1652,10 +1654,7 @@ static int stress_filerace(stress_args_t *args)
 
 	stress_filerace_child(args, pathname, true);
 
-	for (i = 0; i < filerace_procs; i++) {
-		if (pids[i] > 0)
-			stress_kill_and_wait(args, pids[i], SIGKILL, true);
-	}
+	(void)stress_kill_and_wait_many(args, s_pids, filerace_procs, SIGKILL, false);
 
 tidy_dir:
 	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
