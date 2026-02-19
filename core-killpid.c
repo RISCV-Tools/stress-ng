@@ -175,6 +175,34 @@ void stress_kill_many(
 }
 
 /*
+ *  stress_wait_many()
+ *	wait, if delayed send signal signum to n_pids in s_pids array
+ */
+int stress_wait_many(
+	stress_args_t *args,
+	const stress_pid_t *s_pids,
+	const size_t n_pids,
+	const int signum,
+	const bool set_stress_force_killed_bogo)
+{
+	const pid_t mypid = getpid();
+	size_t i;
+	int rc = EXIT_SUCCESS;
+
+	/* Reap */
+	for (i = 0; i < n_pids; i++) {
+		if ((s_pids[i].pid > 1) && (s_pids[i].pid != mypid)) {
+			int ret;
+
+			ret = stress_kill_and_wait(args, s_pids[i].pid, signum, set_stress_force_killed_bogo);
+			if (ret == EXIT_FAILURE)
+				rc = ret;
+		}
+	}
+	return rc;
+}
+
+/*
  *  stress_kill_and_wait_many()
  *	kill and wait on an array of pids. Kill first, then reap.
  *	Avoid killing pids < init and oneself to catch any stupid
@@ -190,22 +218,8 @@ int stress_kill_and_wait_many(
 	const int signum,
 	const bool set_stress_force_killed_bogo)
 {
-	const pid_t mypid = getpid();
-	size_t i;
-	int rc = EXIT_SUCCESS;
-
 	/* Kill first */
 	stress_kill_many(s_pids, n_pids, signum);
-
 	/* Then reap */
-	for (i = 0; i < n_pids; i++) {
-		if ((s_pids[i].pid > 1) && (s_pids[i].pid != mypid)) {
-			int ret;
-
-			ret = stress_kill_and_wait(args, s_pids[i].pid, signum, set_stress_force_killed_bogo);
-			if (ret == EXIT_FAILURE)
-				rc = ret;
-		}
-	}
-	return rc;
+	return stress_wait_many(args, s_pids, n_pids, signum, set_stress_force_killed_bogo);
 }

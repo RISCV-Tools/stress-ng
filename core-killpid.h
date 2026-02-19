@@ -28,6 +28,10 @@ extern int stress_kill_and_wait(stress_args_t *args, const pid_t pid,
 	const int signum, const bool set_stress_force_killed_bogo);
 extern void stress_kill_many(const stress_pid_t *s_pids, const size_t n_pids,
         const int signum);
+extern int stress_wait_many(stress_args_t *args,
+	const stress_pid_t *s_pids,
+        const size_t n_pids, const int signum,
+	const bool set_stress_force_killed_bogo);
 extern int stress_kill_and_wait_many(stress_args_t *args,
 	const stress_pid_t *s_pids,
 	const size_t n_pids, const int signum,
