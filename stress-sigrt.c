@@ -19,6 +19,7 @@
  */
 #include "stress-ng.h"
 #include "core-builtin.h"
+#include "core-killpid.h"
 #include "core-mmap.h"
 
 static const stress_help_t help[] = {
@@ -40,9 +41,9 @@ static const stress_help_t help[] = {
  */
 static int stress_sigrt(stress_args_t *args)
 {
-	pid_t *pids;
+	stress_pid_t *s_pids;
 	union sigval s ALIGN64;
-	int i, status, rc = EXIT_SUCCESS;
+	int i, rc = EXIT_SUCCESS;
 	stress_metrics_t *stress_sigrt_metrics;
 	size_t stress_sigrt_metrics_size = sizeof(*stress_sigrt_metrics) * MAX_RTSIGS;
 	double count, duration, rate;
@@ -59,18 +60,19 @@ static int stress_sigrt(stress_args_t *args)
 		return EXIT_NO_RESOURCE;
 	}
 	stress_memory_anon_name_set(stress_sigrt_metrics, stress_sigrt_metrics_size, "metrics");
-	pids = (pid_t *)calloc((size_t)MAX_RTSIGS, sizeof(*pids));
-	if (!pids) {
+	s_pids = (stress_pid_t *)calloc((size_t)MAX_RTSIGS, sizeof(*s_pids));
+	if (!s_pids) {
 		pr_inf_skip("%s: failed to allocate array of %zu pids%s, skipping stressor\n",
 			args->name, (size_t)MAX_RTSIGS, stress_memory_free_get());
 		(void)munmap((void *)stress_sigrt_metrics, stress_sigrt_metrics_size);
 		return EXIT_NO_RESOURCE;
 	}
+	stress_sync_init_pids(s_pids, MAX_RTSIGS);
 
 	stress_zero_metrics(stress_sigrt_metrics, MAX_RTSIGS);
 	for (i = 0; i < MAX_RTSIGS; i++) {
 		if (stress_signal_handler(args->name, i + SIGRTMIN, stress_signal_ignore_handler, NULL) < 0) {
-			free(pids);
+			free(s_pids);
 			(void)munmap((void *)stress_sigrt_metrics, stress_sigrt_metrics_size);
 			return EXIT_FAILURE;
 		}
@@ -82,8 +84,8 @@ static int stress_sigrt(stress_args_t *args)
 
 	for (i = 0; i < MAX_RTSIGS; i++) {
 again:
-		pids[i] = fork();
-		if (pids[i] < 0) {
+		s_pids[i].pid = fork();
+		if (s_pids[i].pid < 0) {
 			if (stress_redo_fork(args, errno))
 				goto again;
 			if (UNLIKELY(!stress_continue(args)))
@@ -91,7 +93,7 @@ again:
 			pr_err("%s: fork failed, errno=%d (%s)\n",
 				args->name, errno, strerror(errno));
 			goto reap;
-		} else if (pids[i] == 0) {
+		} else if (s_pids[i].pid == 0) {
 			sigset_t mask;
 			siginfo_t info ALIGN64;
 			int idx, j;
@@ -140,7 +142,7 @@ again:
 		(void)shim_memset(&s, 0, sizeof(s));
 
 		for (i = 0; i < MAX_RTSIGS; i++) {
-			const int pid = pids[i];
+			const int pid = s_pids[i].pid;
 
 			/* Inform child which pid to queue a signal to */
 			s.sival_int = pid;
@@ -164,22 +166,15 @@ again:
 
 	(void)shim_memset(&s, 0, sizeof(s));
 	for (i = 0; i < MAX_RTSIGS; i++) {
-		if (pids[i] > 0) {
+		if (s_pids[i].pid > 0) {
 			s.sival_int = 0;
-			(void)sigqueue(pids[i], i + SIGRTMIN, s);
+			(void)sigqueue(s_pids[i].pid, i + SIGRTMIN, s);
 		}
 	}
 	(void)shim_usleep(250);
 reap:
 	stress_proc_state_set(args->name, STRESS_STATE_DEINIT);
-
-	for (i = 0; i < MAX_RTSIGS; i++) {
-		if (pids[i] > 0) {
-			/* And ensure child is really dead */
-			(void)shim_kill(pids[i], SIGALRM);
-			(void)shim_waitpid(pids[i], &status, 0);
-		}
-	}
+	(void)stress_kill_and_wait_many(args, s_pids, MAX_RTSIGS, SIGALRM, false);
 
 	duration = 0.0;
 	count = 0.0;
@@ -191,7 +186,7 @@ reap:
 	stress_metrics_set(args, 0, "nanosecs between sigqueue and sigwaitinfo completion",
 		rate * STRESS_DBL_NANOSECOND, STRESS_METRIC_HARMONIC_MEAN);
 
-	free(pids);
+	free(s_pids);
 	(void)munmap((void *)stress_sigrt_metrics, stress_sigrt_metrics_size);
 
 	return rc;
