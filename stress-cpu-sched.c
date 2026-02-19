@@ -682,7 +682,7 @@ static int stress_cpu_sched_child(stress_args_t *args, void *context)
 	const int instance = (int)args->instance;
 	size_t i;
 	size_t cpu_sched_procs = DEFAULT_CPU_SCHED_PROCS;
-	stress_pid_t pids[MAX_CPU_SCHED_PROCS];
+	stress_pid_t s_pids[MAX_CPU_SCHED_PROCS];
 	char exec_path[PATH_MAX];
 	char *exec_prog = stress_proc_self_exe_get(exec_path, sizeof(exec_path));
 	const bool cap_sys_nice = stress_capabilities_check(SHIM_CAP_SYS_NICE);
@@ -704,7 +704,7 @@ static int stress_cpu_sched_child(stress_args_t *args, void *context)
 	(void)prctl(PR_SET_TIMERSLACK, 5);
 #endif
 
-	stress_sync_init_pids(pids, MAX_CPU_SCHED_PROCS);
+	stress_sync_init_pids(s_pids, MAX_CPU_SCHED_PROCS);
 
 	for (i = 0; LIKELY((i < cpu_sched_procs) && stress_continue(args)); i++) {
 		pid_t pid;
@@ -802,10 +802,10 @@ again:
 	}
 
 	do {
-		stress_cpu_sched_mix_pids(pids, stress_cpu_sched_pids, cpu_sched_procs);
+		stress_cpu_sched_mix_pids(s_pids, stress_cpu_sched_pids, cpu_sched_procs);
 
 		for (i = 0; LIKELY((i < cpu_sched_procs) && stress_continue(args)); i++) {
-			const pid_t pid = pids[i].pid;
+			const pid_t pid = s_pids[i].pid;
 			const bool stop_cont = stress_mwc1();
 
 			if (UNLIKELY(pid == -1))
@@ -835,7 +835,7 @@ again:
 			stress_bogo_inc(args);
 		}
 		for (i = 0; LIKELY((i < (cpu_sched_procs >> 2)) && stress_continue(args)); i++) {
-			const pid_t pid = pids[stress_mwc8modn(cpu_sched_procs)].pid;
+			const pid_t pid = s_pids[stress_mwc8modn(cpu_sched_procs)].pid;
 
 			if (LIKELY(pid != -1)) {
 				(void)kill(pid, SIGSTOP);
