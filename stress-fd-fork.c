@@ -201,7 +201,7 @@ static int stress_fd_fork(stress_args_t *args)
 
 	t_start = stress_time_now();
 	do {
-		pid_t pids[STRESS_PID_MAX];
+		stress_pid_t s_pids[STRESS_PID_MAX];
 		size_t n = (start_fd == 1) ? 10000 : start_fd + 10000;
 		size_t max_pids;
 		const bool rnd = stress_mwc1();
@@ -229,14 +229,13 @@ static int stress_fd_fork(stress_args_t *args)
 		if ((count_fd >= fd_fork_fds) && (t_max < 0.0))
 			t_max = stress_time_now();
 
-		for (i = 0; i < STRESS_PID_MAX; i++)
-			pids[i] = -1;
+		stress_sync_init_pids(s_pids, STRESS_PID_MAX);
 
 		for (max_pids = 0, i = 0; LIKELY(stress_continue(args) && (i < STRESS_PID_MAX)); i++) {
-			pids[i] = fork();
-			if (pids[i] < 0) {
+			s_pids[i].pid = fork();
+			if (s_pids[i].pid < 0) {
 				continue;
-			} else if (pids[i] == 0) {
+			} else if (s_pids[i].pid == 0) {
 				stress_proc_state_set(args->name, STRESS_STATE_RUN);
 				stress_make_it_fail_set();
 				if (rnd) {
@@ -248,13 +247,8 @@ static int stress_fd_fork(stress_args_t *args)
 				max_pids++;
 			}
 		}
-		for (i = 0; i < STRESS_PID_MAX; i++) {
-			if (pids[i] > 1)  {
-				int status;
 
-				(void)shim_waitpid(pids[i], &status, 0);
-			}
-		}
+		(void)stress_wait_many(args, s_pids, STRESS_PID_MAX, SIGKILL, false);
 		if (max_pids == 0) {
 			pr_inf("%s: could not fork child processes, exiting early\n",
 				args->name);
