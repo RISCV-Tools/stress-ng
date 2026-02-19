@@ -149,7 +149,7 @@ static int stress_icache_func(stress_args_t *args, uint8_t *pages, const size_t 
 					    PROT_READ | PROT_EXEC) < 0)
 				return EXIT_FAILURE;
 			for (i = 0; i < pages_size; i += 64) {
-				const stress_ret_func_t icache_func = (stress_ret_func_t)(pages + i);
+				const stress_ret_func_t icache_func = (stress_ret_func_t)(void *)(pages + i);
 
 				icache_func();
 			}
