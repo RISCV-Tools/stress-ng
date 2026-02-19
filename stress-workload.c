@@ -218,7 +218,9 @@ static int stress_workload_set_sched(
 #if defined(SCHED_FIFO)
 		case SCHED_FIFO:
 #endif
+#if defined(SCHED_RR)
 case_sched_fifo:
+#endif
 		min_prio = sched_get_priority_min(policy);
 		max_prio = sched_get_priority_max(policy);
 
