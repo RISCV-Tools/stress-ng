@@ -18,9 +18,9 @@
 #
 
 #
-# Codename "versatile vma vexer"
+# Codename "malevolent memory masher"
 #
-VERSION=0.20.00
+VERSION=0.20.01
 
 #
 # Determine supported toolchains
