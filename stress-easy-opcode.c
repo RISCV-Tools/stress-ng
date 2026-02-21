@@ -269,12 +269,17 @@ static const stress_easy_opcode_t easy_opcodes[] = {
       defined(HAVE_MPROTECT)
 #define HAVE_EASY_OPCODES
 static const stress_easy_opcode_t easy_opcodes[] = {
-	{ 1, { 0x90 } }, /* nop */
-	{ 1, { 0xf5 } }, /* cmc */
-	{ 1, { 0xf8 } }, /* clc */
-	{ 1, { 0xf9 } }, /* stc */
-	{ 1, { 0xfc } }, /* cld */
-	{ 1, { 0xfd } }, /* std */
+	{ 1, { 0x90 } }, 	/* nop */
+	{ 1, { 0x98 } }, 	/* cbw */
+	{ 1, { 0x99 } },	/* cwd */
+	{ 1, { 0x9f } },	/* lahf */
+	{ 1, { 0xf5 } }, 	/* cmc */
+	{ 1, { 0xf8 } }, 	/* clc */
+	{ 1, { 0xf9 } }, 	/* stc */
+	{ 1, { 0xfc } }, 	/* cld */
+	{ 1, { 0xfd } }, 	/* std */
+	{ 2, { 0x30, 0xc0 } },	/* xor %al,%al */
+	{ 2, { 0x30, 0xe4 } },	/* xor %ah,%ah */
 };
 #endif
 
