@@ -470,7 +470,7 @@ int stress_mmap_stats(void *addr, const size_t length, stress_mmap_stats_t *stat
 		return -1;
 
 	for (virt_addr = virt_begin; virt_addr < virt_end; virt_addr += page_size, offset += sizeof(uint64_t)) {
-		uint64_t info;
+		uint64_t info = 0;
 
 		if (stress_mmap_pread(fd, &info, sizeof(info), offset) != sizeof(info)) {
 			stats->pages_unknown++;
