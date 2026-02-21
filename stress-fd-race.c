@@ -187,6 +187,8 @@ static inline ssize_t stress_race_fd_send(const int fd, const int fd_send)
 	msg.msg_controllen = sizeof(ctrl);
 
 	cmsg = CMSG_FIRSTHDR(&msg);
+	if (!cmsg)
+		return 0;
 	cmsg->cmsg_level = SOL_SOCKET;
 	cmsg->cmsg_type = SCM_RIGHTS;
 	cmsg->cmsg_len = CMSG_LEN(sizeof(int));
