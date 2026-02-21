@@ -168,6 +168,7 @@ static int stress_resources(stress_args_t *args)
 				}
 				shim_sched_yield();
 				stress_resources_free(args, resources, n);
+				free(resources);
 				_exit(0);
 			} else if (pid > 0) {
 				forked++;
