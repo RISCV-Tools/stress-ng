@@ -589,7 +589,7 @@ retry:
 		/*
 		 *  Randomly set congestion control
 		 */
-		if (n_ctrls > 0) {
+		if (ctrls && (n_ctrls > 0)) {
 			const size_t idx = stress_mwcsizemodn(n_ctrls);
 			const char *control = ctrls[idx];
 			char name[256];
