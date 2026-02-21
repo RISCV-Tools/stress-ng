@@ -1284,8 +1284,7 @@ static void stress_wait_aggressive(
 
 	for (;;) {
 		stress_stats_t *stats;
-		const int32_t cpus = stress_cpus_configured_get();
-		int32_t cpu_num;
+		int32_t cpus, cpu_num;
 		cpu_set_t mask;
 
 		/*
@@ -1308,6 +1307,7 @@ static void stress_wait_aggressive(
 		if (!stats)
 			continue;
 
+		cpus = stress_cpus_configured_get();
 		do {
 			cpu_num = (int32_t)stress_mwc32modn(cpus);
 		} while (!(CPU_ISSET(cpu_num, &proc_mask)));
