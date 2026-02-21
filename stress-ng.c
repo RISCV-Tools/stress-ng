@@ -3993,7 +3993,7 @@ int main(int argc, char **argv, char **envp)
 	uint32_t n_stressors, n_instances;
 	const uint32_t cpus_online = (uint32_t)stress_cpus_online_get();
 	const uint32_t cpus_configured = (uint32_t)stress_cpus_configured_get();
-	int ret;
+	int ret = EXIT_SUCCESS;
 	bool unsupported = false;		/* true if stressors are unsupported */
 
 	main_pid = getpid();
@@ -4423,7 +4423,7 @@ exit_resctrl:
 		exit(EXIT_NO_RESOURCE);
 	if (!metrics_success)
 		exit(EXIT_METRICS_UNTRUSTWORTHY);
-	exit(EXIT_SUCCESS);
+	exit(ret);
 
 exit_lock_destroy:
 	stress_global_lock_destroy();
