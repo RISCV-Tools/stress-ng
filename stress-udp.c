@@ -96,7 +96,7 @@ static int OPTIMIZE3 stress_udp_client(
 
 	do {
 		socklen_t len;
-		int fd, j = 0;
+		int fd;
 		char ALIGN64 buf[MAX_UDP_MAX_SIZE];
 
 		if (UNLIKELY((fd = socket(udp_domain, SOCK_DGRAM, udp_proto)) < 0)) {
@@ -223,7 +223,7 @@ static int OPTIMIZE3 stress_udp_client(
 		do {
 			register size_t i;
 
-			for (i = udp_min_size; i <= udp_max_size; i += 16, j++) {
+			for (i = udp_min_size; i <= udp_max_size; i += 16) {
 				ssize_t ret;
 
 				ret = sendto(fd, buf, i, 0, addr, len);
