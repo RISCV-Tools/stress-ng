@@ -331,6 +331,7 @@ void stress_workload_waste_time(
 	case STRESS_WORKLOAD_METHOD_INC64:
 		while (stress_time_now() < t_end)
 			val++;
+		stress_put_uint64(val);
 		break;
 	case STRESS_WORKLOAD_METHOD_MWC64:
 		while (stress_time_now() < t_end)
@@ -378,6 +379,7 @@ void stress_workload_waste_time(
 				break;
 			case STRESS_WORKLOAD_METHOD_INC64:
 				val++;
+				stress_put_uint64(val);
 				break;
 			case STRESS_WORKLOAD_METHOD_MWC64:
 				(void)stress_mwc64();
