@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024-2026 Woodrow Shen
+ * Copyright (C) 2026      Colin Ian King
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,8 +17,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
-#include <stdint.h>
+#define _GNU_SOURCE
 #include <sched.h>
+#include <stdint.h>
+#include <string.h>
 #include <sys/syscall.h>
 #include <unistd.h>
 #if defined(__riscv) || \
@@ -47,7 +50,7 @@
 
 static void cbo_zero(char *base)  { CBO_INSN(base, 4); }
 
-static char mem[4096] __attribute__((aligned(4096))) = { [0 ... 4095] = 0xaa };
+static char mem[4096] __attribute__((aligned(4096)));
 
 #if defined(__riscv) || \
     defined(__riscv__)
@@ -58,6 +61,8 @@ int main(void)
 	int ret;
         struct riscv_hwprobe pair;
         cpu_set_t cpus;
+
+	(void)memset(mem, 0xaa, sizeof(mem));
 
         ret = sched_getaffinity(0, sizeof(cpu_set_t), &cpus);
 
