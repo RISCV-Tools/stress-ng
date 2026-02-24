@@ -19,6 +19,7 @@
  */
 #define _GNU_SOURCE
 #include <stdint.h>
+#include <string.h>
 #include <sched.h>
 #include <sys/syscall.h>
 #include <unistd.h>
@@ -49,7 +50,7 @@
 
 static void cbo_flush(char *base)  { CBO_INSN(base, 2); }
 
-static char mem[4096] __attribute__((aligned(4096))) = { [0 ... 4095] = 0xaa };
+static char mem[4096] __attribute__((aligned(4096)));
 
 #if defined(__riscv) || \
     defined(__riscv__)
@@ -62,6 +63,8 @@ int main(void)
 	int ret;
 	struct riscv_hwprobe pair;
 	cpu_set_t cpus;
+
+	(void)memset(mem, 0xaa, sizeof(mem));
 
 	ret = sched_getaffinity(0, sizeof(cpu_set_t), &cpus);
 
