@@ -632,7 +632,7 @@ static avl_t OPTIMIZE3 TARGET_CLONES *avl_find(
 	const avl_t *node)
 {
 	while (LIKELY(head != NULL)) {
-		if (node->value == head->value)
+		if (UNLIKELY(node->value == head->value))
 			return head;
 		head = (node->value <= head->value) ?
 				head->left :
