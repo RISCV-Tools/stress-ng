@@ -830,7 +830,7 @@ static void OPTIMIZE3 btree_remove_tree(btree_t **node)
 	*node = NULL;
 }
 
-static inline bool OPTIMIZE3 btree_search(
+static inline bool ALWAYS_INLINE OPTIMIZE3 btree_search(
 	btree_t *node,
 	const uint32_t value,
 	int *pos)
@@ -852,14 +852,14 @@ static inline bool OPTIMIZE3 btree_search(
 	return btree_search(node->node[*pos], value, pos);
 }
 
-static inline bool OPTIMIZE3 btree_find(btree_t *root, const uint32_t value)
+static inline bool ALWAYS_INLINE OPTIMIZE3 btree_find(btree_t *root, const uint32_t value)
 {
 	int pos;
 
 	return btree_search(root, value, &pos);
 }
 
-static void stress_tree_btree(
+static void OPTIMIZE3 stress_tree_btree(
 	stress_args_t *args,
 	const uint32_t n,
 	void *data,
