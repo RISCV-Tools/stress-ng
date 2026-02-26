@@ -104,8 +104,8 @@ typedef struct binary_node {
 	uint32_t value;
 } binary_t;
 
-#define LH	0
-#define EH	1
+#define EH	0
+#define LH	1
 #define RH	2
 
 typedef struct avl_node {
