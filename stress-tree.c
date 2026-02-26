@@ -489,6 +489,7 @@ PRAGMA_UNROLL_N(4)
 			}
 		}
 		/* optional random find */
+PRAGMA_UNROLL_N(4)
 		for (i = 0; i < n; i++) {
 			const uint32_t j = stress_mwc32modn(n);
 
