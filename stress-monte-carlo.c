@@ -257,7 +257,7 @@ static double OPTIMIZE3 stress_mc_pcg32_rand(void)
 	register const unsigned int count = (unsigned)(x >> 59);
 	register const double scale_u32 = 1.0 / (double)0xffffffff;
 
-	static uint64_t const multiplier = 6364136223846793005u;
+	static uint64_t const multiplier = 6364136223846793005ULL;
 
 	stress_mc_pcg32_state = x * multiplier + stress_mc_pcg32_increment;
 	x ^= x >> 18;
