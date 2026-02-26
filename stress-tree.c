@@ -553,24 +553,20 @@ static bool OPTIMIZE3 avl_insert(
 					q->left = p;
 
 					/* Update balance factors */
+					q->bf = EH;
+					*root = q;
 					switch (q->bf) {
 					case RH:
 						r->bf = EH;
 						p->bf = LH;
-						q->bf = EH;
-						*root = q;
 						break;
 					case LH:
 						r->bf = RH;
 						p->bf = EH;
-						q->bf = EH;
-						*root = q;
 						break;
 					case EH:
 						r->bf = EH;
 						p->bf = EH;
-						q->bf = EH;
-						*root = q;
 						break;
 					}
 				}
@@ -606,24 +602,20 @@ static bool OPTIMIZE3 avl_insert(
 					q->right = p;
 
 					/* Update balance factors */
+					q->bf = EH;
+					*root = q;
 					switch (q->bf) {
 					case LH:
 						r->bf = EH;
 						p->bf = RH;
-						q->bf = EH;
-						*root = q;
 						break;
 					case RH:
 						r->bf = LH;
 						p->bf = EH;
-						q->bf = EH;
-						*root = q;
 						break;
 					case EH:
 						r->bf = EH;
 						p->bf = EH;
-						q->bf = EH;
-						*root = q;
 						break;
 					}
 				}
