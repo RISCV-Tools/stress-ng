@@ -235,7 +235,6 @@ static void OPTIMIZE3 stress_tree_rb(
 	register uint32_t i;
 	register rb_t *node, *next;
 	register rb_t *nodes = (rb_t *)data;
-	rb_t *find;
 	double t;
 	const uint32_t seed = stress_mwc32();
 
@@ -261,8 +260,7 @@ PRAGMA_UNROLL_N(4)
 	t = stress_time_now();
 PRAGMA_UNROLL_N(4)
 	for (node = nodes, i = 0; i < n; i++, node++) {
-		find = RB_FIND(stress_rb_tree, &rb_root, node);
-		if (UNLIKELY(!find)) {
+		if (UNLIKELY(!RB_FIND(stress_rb_tree, &rb_root, node))) {
 			pr_fail("%s: rb tree node #%" PRIu32 " not found\n",
 				args->name, i);
 			*rc = EXIT_FAILURE;
@@ -271,10 +269,11 @@ PRAGMA_UNROLL_N(4)
 	metrics->find += stress_time_now() - t;
 
 	if (g_opt_flags & OPT_FLAGS_VERIFY) {
+		register uint32_t offset = n - 1;
+
 		/* optional reverse find */
-		for (node = &nodes[n - 1], i = n - 1; node >= nodes; node--, i--) {
-			find = RB_FIND(stress_rb_tree, &rb_root, node);
-			if (UNLIKELY(!find)) {
+		for (i = 0; i < n; i++) {
+			if (UNLIKELY(!RB_FIND(stress_rb_tree, &rb_root, &nodes[offset - i]))) {
 				pr_fail("%s: rb tree node #%" PRIu32 " not found\n",
 					args->name, i);
 				*rc = EXIT_FAILURE;
@@ -283,10 +282,9 @@ PRAGMA_UNROLL_N(4)
 		/* optional random find */
 PRAGMA_UNROLL_N(4)
 		for (i = 0; i < n; i++) {
-			const uint32_t j = stress_mwc32modn(n);
+			register const uint32_t j = stress_mwc32modn(n);
 
-			find = RB_FIND(stress_rb_tree, &rb_root, &nodes[j]);
-			if (UNLIKELY(!find)) {
+			if (UNLIKELY(!RB_FIND(stress_rb_tree, &rb_root, &nodes[j]))) {
 				pr_fail("%s: rb tree node #%" PRIu32 " not found\n",
 					args->name, j);
 				*rc = EXIT_FAILURE;
@@ -319,7 +317,6 @@ static void OPTIMIZE3 stress_tree_splay(
 	register uint32_t i;
 	register splay_t *node, *next;
 	register splay_t *nodes = (splay_t *)data;
-	splay_t *find;
 	double t;
 	const uint32_t seed = stress_mwc32();
 
@@ -345,8 +342,7 @@ PRAGMA_UNROLL_N(4)
 	t = stress_time_now();
 PRAGMA_UNROLL_N(4)
 	for (node = nodes, i = 0; i < n; i++, node++) {
-		find = SPLAY_FIND(stress_splay_tree, &splay_root, node);
-		if (UNLIKELY(!find)) {
+		if (UNLIKELY(!SPLAY_FIND(stress_splay_tree, &splay_root, node))) {
 			pr_fail("%s: splay tree node #%" PRIu32 " not found\n",
 				args->name, i);
 			*rc = EXIT_FAILURE;
@@ -355,10 +351,11 @@ PRAGMA_UNROLL_N(4)
 	metrics->find += stress_time_now() - t;
 
 	if (g_opt_flags & OPT_FLAGS_VERIFY) {
+		register uint32_t offset = n - 1;
+
 		/* optional reverse find */
-		for (node = &nodes[n - 1], i = n - 1; node >= nodes; node--, i--) {
-			find = SPLAY_FIND(stress_splay_tree, &splay_root, node);
-			if (UNLIKELY(!find)) {
+		for (i = 0; i < n; i++) {
+			if (UNLIKELY(!SPLAY_FIND(stress_splay_tree, &splay_root, &nodes[offset - i]))) {
 				pr_fail("%s: splay tree node #%" PRIu32 " not found\n",
 					args->name, i);
 				*rc = EXIT_FAILURE;
@@ -367,10 +364,9 @@ PRAGMA_UNROLL_N(4)
 		/* optional random find */
 PRAGMA_UNROLL_N(4)
 		for (i = 0; i < n; i++) {
-			const uint32_t j = stress_mwc32modn(n);
+			register const uint32_t j = stress_mwc32modn(n);
 
-			find = SPLAY_FIND(stress_splay_tree, &splay_root, &nodes[j]);
-			if (UNLIKELY(!find)) {
+			if (UNLIKELY(!SPLAY_FIND(stress_splay_tree, &splay_root, &nodes[j]))) {
 				pr_fail("%s: splay tree node #%" PRIu32 " not found\n",
 					args->name, j);
 				*rc = EXIT_FAILURE;
@@ -433,7 +429,6 @@ static void OPTIMIZE3 stress_tree_binary(
 	register uint32_t i;
 	binary_t *node, *head = NULL;
 	binary_t *nodes = (binary_t *)data;
-	const binary_t *find;
 	double t;
 	const uint32_t seed = stress_mwc32();
 
@@ -452,8 +447,7 @@ PRAGMA_UNROLL_N(4)
 	t = stress_time_now();
 PRAGMA_UNROLL_N(4)
 	for (node = nodes, i = 0; i < n; i++, node++) {
-		find = binary_find(head, node);
-		if (UNLIKELY(!find)) {
+		if (UNLIKELY(!binary_find(head, node))) {
 			pr_fail("%s: binary tree node #%" PRIu32 " not found\n",
 				args->name, i);
 			*rc = EXIT_FAILURE;
@@ -462,10 +456,12 @@ PRAGMA_UNROLL_N(4)
 	metrics->find += stress_time_now() - t;
 
 	if (g_opt_flags & OPT_FLAGS_VERIFY) {
+		register uint32_t offset = n - 1;
+
 		/* optional reverse find */
-		for (node = &nodes[n - 1], i = n - 1; node >= nodes; node--, i--) {
-			find = binary_find(head, node);
-			if (UNLIKELY(!find)) {
+PRAGMA_UNROLL_N(4)
+		for (i = 0; i < n; i++) {
+			if (UNLIKELY(!binary_find(head, &nodes[offset - i]))) {
 				pr_fail("%s: binary tree node #%" PRIu32 " not found\n",
 					args->name, i);
 				*rc = EXIT_FAILURE;
@@ -474,10 +470,9 @@ PRAGMA_UNROLL_N(4)
 		/* optional random find */
 PRAGMA_UNROLL_N(4)
 		for (i = 0; i < n; i++) {
-			const uint32_t j = stress_mwc32modn(n);
+			register const uint32_t j = stress_mwc32modn(n);
 
-			find = binary_find(head, &nodes[j]);
-			if (UNLIKELY(!find)) {
+			if (UNLIKELY(!binary_find(head, &nodes[j]))) {
 				pr_fail("%s: binary tree node #%" PRIu32 " not found\n",
 					args->name, j);
 				*rc = EXIT_FAILURE;
@@ -645,7 +640,6 @@ static void OPTIMIZE3 stress_tree_avl(
 {
 	register uint32_t i;
 	avl_t *node, *head = NULL;
-	const avl_t *find;
 	avl_t *nodes = (avl_t *)data;
 	double t;
 	const uint32_t seed = stress_mwc32();
@@ -665,8 +659,7 @@ PRAGMA_UNROLL_N(4)
 	t = stress_time_now();
 PRAGMA_UNROLL_N(4)
 	for (node = nodes, i = 0; i < n; i++, node++) {
-		find = avl_find(head, node);
-		if (UNLIKELY(!find)) {
+		if (UNLIKELY(!avl_find(head, node))) {
 			pr_fail("%s: avl tree node #%" PRIu32 " not found\n",
 				args->name, i);
 			*rc = EXIT_FAILURE;
@@ -675,10 +668,11 @@ PRAGMA_UNROLL_N(4)
 	metrics->find += stress_time_now() - t;
 
 	if (g_opt_flags & OPT_FLAGS_VERIFY) {
+		register uint32_t offset = n - 1;
+
 		/* optional reverse find */
-		for (node = &nodes[n - 1], i = n - 1; node >= nodes; node--, i--) {
-			find = avl_find(head, node);
-			if (UNLIKELY(!find)) {
+		for (i = 0; i < n; i++) {
+			if (UNLIKELY(!avl_find(head, &nodes[offset - i]))) {
 				pr_fail("%s: avl tree node #%" PRIu32 " not found\n",
 					args->name, i);
 				*rc = EXIT_FAILURE;
@@ -686,10 +680,9 @@ PRAGMA_UNROLL_N(4)
 		}
 		/* optional random find */
 		for (i = 0; i < n; i++) {
-			const uint32_t j = stress_mwc32modn(n);
+			register const uint32_t j = stress_mwc32modn(n);
 
-			find = avl_find(head, &nodes[j]);
-			if (UNLIKELY(!find)) {
+			if (UNLIKELY(!avl_find(head, &nodes[j]))) {
 				pr_fail("%s: avl tree node #%" PRIu32 " not found\n",
 					args->name, j);
 				*rc = EXIT_FAILURE;
@@ -878,7 +871,6 @@ static void stress_tree_btree(
 	btree_t *root = NULL;
 	register btree_value_t *node;
 	register btree_value_t *nodes = (btree_value_t *)data;
-	register bool find;
 	double t;
 	const uint32_t seed = stress_mwc32();
 
@@ -903,8 +895,7 @@ PRAGMA_UNROLL_N(4)
 	t = stress_time_now();
 PRAGMA_UNROLL_N(4)
 	for (node = nodes, i = 0; i < n; i++, node++) {
-		find = btree_find(root, node->value);
-		if (UNLIKELY(!find)) {
+		if (UNLIKELY(!btree_find(root, node->value))) {
 			pr_fail("%s: btree node #%" PRIu32 " not found\n",
 				args->name, i);
 			*rc = EXIT_FAILURE;
@@ -913,11 +904,11 @@ PRAGMA_UNROLL_N(4)
 	metrics->find += stress_time_now() - t;
 
 	if (g_opt_flags & OPT_FLAGS_VERIFY) {
-		stress_rndu32_seed_set(seed);
+		register uint32_t offset = n - 1;
+
 		/* optional reverse find */
-		for (node = &nodes[n - 1], i = n - 1; node >= nodes; node--, i--) {
-			find = btree_find(root, node->value);
-			if (UNLIKELY(!find)) {
+		for (i = 0; i < n; i++) {
+			if (UNLIKELY(!btree_find(root, nodes[offset - i].value))) {
 				pr_fail("%s: btree node #%" PRIu32 " not found\n",
 					args->name, i);
 				*rc = EXIT_FAILURE;
@@ -927,10 +918,9 @@ PRAGMA_UNROLL_N(4)
 		stress_rndu32_seed_set(seed);
 PRAGMA_UNROLL_N(4)
 		for (i = 0; i < n; i++) {
-			const uint32_t j = stress_mwc32modn(n);
+			register const uint32_t j = stress_mwc32modn(n);
 
-			find = btree_find(root, nodes[j].value);
-			if (UNLIKELY(!find)) {
+			if (UNLIKELY(!btree_find(root, nodes[j].value))) {
 				pr_fail("%s: btree node #%" PRIu32 " not found\n",
 					args->name, j);
 				*rc = EXIT_FAILURE;
