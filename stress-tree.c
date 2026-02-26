@@ -119,9 +119,9 @@ typedef struct avl_node {
 #define BTREE_MIN	((BTREE_M >> 1) - 1)
 #define BTREE_MAX	(BTREE_M - 1)
 
-typedef struct btree {
+typedef struct btree_node {
 	uint32_t value[BTREE_MAX + 1];
-	struct btree *node[BTREE_MAX + 1];
+	struct btree_node *node[BTREE_MAX + 1];
 	int count;
 } btree_t;
 
@@ -130,15 +130,15 @@ typedef struct {
 } btree_value_t;
 
 #if defined(HAVE_RB_TREE)
-typedef struct rb {
-	RB_ENTRY(rb)	rb;
+typedef struct rb_node {
+	RB_ENTRY(rb_node)	rb;
 	uint32_t value;
 } rb_t;
 #endif
 
 #if defined(HAVE_SPLAY_TREE)
-typedef struct splay {
-	SPLAY_ENTRY(splay)	splay;
+typedef struct splay_node {
+	SPLAY_ENTRY(splay_node)	splay;
 	uint32_t value;
 } splay_t;
 #endif
@@ -221,9 +221,9 @@ static int OPTIMIZE3 splay_cmp_fwd(splay_t *n1, splay_t *n2)
 #endif
 
 #if defined(HAVE_RB_TREE)
-static RB_HEAD(stress_rb_tree, rb) rb_root;
-RB_PROTOTYPE(stress_rb_tree, rb, rb, rb_cmp_fwd);
-RB_GENERATE(stress_rb_tree, rb, rb, rb_cmp_fwd)
+static RB_HEAD(stress_rb_tree, rb_node) rb_root;
+RB_PROTOTYPE(stress_rb_tree, rb_node, rb, rb_cmp_fwd);
+RB_GENERATE(stress_rb_tree, rb_node, rb, rb_cmp_fwd)
 
 static void OPTIMIZE3 stress_tree_rb(
 	stress_args_t *args,
@@ -300,9 +300,9 @@ PRAGMA_UNROLL_N(4)
 #endif
 
 #if defined(HAVE_SPLAY_TREE)
-static SPLAY_HEAD(stress_splay_tree, splay) splay_root;
-SPLAY_PROTOTYPE(stress_splay_tree, splay, splay, splay_cmp_fwd)
-SPLAY_GENERATE(stress_splay_tree, splay, splay, splay_cmp_fwd)
+static SPLAY_HEAD(stress_splay_tree, splay_node) splay_root;
+SPLAY_PROTOTYPE(stress_splay_tree, splay_node, splay, splay_cmp_fwd)
+SPLAY_GENERATE(stress_splay_tree, splay_node, splay, splay_cmp_fwd)
 
 static void OPTIMIZE3 stress_tree_splay(
 	stress_args_t *args,
