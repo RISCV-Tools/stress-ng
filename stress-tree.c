@@ -510,12 +510,12 @@ STRESS_PRAGMA_WARN_OFF
 
 static bool OPTIMIZE3 avl_insert(
 	avl_t **root,
-	avl_t *node)
+	register avl_t *node)
 {
 	register avl_t *p, *q, *r = *root;
 	register bool taller;
 
-	if (!r) {
+	if (UNLIKELY(r == NULL)) {
 		*root = node;
 		node->left = NULL;
 		node->right = NULL;
