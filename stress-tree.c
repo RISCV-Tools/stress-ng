@@ -695,7 +695,7 @@ PRAGMA_UNROLL_N(4)
 	metrics->count += (double)n;
 }
 
-static void OPTIMIZE3 TARGET_CLONES btree_insert_node(
+static inline void ALWAYS_INLINE btree_insert_node(
 	const uint32_t value,
 	const int pos,
 	btree_t * node,
