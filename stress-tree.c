@@ -841,13 +841,12 @@ static inline bool OPTIMIZE3 btree_search(
 	if (value < node->value[1]) {
 		*pos = 0;
 	} else {
-		register int p;
+		register int p = node->count;
 
-		p = node->count;
 		while ((value < node->value[p]) && (p > 1))
 			p--;
 		*pos = p;
-		if (value == node->value[*pos])
+		if (value == node->value[p])
 			return true;
 	}
 	return btree_search(node->node[*pos], value, pos);
