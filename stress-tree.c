@@ -404,7 +404,7 @@ static binary_t * OPTIMIZE3 binary_find(
 	const binary_t *node)
 {
 	while (head) {
-		if (node->value == head->value)
+		if (UNLIKELY(node->value == head->value))
 			return head;
 		head = (node->value <= head->value) ?
 				head->left :
