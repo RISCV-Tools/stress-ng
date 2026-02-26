@@ -160,6 +160,33 @@ struct tree_node {
 
 STRESS_PRAGMA_POP
 
+static uint32_t stress_rndu32seed;
+
+/*
+ *  stress_rndu32_seed_set()
+ *	set random seed
+ */
+static inline void ALWAYS_INLINE stress_rndu32_seed_set(const uint32_t seed)
+{
+	stress_rndu32seed = seed;
+}
+
+/*
+ *  stress_rndu32()
+ *	generate a relatively fast u32 random number
+ */
+static inline uint32_t ALWAYS_INLINE stress_rndu32(void)
+{
+	register uint32_t const a = 16843009;
+	register uint32_t const b = 826366247;
+
+	stress_rndu32seed *= a;
+	stress_rndu32seed += b;
+
+	return stress_rndu32seed;
+}
+
+
 #if defined(HAVE_SIGLONGJMP)
 /*
  *  stress_tree_handler()
@@ -200,13 +227,17 @@ static void OPTIMIZE3 stress_tree_rb(
 	register struct tree_node *node, *next;
 	struct tree_node *find;
 	double t;
+	const uint32_t seed = stress_mwc32();
 
 	RB_INIT(&rb_root);
 
+	stress_rndu32_seed_set(seed);
 	t = stress_time_now();
 PRAGMA_UNROLL_N(4)
 	for (node = nodes, i = 0; i < n; i++, node++) {
 		register struct tree_node *res;
+
+		node->value = stress_rndu32();
 
 		res = RB_FIND(stress_rb_tree, &rb_root, node);
 		if (!res)
@@ -277,13 +308,17 @@ static void OPTIMIZE3 stress_tree_splay(
 	register struct tree_node *node, *next;
 	struct tree_node *find;
 	double t;
+	const uint32_t seed = stress_mwc32();
 
 	SPLAY_INIT(&splay_root);
 
+	stress_rndu32_seed_set(seed);
 	t = stress_time_now();
 PRAGMA_UNROLL_N(4)
 	for (node = nodes, i = 0; i < n; i++, node++) {
 		register struct tree_node *res;
+
+		node->value = stress_rndu32();
 
 		res = SPLAY_FIND(stress_splay_tree, &splay_root, node);
 		if (!res)
@@ -387,10 +422,13 @@ static void OPTIMIZE3 stress_tree_binary(
 	struct tree_node *node, *head = NULL;
 	const struct tree_node *find;
 	double t;
+	const uint32_t seed = stress_mwc32();
 
+	stress_rndu32_seed_set(seed);
 	t = stress_time_now();
 PRAGMA_UNROLL_N(4)
 	for (node = nodes, i = 0; i < n; i++, node++) {
+		node->value = stress_rndu32();
 		binary_insert(&head, node);
 	}
 	metrics->insert += stress_time_now() - t;
@@ -601,10 +639,13 @@ static void OPTIMIZE3 stress_tree_avl(
 	struct tree_node *node, *head = NULL;
 	const struct tree_node *find;
 	double t;
+	const uint32_t seed = stress_mwc32();
 
+	stress_rndu32_seed_set(seed);
 	t = stress_time_now();
 PRAGMA_UNROLL_N(4)
 	for (node = nodes, i = 0; i < n; i++, node++) {
+		node->value = stress_rndu32();
 		avl_insert(&head, node);
 	}
 	metrics->insert += stress_time_now() - t;
@@ -932,27 +973,6 @@ static const stress_opt_t opts[] = {
 	END_OPT,
 };
 
-static void OPTIMIZE3 TARGET_CLONES stress_tree_shuffle(struct tree_node *nodes, const uint32_t n)
-{
-	register uint32_t const a = 16843009;
-	register uint32_t const c = 826366247;
-	register uint32_t seed = 99; //stress_mwc32();
-	register uint32_t i;
-
-PRAGMA_UNROLL_N(4)
-	for (i = 0; i < n; i++) {
-		register uint32_t j;
-		register uint32_t tmp;
-
-		j = seed % n;
-		seed *= a;
-		seed += c;
-		tmp = nodes[i].value;
-		nodes[i].value = nodes[j].value;
-		nodes[j].value = tmp;
-	}
-}
-
 /*
  *  stress_tree()
  *	stress tree
@@ -1015,17 +1035,12 @@ static int stress_tree(stress_args_t *args)
 	}
 #endif
 
-	for (i = 0; i < n; i++)
-		nodes[i].value = (uint32_t)i;
-	stress_tree_shuffle(nodes, tree_size);
-
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
 	stress_proc_state_set(args->name, STRESS_STATE_RUN);
 
 	do {
 		func(args, tree_size, nodes, metrics, &rc);
-		stress_tree_shuffle(nodes, tree_size);
 
 		stress_bogo_inc(args);
 	} while ((rc == EXIT_SUCCESS) && stress_continue(args));
