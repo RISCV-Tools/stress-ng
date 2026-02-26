@@ -246,12 +246,9 @@ static void OPTIMIZE3 stress_tree_rb(
 	t = stress_time_now();
 PRAGMA_UNROLL_N(4)
 	for (node = nodes, i = 0; i < n; i++, node++) {
-		register rb_t *res;
-
 		node->value = stress_rndu32();
 
-		res = RB_FIND(stress_rb_tree, &rb_root, node);
-		if (!res)
+		if (!RB_FIND(stress_rb_tree, &rb_root, node))
 			RB_INSERT(stress_rb_tree, &rb_root, node);
 	}
 	metrics->insert += stress_time_now() - t;
@@ -328,12 +325,9 @@ static void OPTIMIZE3 stress_tree_splay(
 	t = stress_time_now();
 PRAGMA_UNROLL_N(4)
 	for (node = nodes, i = 0; i < n; i++, node++) {
-		register splay_t *res;
-
 		node->value = stress_rndu32();
 
-		res = SPLAY_FIND(stress_splay_tree, &splay_root, node);
-		if (!res)
+		if (!SPLAY_FIND(stress_splay_tree, &splay_root, node))
 			SPLAY_INSERT(stress_splay_tree, &splay_root, node);
 	}
 	metrics->insert += stress_time_now() - t;
