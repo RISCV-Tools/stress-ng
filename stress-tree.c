@@ -479,9 +479,6 @@ PRAGMA_UNROLL_N(4)
 	metrics->count += (double)n;
 }
 
-STRESS_PRAGMA_PUSH
-STRESS_PRAGMA_WARN_OFF
-
 static bool OPTIMIZE3 avl_insert(
 	avl_t **root,
 	register avl_t *node)
@@ -599,7 +596,6 @@ static bool OPTIMIZE3 avl_insert(
 	}
 	return taller;
 }
-STRESS_PRAGMA_POP
 
 static avl_t OPTIMIZE3 TARGET_CLONES *avl_find(
 	avl_t *head,
