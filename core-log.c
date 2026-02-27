@@ -281,7 +281,7 @@ static int pr_msg(
 			size_t len;
 
 			ret = vsnprintf(buf + n, sizeof(buf) - n, fmt, ap);
-			len = strlen(buf);
+			len = shim_strnlen(buf, sizeof(buf));
 			pr_log_write(buf, len);
 		}
 
@@ -297,7 +297,7 @@ static int pr_msg(
 					(void)snprintf(buf, sizeof(buf), "%s: %s%s [%" PRIdMAX "] "
 						"info: %d failures reached, aborting stress process\n",
 						g_prog_name, ts, type, (intmax_t)pid, ABORT_FAILURES);
-					len = strlen(buf);
+					len = shim_strnlen(buf, sizeof(buf));
 					pr_log_write(buf, len);
 				}
 			}
