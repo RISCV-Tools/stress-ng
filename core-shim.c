@@ -2320,7 +2320,7 @@ static int shim_nice_autogroup(int niceness)
 
 			(void)snprintf(buf, sizeof(buf), "%d\n", niceness);
 retry:
-			ret = write(fd, buf, strlen(buf));
+			ret = write(fd, buf, shim_strnlen(buf, sizeof(buf)));
 			if (ret < 0)
 				if (errno == EAGAIN) {
 					stress_random_small_sleep();
