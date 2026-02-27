@@ -83,7 +83,7 @@ static void stress_led_brightness(const char *path, const int brightness)
 
 	(void)snprintf(filename, sizeof(filename), "%s/brightness", path);
 	(void)snprintf(val, sizeof(val), "%d\n", brightness);
-	stress_fs_file_write(filename, val, strlen(val));
+	stress_fs_file_write(filename, val, shim_strnlen(val, sizeof(val)));
 }
 
 static void stress_led_trigger(const char *path, const char *trigger)
