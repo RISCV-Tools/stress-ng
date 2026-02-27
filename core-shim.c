@@ -1453,6 +1453,25 @@ size_t shim_strlcat(char *dst, const char *src, size_t len)
 }
 
 /*
+ *   shim_strnlen()
+ *	wrapper / implementation of strnlen
+ */
+size_t shim_strnlen(char *str, size_t len)
+{
+#if defined(HAVE_STRNLEN)
+	return strnlen(str, len);
+#else
+	size_t l;
+
+	for (l = 0; l < len; l++, str++) {
+		if (!*str)
+			break;
+	}
+	return l;
+#endif
+}
+
+/*
  *  shim_sync
  *	wrapper of sync
  */
