@@ -248,13 +248,14 @@ static int get_modpath_name(
 			}
 			*start_postfix  = '\0';
 
+			len = strlen(name);
 			(void)shim_strscpy(module_short, module_path_basename, sizeof(module_short));
-			if (strlen(name) != strlen(module_short)) {
+			if (len != shim_strnlen(module_short, sizeof(module_short))) {
 				free(line);
 				line = NULL;
 				break;
 			}
-			if (strncmp(name, module_short, strlen(name)) != 0) {
+			if (strncmp(name, module_short, len) != 0) {
 				free(line);
 				line = NULL;
 				break;
