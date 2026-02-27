@@ -78,7 +78,7 @@ static int stress_parse_run(
 		return 1;
 	}
 err:
-	(void)fprintf(stderr, "Cannot have both run sequential "
+	(void)fprintf(stderr, "cannot have both run sequential "
 		"and run parallel in jobfile %s\n",
 		jobfile);
 	return -1;
@@ -128,7 +128,7 @@ int stress_job_parse_file(
 		fp = fopen(jobfile, "r");
 	}
 	if (!fp) {
-		(void)fprintf(stderr, "Cannot open jobfile '%s'\n", jobfile);
+		(void)fprintf(stderr, "cannot open jobfile '%s'\n", jobfile);
 		return -1;
 	}
 
@@ -187,7 +187,7 @@ int stress_job_parse_file(
 			/* Must check for --job -h option! */
 			if (!strcmp(new_argv[1], "job") ||
 			    !strcmp(new_argv[1], "j")) {
-				(void)fprintf(stderr, "Cannot read job file in from a job script!\n");
+				(void)fprintf(stderr, "cannot read job file in from a job script!\n");
 				goto err;
 			}
 
