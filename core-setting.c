@@ -181,16 +181,14 @@ void stress_setting_show(void)
 	free(settings);
 }
 
-void stress_setting_dbg(stress_args_t *args)
+void stress_setting_dbg(const char *name)
 {
 	stress_setting_t *setting;
 	stress_setting_t **settings;
 	size_t i, n;
 
-	if (args->instance != 0)
-		return;
 	for (n = 0, setting = setting_head; setting; setting = setting->next) {
-		if (strcmp(setting->stressor_name, args->name) == 0)
+		if (strcmp(setting->stressor_name, name) == 0)
 			n++;
 	}
 
@@ -201,9 +199,9 @@ void stress_setting_dbg(stress_args_t *args)
 	if (UNLIKELY(!settings))
 		return;
 
-	pr_dbg("%s: %zu setting%s:\n", args->name, n, n == 1 ? "" : "s");
+	pr_dbg("%s: %zu setting%s:\n", name, n, n == 1 ? "" : "s");
 	for (i = 0, setting = setting_head; setting; setting = setting->next) {
-		if (strcmp(setting->stressor_name, args->name) == 0)
+		if (strcmp(setting->stressor_name, name) == 0)
 			settings[i++] = setting;
 	}
 	qsort(settings, n, sizeof(*settings), stress_setting_cmp);
@@ -469,4 +467,15 @@ int stress_setting_set_true(
 
         (void)opt;
         return stress_setting_set(stressor_name, name, TYPE_ID_BOOL, &val);
+}
+
+/*
+ *  stress_setting_global_set_true()
+ *	create a global setting of name name to true
+ */
+int stress_setting_global_set_true(const char *name)
+{
+        bool val = true;
+
+        return stress_setting_set("global", name, TYPE_ID_BOOL, &val);
 }

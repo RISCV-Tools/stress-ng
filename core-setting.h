@@ -79,7 +79,7 @@ typedef struct stress_setting {
 
 extern void stress_setting_free(void);
 extern void stress_setting_show(void);
-extern void stress_setting_dbg(stress_args_t *args);
+extern void stress_setting_dbg(const char *name);
 extern bool stress_setting_get(const char *name, void *value);
 extern int stress_setting_set(const char *stressor_name, const char *name,
 	const stress_type_id_t type_id, const void *value);
@@ -87,5 +87,6 @@ extern int stress_setting_set_true(const char *stressor_name, const char *name,
 	const char *opt);
 extern int stress_setting_global_set(const char *name,
 	const stress_type_id_t type_id, const void *value);
+extern int stress_setting_global_set_true(const char *name);
 
 #endif

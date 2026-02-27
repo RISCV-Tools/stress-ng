@@ -1698,7 +1698,7 @@ static int MLOCKED_TEXT stress_run_child(
 		args->info = info;
 
 		if (instance == 0)
-			stress_setting_dbg(args);
+			stress_setting_dbg(args->name);
 		stress_set_oom_adjustment(args, false);
 
 		(void)shim_memset(*checksum, 0, sizeof(**checksum));
@@ -3371,7 +3371,7 @@ next_opt:
 
 		for (i = 0; i < SIZEOF_ARRAY(opt_flags); i++) {
 			if (c == opt_flags[i].opt) {
-				stress_setting_set_true("global", stress_opt_name(c), NULL);
+				stress_setting_global_set_true(stress_opt_name(c));
 				g_opt_flags |= opt_flags[i].opt_flag;
 				g_pr_log_flags |= opt_flags[i].pr_log_flag;
 				goto next_opt;
@@ -3384,6 +3384,7 @@ next_opt:
 			opt_parallel= stress_get_int32_instance_percent(optarg);
 			stress_get_processors(&opt_parallel);
 			stress_check_max_stressors("all", opt_parallel);
+			stress_setting_global_set("all", TYPE_ID_UINT32, &opt_parallel);
 			break;
 		case OPT_cache_size:
 			/* 1K..4GB should be enough range  */
@@ -3469,9 +3470,11 @@ next_opt:
 		case OPT_mbind:
 			if (stress_set_mbind(optarg) < 0)
 				exit(EXIT_FAILURE);
+			stress_setting_global_set("mbind", TYPE_ID_STR, (void *)optarg);
 			break;
 		case OPT_no_madvise:
 			g_opt_flags &= ~OPT_FLAGS_MMAP_MADVISE;
+			stress_setting_global_set_true("no-madvise");
 			break;
 		case OPT_oom_avoid_bytes:
 			{
@@ -3488,6 +3491,7 @@ next_opt:
 						stress_uint64_to_str(buf, sizeof(buf), (uint64_t)bytes, 1, true));
 				}
 				stress_setting_global_set("oom-avoid-bytes", TYPE_ID_SIZE_T, &bytes);
+				stress_setting_global_set_true("oom-avoid");
 				g_opt_flags |= OPT_FLAGS_OOM_AVOID;
 			}
 			break;
@@ -3501,6 +3505,7 @@ next_opt:
 			return EXIT_FAILURE;
 		case OPT_quiet:
 			g_pr_log_flags &= ~(PR_LOG_FLAGS_ALL);
+			stress_setting_global_set_true("quiet");
 			break;
 		case OPT_random:
 			g_opt_flags |= OPT_FLAGS_RANDOM;
@@ -3536,6 +3541,7 @@ next_opt:
 			break;
 		case OPT_sched_reclaim:
 			g_opt_flags |= OPT_FLAGS_SCHED_RECLAIM;
+			stress_setting_global_set("sched-reclaim", TYPE_ID_BOOL, &u64);
 			break;
 		case OPT_seed:
 			u64 = stress_get_uint64(optarg);
@@ -3548,12 +3554,14 @@ next_opt:
 			stress_get_processors(&opt_sequential);
 			stress_check_range("sequential", (uint64_t)opt_sequential,
 				MIN_SEQUENTIAL, MAX_SEQUENTIAL);
+			stress_setting_global_set("sequential", TYPE_ID_UINT32, &opt_sequential);
 			break;
 		case OPT_permute:
 			g_opt_flags |= OPT_FLAGS_PERMUTE;
 			opt_permute = stress_get_int32_instance_percent(optarg);
 			stress_get_processors(&opt_permute);
 			stress_check_max_stressors("permute", opt_permute);
+			stress_setting_global_set("permute", TYPE_ID_UINT32, &opt_permute);
 			break;
 		case OPT_status:
 			if (stress_set_status(optarg) < 0)
@@ -3571,6 +3579,7 @@ next_opt:
 			break;
 		case OPT_timeout:
 			g_opt_timeout = stress_get_uint64_time(optarg);
+			stress_setting_global_set("timeout", TYPE_ID_UINT64, &g_opt_timeout);
 			break;
 		case OPT_timer_slack:
 			(void)stress_timer_slack_ns_set(optarg);
@@ -4318,6 +4327,8 @@ int main(int argc, char **argv, char **envp)
 		ret = EXIT_FAILURE;
 		goto exit_resctrl;
 	}
+
+	stress_setting_dbg("global");
 
 	if (g_opt_flags & OPT_FLAGS_SEQUENTIAL) {
 		stress_run_sequential(ticks_per_sec, n_stressors, &duration, &success, &resource_success, &metrics_success);

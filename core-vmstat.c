@@ -203,6 +203,8 @@ static int stress_set_generic_stat(
                 _exit(EXIT_FAILURE);
         }
 	*delay = (int32_t)(delay64 & 0x7fffffff);
+	stress_setting_global_set(name, TYPE_ID_INT32, delay);
+
 	return 0;
 }
 
