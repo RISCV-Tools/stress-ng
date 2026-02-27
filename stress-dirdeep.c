@@ -428,7 +428,7 @@ static int stress_dirdeep(stress_args_t *args)
 	inodes_start = stress_fs_available_inodes_get();
 
 	(void)stress_fs_temp_dir_args(args, rootpath, sizeof(rootpath));
-	path_len = strlen(rootpath);
+	path_len = shim_strnlen(rootpath, sizeof(rootpath));
 
 	(void)stress_fs_make_filename(linkpath, sizeof(linkpath), rootpath, "/f");
 
