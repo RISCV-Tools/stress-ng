@@ -754,7 +754,7 @@ static int stress_filename(stress_args_t *args)
 #endif
 
 	(void)shim_strscpy(filename, pathname, sizeof(filename) - 1);
-	ptr = filename + strlen(pathname);
+	ptr = filename + shim_strnlen(pathname, sizeof(pathname));
 	*(ptr++) = '/';
 	*(ptr) = '\0';
 	sz_left = sizeof(filename) - (size_t)(ptr - filename);
@@ -786,7 +786,7 @@ static int stress_filename(stress_args_t *args)
 	switch (filename_opt) {
 	case STRESS_FILENAME_POSIX:
 		(void)shim_strscpy(allowed, posix_allowed, sizeof(allowed));
-		chars_allowed = strlen(allowed);
+		chars_allowed = shim_strnlen(allowed, sizeof(allowed));
 		break;
 	case STRESS_FILENAME_EXT:
 		stress_filename_ext(&chars_allowed);
