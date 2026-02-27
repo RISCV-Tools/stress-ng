@@ -132,7 +132,7 @@ static int stress_link_generic(
 	(void)close(fd);
 
 	mounts_max = stress_mount_get(mnts, MOUNTS_MAX);
-	oldpathlen = strlen(oldpath);
+	oldpathlen = shim_strnlen(oldpath, sizeof(oldpath));
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
