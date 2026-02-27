@@ -144,7 +144,7 @@ static int stress_key(stress_args_t *args)
 
 			(void)snprintf(payload, sizeof(payload),
 				"somedata-%zu", n);
-			payload_len = strlen(payload);
+			payload_len = shim_strnlen(payload, sizeof(payload));
 			(void)snprintf(description, sizeof(description),
 				"stress-ng-key-%" PRIdMAX "-%" PRIu32
 				"-%zu", (intmax_t)ppid, args->instance, n);
@@ -264,7 +264,7 @@ static int stress_key(stress_args_t *args)
 				"somedata-%zu", i);
 #if defined(KEYCTL_UPDATE)
 			if (UNLIKELY(shim_keyctl(KEYCTL_UPDATE, (long int)keys[i],
-					         (long int)payload, (long int)strlen(payload), 0) < 0)) {
+					         (long int)payload, (long int)shim_strnlen(payload, sizeof(payload)), 0) < 0)) {
 				if ((errno != ENOMEM) &&
 #if defined(EKEYEXPIRED)
 				    (errno != EKEYEXPIRED) &&
