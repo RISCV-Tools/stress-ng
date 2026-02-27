@@ -100,7 +100,7 @@ static void stress_ignite_cpu_set(
 			"/sys/devices/system/cpu/cpu%" PRId32
 			"/cpufreq/scaling_max_freq", cpu);
 		(void)snprintf(buffer, sizeof(buffer), "%" PRIu64 "\n", max_freq);
-		if (stress_fs_file_write(path, buffer, strlen(buffer)) < 0)
+		if (stress_fs_file_write(path, buffer, shim_strnlen(buffer, sizeof(buffer))) < 0)
 			*setting_flag &= ~SETTING_SCALING_FREQ;
 
 		/* Try to set min to be 100% of max down to lowest, which ever works first */
@@ -110,7 +110,7 @@ static void stress_ignite_cpu_set(
 		freq = (maximize_freq) ? max_freq : min_freq;
 		while ((retry++ < max_retries) && (freq_delta > 0) && (freq >= min_freq)) {
 			(void)snprintf(buffer, sizeof(buffer), "%" PRIu64 "\n", freq);
-			if (stress_fs_file_write(path, buffer, strlen(buffer)) >= 0)
+			if (stress_fs_file_write(path, buffer, shim_strnlen(buffer, sizeof(buffer))) >= 0)
 				break;
 			freq -= freq_delta;
 		}
@@ -121,7 +121,7 @@ static void stress_ignite_cpu_set(
 			"/sys/devices/system/cpu/cpu%" PRId32
 			"/power/pm_qos_resume_latency_us", cpu);
 		(void)snprintf(buffer, sizeof(buffer), "%" PRIu64 "\n", resume_latency_us);
-		if (stress_fs_file_write(path, buffer, strlen(buffer)) < 0)
+		if (stress_fs_file_write(path, buffer, shim_strnlen(buffer, sizeof(buffer))) < 0)
 			*setting_flag &= ~SETTING_RESUME_LATENCY_US;
 	}
 
@@ -130,7 +130,7 @@ static void stress_ignite_cpu_set(
 			"/sys/devices/system/cpu/cpu%" PRId32
 			"/power/energy_perf_bias", cpu);
 		(void)snprintf(buffer, sizeof(buffer), "%" PRId8 "\n", energy_perf_bias);
-		if (stress_fs_file_write(path, buffer, strlen(buffer)) < 0)
+		if (stress_fs_file_write(path, buffer, shim_strnlen(buffer, sizeof(buffer))) < 0)
 			*setting_flag &= ~SETTING_ENERGY_PERF_BIAS;
 	}
 
@@ -285,7 +285,7 @@ void stress_ignite_cpu_start(void)
 		if (ret < 0)
 			continue;
 		buf[ret] = '\0';
-		len = strlen(buf);
+		len = shim_strnlen(buf, sizeof(buf));
 		if (len == 0)
 			continue;
 
