@@ -293,7 +293,7 @@ void stress_ftrace_add_pid(const pid_t pid)
 	} else {
 		(void)snprintf(buffer, sizeof(buffer), "%" PRIdMAX, (intmax_t)pid);
 	}
-	VOID_RET(ssize_t, write(fd, buffer, strlen(buffer)));
+	VOID_RET(ssize_t, write(fd, buffer, shim_strnlen(buffer, sizeof(buffer))));
 	(void)close(fd);
 }
 
