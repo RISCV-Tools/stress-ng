@@ -199,7 +199,8 @@ static int stress_cpu_sched_nice(const int inc)
 	ret = setpriority(PRIO_PROCESS, 0, prio);
 	saved_errno = errno;
 	(void)snprintf(buffer, sizeof(buffer), "%d\n", prio);
-	VOID_RET(ssize_t, stress_fs_file_write("/proc/self/autogroup", buffer, strlen(buffer)));
+	VOID_RET(ssize_t, stress_fs_file_write("/proc/self/autogroup",
+				buffer, shim_strnlen(buffer, sizeof(buffer))));
 
 	errno = saved_errno;
 	return ret;
