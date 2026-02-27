@@ -264,7 +264,7 @@ static int stress_tmpfs_child(stress_args_t *args, void *ctxt)
 			(void)snprintf(attrdata, sizeof(attrdata), "data-%" PRIx32, stress_mwc32());
 
 			/* Not supported, but exercise it anyhow */
-			ret = shim_fsetxattr(fd, attrname, attrdata, strlen(attrdata), XATTR_CREATE);
+			ret = shim_fsetxattr(fd, attrname, attrdata, shim_strnlen(attrdata, sizeof(attrdata)), XATTR_CREATE);
 			if (ret == 0)
 				VOID_RET(int, shim_fremovexattr(fd, attrname));
 		}
