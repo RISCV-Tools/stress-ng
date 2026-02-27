@@ -166,7 +166,7 @@ static int stress_dirmany(stress_args_t *args)
 
 	stress_fs_temp_dir(pathname, sizeof(pathname), args->name,
 		args->pid, args->instance);
-	pathname_len = strlen(pathname);
+	pathname_len = shim_strnlen(pathname, sizeof(pathname));
 
 	ret = stress_fs_temp_dir_make_args(args);
 	if (ret < 0)
