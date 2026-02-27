@@ -55,7 +55,7 @@ long int stress_numa_count_mem_nodes(long int *max_node)
 	if (!str)
 		return -1;
 
-	ptr = buffer + strlen(buffer) - 2;
+	ptr = buffer + shim_strnlen(buffer, sizeof(buffer)) - 2;
 
 	/*
 	 *  Parse hex digits into NUMA node ids, these
@@ -119,7 +119,7 @@ long int stress_numa_mask_nodes_get(stress_numa_mask_t *numa_mask)
 	if (!str)
 		return -1;
 
-	ptr = buffer + strlen(buffer) - 2;
+	ptr = buffer + shim_strnlen(buffer, sizeof(buffer)) - 2;
 
 	/*
 	 *  Parse hex digits into NUMA node ids, these
