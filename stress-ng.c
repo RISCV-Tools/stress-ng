@@ -3541,7 +3541,7 @@ next_opt:
 			break;
 		case OPT_sched_reclaim:
 			g_opt_flags |= OPT_FLAGS_SCHED_RECLAIM;
-			stress_setting_global_set("sched-reclaim", TYPE_ID_BOOL, &u64);
+			stress_setting_global_set_true("sched-reclaim");
 			break;
 		case OPT_seed:
 			u64 = stress_get_uint64(optarg);
