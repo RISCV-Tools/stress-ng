@@ -393,30 +393,30 @@ static treap_t * OPTIMIZE3 treap_split(
 	if (UNLIKELY(!root)) {
 		*remain = NULL;
 		return root;
-	}
-	if (root->value < node->value) {
+	} else if (root->value < node->value) {
 		root->right = treap_split(root->right, node, remain);
+		return root;
 	} else {
 		*remain = root;
-		root = treap_split(root->left, node, &root->left);
+		return treap_split(root->left, node, &root->left);
 	}
-	return root;
 }
 
 static treap_t * OPTIMIZE3 treap_join(
-	treap_t *little,
-	treap_t *big)
+	treap_t * RESTRICT little,
+	treap_t * RESTRICT big)
 {
-	if (!little)
+	if (!little) {
 		return big;
-	if (!big)
+	} else if (!big) {
 		return little;
-	if (little->priority < big->priority) {
+	} else if (little->priority < big->priority) {
 		little->right = treap_join(little->right, big);
 		return little;
+	} else {
+		big->left = treap_join(little, big->left);
+		return big;
 	}
-	big->left = treap_join(little, big->left);
-	return big;
 }
 
 static inline void ALWAYS_INLINE OPTIMIZE3 treap_insert(
@@ -425,8 +425,8 @@ static inline void ALWAYS_INLINE OPTIMIZE3 treap_insert(
 {
 	treap_t *big, *little;
 
-	little = treap_split(*root, node, &big);
 	node->priority = stress_mwc32();
+	little = treap_split(*root, node, &big);
 	*root = treap_join(treap_join(little, node), big);
 }
 
@@ -438,8 +438,7 @@ static treap_t * OPTIMIZE3 treap_find(
 		if (node->value == head->value)
 			return head;
 		head = (node->value < head->value) ?
-			head->left :
-			head->right;
+			head->left : head->right;
 	}
 	return head;
 }
@@ -527,8 +526,7 @@ static void OPTIMIZE3 binary_insert(
 {
 	while (*head) {
 		head = (node->value <= (*head)->value) ?
-			&(*head)->left :
-			&(*head)->right;
+			&(*head)->left : &(*head)->right;
 	}
 	*head = node;
 }
@@ -541,8 +539,7 @@ static binary_t * OPTIMIZE3 binary_find(
 		if (UNLIKELY(node->value == head->value))
 			return head;
 		head = (node->value <= head->value) ?
-				head->left :
-				head->right;
+			head->left : head->right;
 	}
 	return NULL;
 }
@@ -749,8 +746,7 @@ static avl_t OPTIMIZE3 TARGET_CLONES *avl_find(
 		if (UNLIKELY(node->value == head->value))
 			return head;
 		head = (node->value <= head->value) ?
-				head->left :
-				head->right;
+			head->left : head->right;
 	}
 	return NULL;
 }
