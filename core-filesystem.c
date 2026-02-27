@@ -1634,7 +1634,7 @@ void stress_fs_clean_dir(
 		(void)stress_fs_temp_dir(path, sizeof(path), name, pid, instance);
 		if (access(path, F_OK) == 0) {
 			pr_dbg("%s: removing temporary files in %s\n", name, path);
-			stress_fs_clean_dir_files(temp_path, temp_path_len, path, strlen(path));
+			stress_fs_clean_dir_files(temp_path, temp_path_len, path, shim_strnlen(path, sizeof(path)));
 		}
 	}
 }
