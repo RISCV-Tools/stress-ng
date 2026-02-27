@@ -324,7 +324,7 @@ static int stress_fstat(stress_args_t *args)
 		}
 		if ((si->path = shim_strdup(path)) == NULL) {
 			pr_err("%s: out of memory allocating %zu bytes%s\n",
-				args->name, strlen(path),
+				args->name, shim_strnlen(path, sizeof(path)),
 				stress_memory_free_get());
 			free(si);
 			(void)closedir(dp);
