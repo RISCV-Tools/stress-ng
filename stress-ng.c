@@ -1387,7 +1387,7 @@ static void MLOCKED_TEXT stress_handle_terminate(int signum)
 		 */
 		(void)snprintf(buf, sizeof(buf), "%s: info:  [%" PRIdMAX "] stressor terminated with unexpected %s\n",
 			g_prog_name, (intmax_t)getpid(), stress_signal_str(signum));
-		VOID_RET(ssize_t, write(fd, buf, strlen(buf)));
+		VOID_RET(ssize_t, write(fd, buf, shim_strnlen(buf, sizeof(buf))));
 		if (signum == SIGABRT)
 			stress_stack_backtrace();
 		stress_kill_stressors(SIGALRM, true);
@@ -2074,7 +2074,7 @@ static void stress_exit_status_type(const char *name, const size_t type)
 
 			(void)snprintf(buf, sizeof(buf), " %s (%" PRIu32")",
 				ss->stressor->name, count);
-			buf_len = strlen(buf);
+			buf_len = shim_strnlen(buf, sizeof(buf));
 			new_str = (char *)realloc(str, str_len + buf_len);
 			if (!new_str) {
 				free(str);
