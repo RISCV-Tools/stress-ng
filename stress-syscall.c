@@ -688,14 +688,14 @@ static int syscall_socket_measure(const int measure)
 		switch (measure) {
 		case SOCK_MEASURE_SEND:
 			syscall_shared_info->t1 = syscall_time_now();
-			sret = send(sfd, buffer, strlen(buffer), 0);
+			sret = send(sfd, buffer, shim_strnlen(buffer, sizeof(buffer)), 0);
 			syscall_shared_info->t2 = syscall_time_now();
 			if (sret < 0)
 				syscall_shared_error((int)sret);
 			break;
 		case SOCK_MEASURE_SENDTO:
 			syscall_shared_info->t1 = syscall_time_now();
-			sret = sendto(sfd, buffer, strlen(buffer), 0, NULL, 0);
+			sret = sendto(sfd, buffer, shim_strnlen(buffer, sizeof(buffer)), 0, NULL, 0);
 			syscall_shared_info->t2 = syscall_time_now();
 			if (sret < 0)
 				syscall_shared_error((int)sret);
@@ -729,7 +729,7 @@ static int syscall_socket_measure(const int measure)
 			break;
 #endif
 		default:
-			VOID_RET(ssize_t, send(sfd, buffer, strlen(buffer), 0));
+			VOID_RET(ssize_t, send(sfd, buffer, shim_strnlen(buffer, sizeof(buffer)), 0));
 			break;
 		}
 close_sfd_child:
