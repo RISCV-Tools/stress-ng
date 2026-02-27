@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 		return -1;
 
 	(void)memset(&msg, 0, sizeof(msg));
-	(void)strcpy(msg.msg, "TESTMSG");
+	(void)strncpy(msg.msg, "TESTMSG", sizeof(msg.msg));
 	msg.mtype = 1;
 	ret = msgsnd(msgq_id, &msg, sizeof(msg.msg), 0);
 	(void)ret;
