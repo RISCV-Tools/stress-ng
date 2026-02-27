@@ -235,7 +235,7 @@ static int pr_msg(
 		static const char empty_ts[] = "xx-xx-xx.xxx ";
 
 		if (gettimeofday(&tv, NULL) < 0) {
-			(void)strncpy(ts, empty_ts, sizeof(ts));
+			(void)shim_strscpy(ts, empty_ts, sizeof(ts));
 		} else {
 #if defined(HAVE_LOCALTIME_R)
 			time_t t = tv.tv_sec;
@@ -247,7 +247,7 @@ static int pr_msg(
 				tm.tm_hour, tm.tm_min, tm.tm_sec,
 				(long int)tv.tv_usec / 10000);
 #else
-			(void)strncpy(ts, empty_ts, sizeof(ts));
+			(void)shim_strscpy(ts, empty_ts, sizeof(ts));
 #endif
 		}
 	} else {
