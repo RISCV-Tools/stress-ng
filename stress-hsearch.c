@@ -205,7 +205,7 @@ static int OPTIMIZE3 stress_hsearch(stress_args_t *args)
 		keys[i] = shim_strdup(buffer);
 		if (!keys[i]) {
 			pr_err("%s: cannot allocate %zu byte key%s\n",
-				args->name, strlen(buffer),
+				args->name, shim_strnlen(buffer, sizeof(buffer)),
 				stress_memory_free_get());
 			goto free_all;
 		}
