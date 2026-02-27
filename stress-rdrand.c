@@ -395,7 +395,7 @@ static int stress_rdrand(stress_args_t *args)
 				uint64_t i;
 				const uint64_t shift = 1ULL << 60;
 
-				pr_inf("Frequency distribution:\n");
+				pr_inf("frequency distribution:\n");
 				for (i = 0; i < (uint64_t)SIZEOF_ARRAY(counters); i++) {
 					pr_inf("0x%16.16" PRIx64 "..0x%16.16" PRIx64 " %5.2f%% %10" PRIu64 "\n",
 						i  * shift, ((i + 1) * shift) - 1, (double)counters[i] * 100.0 / total, counters[i]);
