@@ -87,7 +87,7 @@ typedef struct {
 
 static const stress_help_t help[] = {
 	{ NULL,	"tree N",	 "start N workers that exercise tree structures" },
-	{ NULL,	"tree-method M", "select tree method: all,avl,binary,btree,rb,splay" },
+	{ NULL,	"tree-method M", "select tree method [ all | avl | binary | btree | rb | splay | treap ]" },
 	{ NULL,	"tree-ops N",	 "stop after N bogo tree operations" },
 	{ NULL,	"tree-size N",	 "N is the number of items in the tree" },
 	{ NULL,	NULL,		 NULL }
@@ -143,16 +143,24 @@ typedef struct splay_node {
 } splay_t;
 #endif
 
+typedef struct treap_node {
+	struct treap_node *left;
+	struct treap_node *right;
+	uint32_t value;
+	uint32_t priority;
+} treap_t;
+
 union tree_node {
+	avl_t avl;
+	binary_t binary;
+	btree_value_t btree;
 #if defined(HAVE_RB_TREE)
 	rb_t	rb;
 #endif
 #if defined(HAVE_SPLAY_TREE)
 	splay_t	splay;
 #endif
-	binary_t binary;
-	avl_t avl;
-	btree_value_t btree;
+	treap_t treap;
 };
 
 static uint32_t stress_rndu32seed;
@@ -376,6 +384,142 @@ PRAGMA_UNROLL_N(4)
 	metrics->count += (double)n;
 }
 #endif
+
+static treap_t * OPTIMIZE3 treap_split(
+	treap_t *root,
+	const treap_t *node,
+	treap_t **remain)
+{
+	if (UNLIKELY(!root)) {
+		*remain = NULL;
+		return root;
+	}
+	if (root->value < node->value) {
+		root->right = treap_split(root->right, node, remain);
+	} else {
+		*remain = root;
+		root = treap_split(root->left, node, &root->left);
+	}
+	return root;
+}
+
+static treap_t * OPTIMIZE3 treap_join(
+	treap_t *little,
+	treap_t *big)
+{
+	if (!little)
+		return big;
+	if (!big)
+		return little;
+	if (little->priority < big->priority) {
+		little->right = treap_join(little->right, big);
+		return little;
+	}
+	big->left = treap_join(little, big->left);
+	return big;
+}
+
+static inline void ALWAYS_INLINE OPTIMIZE3 treap_insert(
+	treap_t **root,
+	treap_t *node)
+{
+	treap_t *big, *little;
+
+	little = treap_split(*root, node, &big);
+	node->priority = stress_mwc32();
+	*root = treap_join(treap_join(little, node), big);
+}
+
+static treap_t * OPTIMIZE3 treap_find(
+	treap_t *head,
+	const treap_t *node)
+{
+	while (head) {
+		if (node->value == head->value)
+			return head;
+		head = (node->value < head->value) ?
+			head->left :
+			head->right;
+	}
+	return head;
+}
+
+static void OPTIMIZE3 TARGET_CLONES treap_remove_tree(treap_t *node)
+{
+	if (node) {
+		treap_remove_tree(node->left);
+		treap_remove_tree(node->right);
+		node->left = NULL;
+		node->right = NULL;
+	}
+}
+
+static void OPTIMIZE3 stress_tree_treap(
+	stress_args_t *args,
+	const uint32_t n,
+	void *data,
+	stress_tree_metrics_t *metrics,
+	int *rc)
+{
+	register uint32_t i;
+	treap_t *node, *head = NULL;
+	treap_t *nodes = (treap_t *)data;
+	double t;
+	const uint32_t seed = stress_mwc32();
+
+	(void)shim_memset(nodes, 0, sizeof(*nodes) * n);
+
+	stress_rndu32_seed_set(seed);
+	t = stress_time_now();
+PRAGMA_UNROLL_N(4)
+	for (node = nodes, i = 0; i < n; i++, node++) {
+		node->value = stress_rndu32();
+		treap_insert(&head, node);
+	}
+
+	metrics->insert += stress_time_now() - t;
+
+	/* Mandatory forward tree check */
+	t = stress_time_now();
+PRAGMA_UNROLL_N(4)
+	for (node = nodes, i = 0; i < n; i++, node++) {
+		if (UNLIKELY(!treap_find(head, node))) {
+			pr_fail("%s: treap tree node #%" PRIu32 " not found\n",
+				args->name, i);
+			*rc = EXIT_FAILURE;
+		}
+	}
+	metrics->find += stress_time_now() - t;
+
+	if (g_opt_flags & OPT_FLAGS_VERIFY) {
+		register uint32_t offset = n - 1;
+
+		/* optional reverse find */
+PRAGMA_UNROLL_N(4)
+		for (i = 0; i < n; i++) {
+			if (UNLIKELY(!treap_find(head, &nodes[offset - i]))) {
+				pr_fail("%s: treap tree node #%" PRIu32 " not found\n",
+					args->name, i);
+				*rc = EXIT_FAILURE;
+			}
+		}
+		/* optional random find */
+PRAGMA_UNROLL_N(4)
+		for (i = 0; i < n; i++) {
+			register const uint32_t j = stress_mwc32modn(n);
+
+			if (UNLIKELY(!treap_find(head, &nodes[j]))) {
+				pr_fail("%s: treap tree node #%" PRIu32 " not found\n",
+					args->name, j);
+				*rc = EXIT_FAILURE;
+			}
+		}
+	}
+	t = stress_time_now();
+	treap_remove_tree(head);
+	metrics->remove += stress_time_now() - t;
+	metrics->count += (double)n;
+}
 
 static void OPTIMIZE3 binary_insert(
 	binary_t **head,
@@ -936,13 +1080,14 @@ static const stress_tree_method_info_t stress_tree_methods[] = {
 	{ "all",	stress_tree_all },
 	{ "avl",	stress_tree_avl },
 	{ "binary",	stress_tree_binary },
+	{ "btree",	stress_tree_btree },
 #if defined(HAVE_RB_TREE)
 	{ "rb",		stress_tree_rb },
 #endif
 #if defined(HAVE_SPLAY_TREE)
 	{ "splay",	stress_tree_splay },
 #endif
-	{ "btree",	stress_tree_btree },
+	{ "treap",	stress_tree_treap },
 };
 
 static stress_tree_metrics_t stress_tree_metrics[SIZEOF_ARRAY(stress_tree_methods)];

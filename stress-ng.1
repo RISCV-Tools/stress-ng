@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, may be w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH STRESS-NG 1 "18 February 2026"
+.TH STRESS-NG 1 "27 February 2026"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -9481,12 +9481,12 @@ T}
 .TQ
 .B \-\-tree N
 start N workers that exercise tree data structures. The default is
-to add, find and remove 250000 64 bit integers into AVL (avl),
-Red-Black (rb), Splay (splay), btree and binary trees. The intention of
-this stressor is to exercise memory and cache with the various tree
+to add, find and remove 250000 32 bit integers into AVL (avl),
+binary, btree, red-black (rb), splay (splay) and treap trees. The intention
+of this stressor is to exercise memory and cache with the various tree
 operations.
 .TP
-.B \-\-tree\-method [ all | avl | binary | btree | rb | splay ]
+.B \-\-tree\-method [ all | avl | binary | btree | rb | splay | treap ]
 specify the tree to be used. By default, all the trees are
 used (the `all' option).
 .TP
