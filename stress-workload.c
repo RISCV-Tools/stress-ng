@@ -316,7 +316,7 @@ static void stress_workload_bucket_report(stress_args_t *args, stress_workload_b
 
 	(void)snprintf(buf, sizeof(buf), "%" PRIu64,
 		(uint64_t)((SIZEOF_ARRAY(bucket->bucket) + 1) * bucket->width));
-	width1 = (int)strlen(buf);
+	width1 = (int)shim_strnlen(buf, sizeof(buf));
 	if (width1 < 7)
 		width1 = 7;
 
@@ -324,7 +324,7 @@ static void stress_workload_bucket_report(stress_args_t *args, stress_workload_b
 	for (i = 0; i < SIZEOF_ARRAY(bucket->bucket); i++)
 		total += bucket->bucket[i];
 	(void)snprintf(buf, sizeof(buf), "%" PRIu64, total);
-	width2 = (int)strlen(buf);
+	width2 = (int)shim_strnlen(buf, sizeof(buf));
 	if (width2 < 7)
 		width2 = 7;
 
