@@ -121,6 +121,7 @@ static int stress_xattr(stress_args_t *args)
 		char *buffer;
 		char bad_attrname[32];
 		uint32_t set_xattr_ok[MAX_XATTRS / sizeof(uint32_t)];
+		size_t value_len;
 
 		(void)shim_memset(set_xattr_ok, 0, sizeof(set_xattr_ok));
 
@@ -128,9 +129,10 @@ static int stress_xattr(stress_args_t *args)
 			STRESS_CLRBIT(set_xattr_ok, i);
 			(void)snprintf(attrname, sizeof(attrname), "user.var_%d", i);
 			(void)snprintf(value, sizeof(value), "orig-value-%d", i);
+			value_len = shim_strnlen(value, sizeof(value));
 
 			(void)shim_fremovexattr(fd, attrname);
-			ret = shim_fsetxattr(fd, attrname, value, strlen(value), XATTR_CREATE);
+			ret = shim_fsetxattr(fd, attrname, value, value_len, XATTR_CREATE);
 			if (UNLIKELY(ret < 0)) {
 				if ((errno == ENOTSUP) || (errno == ENOSYS)) {
 					if (stress_instance_zero(args))
@@ -160,16 +162,17 @@ static int stress_xattr(stress_args_t *args)
 
 		(void)snprintf(attrname, sizeof(attrname), "user.var_%d", MAX_XATTRS);
 		(void)snprintf(value, sizeof(value), "orig-value-%d", MAX_XATTRS);
+		value_len = shim_strnlen(value, sizeof(value));
 
 		/*
 		 *  Exercise bad/invalid fd
 		 */
-		VOID_RET(int, shim_fsetxattr(bad_fd, attrname, value, strlen(value), XATTR_CREATE));
+		VOID_RET(int, shim_fsetxattr(bad_fd, attrname, value, value_len, XATTR_CREATE));
 
 		/*
 		 *  Exercise invalid flags
 		 */
-		ret = shim_fsetxattr(fd, attrname, value, strlen(value), ~0);
+		ret = shim_fsetxattr(fd, attrname, value, value_len, ~0);
 		if (UNLIKELY(ret >= 0)) {
 			pr_fail("%s: fsetxattr unexpectedly succeeded on invalid flags, "
 				"errno=%d (%s)%s\n", args->name,
@@ -178,7 +181,7 @@ static int stress_xattr(stress_args_t *args)
 		}
 
 #if defined(HAVE_LSETXATTR)
-		ret = shim_lsetxattr(filename, attrname, value, strlen(value), ~0);
+		ret = shim_lsetxattr(filename, attrname, value, value_len, ~0);
 		if (UNLIKELY(ret >= 0)) {
 			pr_fail("%s: lsetxattr unexpectedly succeeded on invalid flags, "
 				"errno=%d (%s)%s\n", args->name,
@@ -186,7 +189,7 @@ static int stress_xattr(stress_args_t *args)
 			goto out_close;
 		}
 #endif
-		ret = shim_setxattr(filename, attrname, value, strlen(value), ~0);
+		ret = shim_setxattr(filename, attrname, value, value_len, ~0);
 		if (UNLIKELY(ret >= 0)) {
 			pr_fail("%s: setxattr unexpectedly succeeded on invalid flags, "
 				"errno=%d (%s)%s\n", args->name,
@@ -194,10 +197,10 @@ static int stress_xattr(stress_args_t *args)
 			goto out_close;
 		}
 		/* Exercise invalid filename, ENOENT */
-		VOID_RET(int, shim_setxattr("", attrname, value, strlen(value), 0));
+		VOID_RET(int, shim_setxattr("", attrname, value, value_len, 0));
 
 		/* Exercise invalid attrname, ERANGE */
-		VOID_RET(int, shim_setxattr(filename, "", value, strlen(value), 0));
+		VOID_RET(int, shim_setxattr(filename, "", value, value_len, 0));
 
 		/* Exercise huge value length, E2BIG */
 		if (hugevalue) {
@@ -208,8 +211,7 @@ static int stress_xattr(stress_args_t *args)
 		 * Check fsetxattr syscall cannot succeed in replacing
 		 * attribute name and value pair which doesn't exist
 		 */
-		ret = shim_fsetxattr(fd, attrname, value, strlen(value),
-			XATTR_REPLACE);
+		ret = shim_fsetxattr(fd, attrname, value, value_len, XATTR_REPLACE);
 		if (UNLIKELY(ret >= 0)) {
 			pr_fail("%s: fsetxattr succeeded unexpectedly, "
 				"replaced attribute which "
@@ -219,8 +221,7 @@ static int stress_xattr(stress_args_t *args)
 		}
 
 #if defined(HAVE_LSETXATTR)
-		ret = shim_lsetxattr(filename, attrname, value, strlen(value),
-			XATTR_REPLACE);
+		ret = shim_lsetxattr(filename, attrname, value, value_len, XATTR_REPLACE);
 		if (UNLIKELY(ret >= 0)) {
 			pr_fail("%s: lsetxattr succeeded unexpectedly, "
 				"replaced attribute which "
@@ -229,8 +230,7 @@ static int stress_xattr(stress_args_t *args)
 			goto out_close;
 		}
 #endif
-		ret = shim_setxattr(filename, attrname, value, strlen(value),
-			XATTR_REPLACE);
+		ret = shim_setxattr(filename, attrname, value, value_len, XATTR_REPLACE);
 		if (UNLIKELY(ret >= 0)) {
 			pr_fail("%s: setxattr succeeded unexpectedly, "
 				"replaced attribute which "
@@ -286,8 +286,8 @@ static int stress_xattr(stress_args_t *args)
 		 */
 		(void)snprintf(attrname, sizeof(attrname), "user.var_%d", 0);
 		(void)snprintf(value, sizeof(value), "orig-value-%d", 0);
-		ret = shim_fsetxattr(fd, attrname, value, strlen(value),
-			XATTR_CREATE);
+		value_len = shim_strnlen(value, sizeof(value));
+		ret = shim_fsetxattr(fd, attrname, value, value_len, XATTR_CREATE);
 		if (UNLIKELY(ret >= 0)) {
 			pr_fail("%s: fsetxattr succeeded unexpectedly, "
 				"created attribute which "
@@ -300,8 +300,7 @@ static int stress_xattr(stress_args_t *args)
 		}
 
 #if defined(HAVE_LSETXATTR)
-		ret = shim_lsetxattr(filename, attrname, value, strlen(value),
-			XATTR_CREATE);
+		ret = shim_lsetxattr(filename, attrname, value, value_len, XATTR_CREATE);
 		if (UNLIKELY(ret >= 0)) {
 			pr_fail("%s: lsetxattr succeeded unexpectedly, "
 				"created attribute which "
@@ -313,8 +312,7 @@ static int stress_xattr(stress_args_t *args)
 				STRESS_CLRBIT(set_xattr_ok, 0);
 		}
 #endif
-		ret = shim_setxattr(filename, attrname, value, strlen(value),
-			XATTR_CREATE);
+		ret = shim_setxattr(filename, attrname, value, value_len, XATTR_CREATE);
 		if (UNLIKELY(ret >= 0)) {
 			pr_fail("%s: setxattr succeeded unexpectedly, "
 				"created attribute which "
@@ -332,9 +330,9 @@ static int stress_xattr(stress_args_t *args)
 
 			(void)snprintf(attrname, sizeof(attrname), "user.var_%d", j);
 			(void)snprintf(value, sizeof(value), "value-%d", j);
+			value_len = shim_strnlen(value, sizeof(value));
 
-			ret = shim_fsetxattr(fd, attrname, value, strlen(value),
-				XATTR_REPLACE);
+			ret = shim_fsetxattr(fd, attrname, value, value_len, XATTR_REPLACE);
 			if (ret < 0) {
 				STRESS_CLRBIT(set_xattr_ok, j);
 				if (UNLIKELY((errno != ENOSPC) && (errno != EDQUOT) && (errno != E2BIG))) {
@@ -345,8 +343,7 @@ static int stress_xattr(stress_args_t *args)
 			}
 
 			/* ..and do it again using setxattr */
-			ret = shim_setxattr(filename, attrname, value, strlen(value),
-				XATTR_REPLACE);
+			ret = shim_setxattr(filename, attrname, value, value_len, XATTR_REPLACE);
 			if (ret < 0) {
 				STRESS_CLRBIT(set_xattr_ok, j);
 				if (UNLIKELY((errno != ENOSPC) && (errno != EDQUOT) && (errno != E2BIG))) {
@@ -361,7 +358,7 @@ static int stress_xattr(stress_args_t *args)
 				shim_xattr_args arg;
 
 				arg.value = (uint64_t)value;
-				arg.size = strlen(value);
+				arg.size = value_len;
 				arg.flags = 0;
 
 				ret = shim_setxattrat(AT_FDCWD, filename, 0, attrname, &arg, sizeof(arg));
@@ -378,8 +375,7 @@ static int stress_xattr(stress_args_t *args)
 
 #if defined(HAVE_LSETXATTR)
 			/* Although not a link, it's good to exercise this call */
-			ret = shim_lsetxattr(filename, attrname, value, strlen(value),
-				XATTR_REPLACE);
+			ret = shim_lsetxattr(filename, attrname, value, value_len, XATTR_REPLACE);
 			if (ret < 0) {
 				STRESS_CLRBIT(set_xattr_ok, j);
 				if (UNLIKELY((errno != ENOSPC) && (errno != EDQUOT) && (errno != E2BIG))) {
