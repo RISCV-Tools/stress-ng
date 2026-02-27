@@ -363,9 +363,9 @@ static const stress_help_t help_generic[] = {
 	{ NULL,		"no-madvise",		"don't use random madvise options for each mmap" },
 	{ NULL,		"no-oom-adjust",	"disable all forms of out-of-memory score adjustments" },
 	{ NULL,		"no-rand-seed",		"seed random numbers with the same constant" },
-	{ NULL,		"oom-avoid",		"Try to avoid stressors from being OOM'd" },
-	{ NULL,		"oom-avoid-bytes N",	"Number of bytes free to stop further memory allocations" },
-	{ NULL,		"oomable",		"Do not respawn a stressor if it gets OOM'd" },
+	{ NULL,		"oom-avoid",		"try to avoid stressors from being OOM'd" },
+	{ NULL,		"oom-avoid-bytes N",	"number of bytes free to stop further memory allocations" },
+	{ NULL,		"oomable",		"do not respawn a stressor if it gets OOM'd" },
 	{ NULL,		"page-in",		"touch allocated pages that are not in core" },
 	{ NULL,		"parallel N",		"synonym for 'all N'" },
 	{ NULL,		"pathological",		"enable stressors that are known to hang a machine" },
@@ -550,7 +550,7 @@ static int stress_get_class(char *const class_str, uint32_t *opt_class)
 					return 1;
 				}
 			}
-			(void)fprintf(stderr, "Unknown class: '%s', "
+			(void)fprintf(stderr, "unknown class: '%s', "
 				"available classes:", token);
 			for (i = 0; i < SIZEOF_ARRAY(stress_classes); i++)
 				(void)fprintf(stderr, " %s", stress_classes[i].name);
@@ -959,11 +959,11 @@ static void stress_verifiable_mode(const stress_verify_t mode)
  */
 static void stress_verifiable(void)
 {
-	(void)printf("Verification always enabled:\n");
+	(void)printf("verification always enabled:\n");
 	stress_verifiable_mode(VERIFY_ALWAYS);
-	(void)printf("\nVerification enabled by --verify option:\n");
+	(void)printf("\nverification enabled by --verify option:\n");
 	stress_verifiable_mode(VERIFY_OPTIONAL);
-	(void)printf("\nVerification not implemented:\n");
+	(void)printf("\nverification not implemented:\n");
 	stress_verifiable_mode(VERIFY_NONE);
 }
 
@@ -1001,14 +1001,14 @@ static inline void stress_show_stressor_names(void)
 static void NORETURN stress_usage(void)
 {
 	stress_version();
-	(void)printf("\nUsage: %s [OPTION [ARG]]\n", g_prog_name);
-	(void)printf("\nGeneral control options:\n");
+	(void)printf("\nusage: %s [OPTION [ARG]]\n", g_prog_name);
+	(void)printf("\ngeneral control options:\n");
 	stress_usage_help(help_generic);
-	(void)printf("\nStressor specific options:\n");
+	(void)printf("\nstressor specific options:\n");
 	stress_usage_help_stressors();
-	(void)printf("\nExample: %s --cpu 8 --iomix 4 --vm 2 --vm-bytes 128M "
+	(void)printf("\nexample: %s --cpu 8 --iomix 4 --vm 2 --vm-bytes 128M "
 		"--fork 4 --timeout 10s\n\n"
-		"Note: sizes can be suffixed with B, K, M, G and times with "
+		"note: sizes can be suffixed with B, K, M, G and times with "
 		"s, m, h, d, y\n", g_prog_name);
 	stress_setting_free();
 	exit(EXIT_SUCCESS);
@@ -3186,7 +3186,7 @@ static inline void stress_set_random_stressors(void)
 
 		if (!n_procs) {
 			(void)fprintf(stderr,
-				"No stressors are available, unable to continue\n");
+				"no stressors are available, unable to continue\n");
 			exit(EXIT_FAILURE);
 		}
 
@@ -3215,7 +3215,7 @@ static void stress_with(const int32_t instances)
 		const ssize_t i = stress_stressor_find(token);
 
 		if (i < 0) {
-			(void)fprintf(stderr, "Unknown stressor: '%s', "
+			(void)fprintf(stderr, "unknown stressor: '%s', "
 				"invalid --with option\n", token);
 			exit(EXIT_FAILURE);
 		}
@@ -3501,7 +3501,7 @@ next_opt:
 			break;
 		case OPT_query:
 			if (!jobmode)
-				(void)printf("Try '%s --help' or 'man stress-ng' for more information.\n", g_prog_name);
+				(void)printf("try '%s --help' or 'man stress-ng' for more information.\n", g_prog_name);
 			return EXIT_FAILURE;
 		case OPT_quiet:
 			g_pr_log_flags &= ~(PR_LOG_FLAGS_ALL);
@@ -3619,7 +3619,7 @@ next_opt:
 			break;
 		default:
 			if (!jobmode)
-				(void)printf("Unknown option (%d)\n",c);
+				(void)printf("unknown option (%d)\n",c);
 			return EXIT_FAILURE;
 		}
 	}
@@ -3627,7 +3627,7 @@ next_opt:
 	if (optind < argc) {
 		bool unicode = false;
 
-		(void)printf("Error: unrecognised option:");
+		(void)printf("error: unrecognised option:");
 		while (optind < argc) {
 			(void)printf(" %s", argv[optind]);
 			if (((argv[optind][0] & 0xff) == 0xe2) &&
