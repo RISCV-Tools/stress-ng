@@ -289,7 +289,7 @@ void stress_ftrace_add_pid(const pid_t pid)
 	if (fd < 0)
 		return;
 	if (pid == -1) {
-		strcpy(buffer, " ");
+		shim_strscpy(buffer, " ", sizeof(buffer));
 	} else {
 		(void)snprintf(buffer, sizeof(buffer), "%" PRIdMAX, (intmax_t)pid);
 	}
