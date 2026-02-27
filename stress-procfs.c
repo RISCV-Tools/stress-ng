@@ -677,7 +677,7 @@ err:
 		 *  Create /proc/ filename with - corruption to force
 		 *  ENOENT procfs open failures
 		 */
-		len = strlen(path);
+		len = shim_strnlen(path, sizeof(path));
 
 		/* /proc + ... */
 		if (len > 5) {
