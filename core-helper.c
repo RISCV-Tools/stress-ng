@@ -692,9 +692,9 @@ void stress_buildinfo(void)
 		pr_inf("STDC Hosted: " XSTR(__STDC_HOSTED__) "\n");
 #endif
 #if defined(BUILD_STATIC)
-		pr_inf("Build: static image\n");
+		pr_inf("build: static image\n");
 #else
-		pr_inf("Build: dynamic link\n");
+		pr_inf("build: dynamic link\n");
 #endif
 	}
 }
