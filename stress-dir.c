@@ -281,7 +281,7 @@ static inline void stress_invalid_mkdir(const char *path)
 
 	(void)shim_strscpy(filename, path, sizeof(filename));
 	(void)shim_strlcat(filename, "/", sizeof(filename));
-	len = strlen(filename);
+	len = shim_strnlen(filename, sizeof(filename));
 	(void)stress_rndstr(filename + len, sizeof(filename) - len);
 	ret = mkdir(filename,  S_IRUSR | S_IWUSR);
 	if (ret == 0)
