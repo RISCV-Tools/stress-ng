@@ -289,7 +289,7 @@ int stress_process_dumpable(const bool dumpable)
 	{
 		char const *str = dumpable ? "0x33" : "0x00";
 
-		if (stress_fs_file_write("/proc/self/coredump_filter", str, strlen(str)) < 0)
+		if (stress_fs_file_write("/proc/self/coredump_filter", str, 4) < 0)
 			rc = -1;
 	}
 #endif
