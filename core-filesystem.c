@@ -537,7 +537,7 @@ static void stress_fs_temp_hash_truncate(char *filename, const size_t filename_l
 		f_namemax = buf.f_namemax;
 #endif
 
-	if (strlen(filename) > f_namemax) {
+	if (len > f_namemax) {
 		const uint32_t upper = stress_hash_jenkin((uint8_t *)filename, len);
 		const uint32_t lower = stress_hash_pjw(filename);
 		const uint64_t val = ((uint64_t)upper << 32) | lower;
