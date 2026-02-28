@@ -708,11 +708,12 @@ static size_t TARGET_CLONES stress_vm_walking_flush_data(
 	size_t bit_errors = 0;
 	register uint8_t *ptr;
 	register uint64_t c = stress_bogo_get(args);
-	register uint8_t val = 0;
+	register uint8_t val = stress_mwc8();
+	static size_t offset = 0;
 
 	(void)sz;
 
-	for (ptr = (uint8_t *)buf; ptr < (uint8_t *)buf_end - 7; ptr++, val++) {
+	for (ptr = (uint8_t *)buf + offset; ptr < (uint8_t *)buf_end - 7; ptr += 64, val += 8) {
 		*(ptr + 0) = (val + 0) & 0xff;
 		shim_clflush(ptr + 0);
 		stress_asm_mb();
@@ -760,6 +761,10 @@ static size_t TARGET_CLONES stress_vm_walking_flush_data(
 		if (UNLIKELY(!stress_continue_flag()))
 			break;
 	}
+
+	offset += 8;
+	if (offset >= 64)
+		offset = 0;
 	if (vm_flush)
 		stress_cpu_cache_data_flush(buf, sz);
 	stress_vm_check("walking flush (data)", bit_errors);
