@@ -154,9 +154,9 @@ static void MLOCKED_TEXT stress_af_alg_alarm_handler(int signum)
  *   name_to_type()
  *	map text type name to symbolic enum value
  */
-static stress_crypto_type_t name_to_type(const char *buffer)
+static stress_crypto_type_t name_to_type(const char *buffer, const size_t buffer_len)
 {
-	const char *end = buffer + strlen(buffer);
+	const char *end = buffer + shim_strnlen(buffer, buffer_len);
 	const char *ptr = strchr(buffer, ':');
 	size_t i;
 
@@ -1516,7 +1516,7 @@ static void stress_af_alg_init(const uint32_t instances)
 			info.name = dup_field(buffer);
 		}
 		else if (!strncmp(buffer, "type", 4)) {
-			info.crypto_type = name_to_type(buffer);
+			info.crypto_type = name_to_type(buffer, sizeof(buffer));
 			if (info.type)
 				free(info.type);
 			info.type = dup_field(buffer);
