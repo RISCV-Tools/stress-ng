@@ -1456,7 +1456,7 @@ size_t shim_strlcat(char *dst, const char *src, size_t len)
  *   shim_strnlen()
  *	wrapper / implementation of strnlen
  */
-size_t shim_strnlen(char *str, size_t len)
+size_t shim_strnlen(const char *str, size_t len)
 {
 #if defined(HAVE_STRNLEN)
 	return strnlen(str, len);

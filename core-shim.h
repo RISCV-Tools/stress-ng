@@ -620,7 +620,7 @@ extern int shim_brk(void *addr);
 extern void *shim_sbrk(intptr_t increment);
 extern ssize_t shim_strscpy(char *dst, const char *src, size_t len);
 extern size_t shim_strlcat(char *dst, const char *src, size_t len);
-extern size_t shim_strnlen(char *str, size_t len);
+extern size_t shim_strnlen(const char *str, size_t len);
 extern void shim_sync(void);
 extern int shim_fsync(int fd);
 extern int shim_fdatasync(int fd);
