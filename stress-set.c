@@ -110,8 +110,9 @@ static int stress_set(stress_args_t *args)
 {
 	size_t i;
 	int ret_hostname;
-	const size_t hostname_len = stress_hostname_length_get();
-	const size_t longname_len = hostname_len << 1;
+	const size_t max_hostname_len = stress_hostname_length_get();
+	const size_t max_longname_len = max_hostname_len << 1;
+	size_t hostname_len;
 	char *hostname;
 	char *longname;
 #if defined(HAVE_GETPGID) && 	\
@@ -132,24 +133,26 @@ static int stress_set(stress_args_t *args)
 		rlimits[i].ret = getrlimit(rlimit_resources[i], &rlimits[i].rlim);
 	}
 
-	hostname = (char *)calloc(hostname_len, sizeof(*hostname));
+	hostname = (char *)calloc(max_hostname_len, sizeof(*hostname));
 	if (!hostname) {
 		pr_inf_skip("%s: cannot allocate hostname array of %zu bytes%s, skipping stressor\n",
-			args->name, hostname_len, stress_memory_free_get());
+			args->name, max_hostname_len, stress_memory_free_get());
 		return EXIT_NO_RESOURCE;
 	}
-	longname = (char *)calloc(longname_len, sizeof(*longname));
+	longname = (char *)calloc(max_longname_len, sizeof(*longname));
 	if (!longname) {
 		pr_inf_skip("%s: cannot allocate longname array of %zu bytes%s, skipping stressor\n",
-			args->name, longname_len, stress_memory_free_get());
+			args->name, max_longname_len, stress_memory_free_get());
 		free(hostname);
 		return EXIT_NO_RESOURCE;
 	}
-	ret_hostname = gethostname(hostname, hostname_len - 1);
+	ret_hostname = gethostname(hostname, max_hostname_len - 1);
 	if (ret_hostname == 0) {
-		hostname[hostname_len - 1] = '\0';
-		(void)shim_strscpy(longname, hostname, longname_len);
+		hostname[max_hostname_len - 1] = '\0';
+		(void)shim_strscpy(longname, hostname, max_longname_len);
 	}
+
+	hostname_len = shim_strnlen(hostname, max_hostname_len);
 
 	stress_proc_state_set(args->name, STRESS_STATE_SYNC_WAIT);
 	stress_sync_start_wait(args);
@@ -178,8 +181,8 @@ static int stress_set(stress_args_t *args)
 			break;
 
 		if (*longname) {
-			VOID_RET(int, sethostname(longname, longname_len));
-			VOID_RET(int, sethostname(hostname, strlen(hostname)));
+			VOID_RET(int, sethostname(longname, max_longname_len));
+			VOID_RET(int, sethostname(hostname, hostname_len));
 		}
 
 #if defined(HAVE_GETPGID) &&	\
@@ -484,7 +487,7 @@ static int stress_set(stress_args_t *args)
 				VOID_RET(int, shim_setdomainname(name, sizeof(name)));
 
 				/* Set name back */
-				VOID_RET(int, shim_setdomainname(name, strlen(name)));
+				VOID_RET(int, shim_setdomainname(name, shim_strnlen(name, sizeof(name))));
 			}
 			if (UNLIKELY(!stress_continue(args)))
 				break;
