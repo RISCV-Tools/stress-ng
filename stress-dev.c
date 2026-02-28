@@ -3728,8 +3728,8 @@ static void stress_dev_autofs_linux(
 	const int fd,
 	const char *devpath)
 {
-	const char *tmp = ".....";
-	const size_t tmp_len = strlen(tmp) + 1;
+	static const char tmp[] = ".....";
+	const size_t tmp_len = shim_strnlen(tmp, sizeof(tmp)) + 1;
 	size_t size;
 	struct autofs_dev_ioctl *info;
 	static bool try_invalid_path = false;
