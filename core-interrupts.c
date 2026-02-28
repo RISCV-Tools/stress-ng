@@ -31,7 +31,7 @@
 typedef void (*pr_func_t)(const char *fmt, ...);
 
 typedef struct {
-	const char *type;		/* /proc/interrupts interrupt name */
+	const char type[5];		/* /proc/interrupts interrupt name */
 	const bool check_failure;	/* check interrupt delta, flag as failure if > 0 */
 	const pr_func_t pr_func FORMAT(printf, 1, 2); /* logging function to use */
 	const char *descr;		/* description of interrupt */
@@ -108,14 +108,13 @@ static void stress_interrupts_count(stress_interrupts_t *counters, const int whi
 
 	while (fgets(buffer, sizeof(buffer), fp)) {
 		for (i = 0; i < SIZEOF_ARRAY(info); i++) {
-			const char *type = info[i].type;
 			char *ptr;
 
 			/* Find a match */
-			ptr = strstr(buffer, type);
+			ptr = strstr(buffer, info[i].type);
 			if (ptr) {
 				count = 0;
-				ptr += strlen(type);
+				ptr += shim_strnlen(info[i].type, sizeof(info[i].type));
 				for (;;) {
 					uint64_t val = 0ULL;
 
