@@ -525,10 +525,10 @@ static inline void OPTIMIZE3 stress_fs_base36_encode_uint64(char dst[14], uint64
  *	so workaround this by hashing them into a 64 bit hex
  *	filename.
  */
-static void stress_fs_temp_hash_truncate(char *filename)
+static void stress_fs_temp_hash_truncate(char *filename, const size_t filename_len)
 {
 	size_t f_namemax = 16;
-	size_t len = strlen(filename);
+	const size_t len = shim_strnlen(filename, filename_len);
 #if defined(HAVE_SYS_STATVFS_H)
 	struct statvfs buf;
 
@@ -564,12 +564,12 @@ int stress_fs_temp_filename(
 	(void)snprintf(directoryname, sizeof(directoryname),
 		"tmp-%s-%s-%d-%" PRIu32,
 		g_prog_name, name, (int)pid, instance);
-	stress_fs_temp_hash_truncate(directoryname);
+	stress_fs_temp_hash_truncate(directoryname, sizeof(directoryname));
 
 	(void)snprintf(filename, sizeof(filename),
 		"%s-%s-%d-%" PRIu32 "-%" PRIu64,
 		g_prog_name, name, (int)pid, instance, magic);
-	stress_fs_temp_hash_truncate(filename);
+	stress_fs_temp_hash_truncate(filename, sizeof(filename));
 
 	return snprintf(path, len, "%s/%s/%s",
 		stress_fs_temp_path_get(), directoryname, filename);
@@ -606,7 +606,7 @@ int stress_fs_temp_dir(
 	(void)snprintf(directoryname, sizeof(directoryname),
 		"tmp-%s-%s-%d-%" PRIu32,
 		g_prog_name, name, (int)pid, instance);
-	stress_fs_temp_hash_truncate(directoryname);
+	stress_fs_temp_hash_truncate(directoryname, sizeof(directoryname));
 
 	l = snprintf(path, len, "%s/%s",
 		stress_fs_temp_path_get(), directoryname);
