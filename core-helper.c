@@ -2019,9 +2019,11 @@ char *stress_env_ld_library_path_get(void)
 	 */
 	parent_ld_path = getenv("LD_LIBRARY_PATH");
 	if (parent_ld_path) {
-		ld_library_path = (char *)malloc(strlen(parent_ld_path) + 17);
+		const size_t len = strlen(parent_ld_path) + 17;
+
+		ld_library_path = (char *)malloc(len);
 		if (ld_library_path)
-			(void)snprintf(ld_library_path, strlen(parent_ld_path) + 17, "LD_LIBRARY_PATH=%s", parent_ld_path);
+			(void)snprintf(ld_library_path, len, "LD_LIBRARY_PATH=%s", parent_ld_path);
 	}
 	return ld_library_path;
 }
