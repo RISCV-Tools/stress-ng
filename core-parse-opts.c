@@ -124,7 +124,7 @@ static void stress_ensure_numeric(const char *const str)
 	}
 	if (*ptr == '\0')
 		return;
-	(void)fprintf(stderr, "value %s contains non-numeric: '%s'\n",
+	(void)fprintf(stderr, "value %s contains non-integer numeric: '%s'\n",
 		str, ptr);
 	longjmp(g_error_env, 1);
 	stress_no_return();
