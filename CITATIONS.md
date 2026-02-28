@@ -175,6 +175,7 @@
  * [CINERGY: Reasoning over the Worst Case Power Consumption of Cloud Virtual Machines](https://hal.science/hal-04981001/document)
  * [Container-level Energy Observability in Kubernetes Clusters](https://arxiv.org/pdf/2504.10702)
  * [Data Center Model for Transient Stability Analysis of Power Systems](https://arxiv.org/pdf/2505.16575)
+ * [Data Exfiltration from Network-Isolated Virtual Computing Systems with Infrastructure Mediated Power Analysis](https://s2.smu.edu/~eclarson/pubs/2025_covert_book.pdf)
  * [Dodoor: Efficient Randomized Decentralized Scheduling with Load Caching for Heterogeneous Tasks and Clusters](https://arxiv.org/pdf/2510.12889)
  * [Ecoscape: Fault Tolerance Benchmark for Adaptive Remediation Strategies in Real-Time Edge ML](https://arxiv.org/html/2507.22702v1)
  * [Efficient Fault Localization in a Cloud Stack Using End-to-End Application Service Topology](https://arxiv.org/html/2509.05511v1)
